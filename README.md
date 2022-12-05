@@ -1,1 +1,1 @@
-# workshop-rebo-skills-academy-2023
+3 REBO Skills Academy 2023: Text Mining Workshop
