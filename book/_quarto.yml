@@ -1,5 +1,6 @@
 project:
   type: book
+  output-dir: ../docs
 
 book:
   title: "book"
@@ -8,16 +9,15 @@ book:
   chapters:
     - index.qmd
     - intro.qmd
-    - summary.qmd
+    - base-r.qmd
     - references.qmd
 
 bibliography: references.bib
 
 format:
   html:
-    theme: cosmo
-  pdf:
-    documentclass: scrreprt
+    theme: pulse
+
 
 
 

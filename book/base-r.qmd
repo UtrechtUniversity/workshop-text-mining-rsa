@@ -1,0 +1,44 @@
+# Base R
+
+## R Syntax & Data Types
+
+### Slides
+
+```{r embed-xaringan-1, echo=FALSE}
+xaringanExtra::embed_xaringan(url = "https://utrechtuniversity.github.io/workshop-introduction-to-R-and-data/slides/slides_introduction.html#18", ratio = "4:3")
+```
+
+[Use this link to open slides in a new tab (refer to slide #18)](https://utrechtuniversity.github.io/workshop-introduction-to-R-and-data/slides/slides_introduction.html#18)
+
+### Video
+
+```{r echo=FALSE}
+vembedr::embed_url("https://www.youtube.com/watch?v=S8zTmEvpYYk")
+```
+
+### Exercise 1
+
+1. Do the following calculation in R: one plus five, divided by nine.
+
+2. Assign the result of the calculation to a variable.
+
+3. Test if the result of your calculation is larger than 1.
+
+4. Round off the result to 1 decimal. Tip: use the Maths Functions section of the Base R cheat sheet!
+
+### Solution
+
+#### Slides {-}
+
+```{r embed-xaringan-2, echo=FALSE}
+xaringanExtra::embed_xaringan(url = "https://utrechtuniversity.github.io/workshop-introduction-to-R-and-data/slides/slides_introduction.html#27", ratio = "4:3")
+```
+
+[Use this link to open slides in a new tab (refer to slide #27)](https://utrechtuniversity.github.io/workshop-introduction-to-R-and-data/slides/slides_introduction.html#27)
+
+#### Video {-}
+
+```{r echo=FALSE}
+vembedr::embed_url("https://www.youtube.com/watch?v=V8za6GR7u8Q&feature=youtu.be")
+```
+
