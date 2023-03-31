@@ -10,15 +10,39 @@ In this session we will see how to perform basic **text mining** with R. As the 
 itself suggests, text mining refers to the process of extracting information and insights
 from text. Text mining can be extremely useful when looking for any sort of pattern,
 trend, or relantionships in large volumes of text data (articles, documents, emails, 
-social media posts, etc).<br>
+social media posts, etc).
+
 Text mining, or text analysis, can be a very challenging task as text data is often
 *unstructured*, i.e. it does not have a predefined format or structure. Furthermore, 
 text is written in natural language and contains all the ambiguity of human
 subjects. Considering that everything ever written is text, the volume of data available for 
 mining is huge and very "noisy", as text may contain irrelevant information, typos, etc.
-For these reasons, text mining requires quite sophisticated techniques to be perfomed.<br>
+For these reasons, text mining requires quite sophisticated techniques to be perfomed.
+
 Thanks for us, most of these techniques have already been implemented into ready-to-use
 packages in different programming languanges (including R) and in this session we will go through the basic steps of a general text mining process:
 data collection, preprocessing, feature extraction, text classification, and visualization. 
 
+### Reading data
 
+For this session we already collected data using the web application I-analyzer. In
+particular we looked for "european union" over the news of the Times Digital Archive
+between 1945 and 2012. The data are stored in a csv file and we are going to read
+it into an R dataframe
+
+```{r}
+library(readr)
+
+data_file_name <- '../data/times_ocr=80_100&date=1945-01-01_2010-12-31&query=_european_union_&category=News.csv'
+data_df <- read_delim(data_file_name, delim = ";", escape_double = FALSE, col_types = cols(`date-pub` = col_date(format = "%B %d, %Y")), trim_ws = TRUE)
+
+print(colnames(data_df))
+```
+```read_delim``` is a function to read coma separated files (csv) and more into R DataFrames. In this case we obtained all the necessary arguments clicking on "Import Dataset" 
+in R studio. In particular, we gave instructions to convert the date of publication column ("date-pub") data format (\<month_str\> \<day\>, \<year\>) into an R object.
+
+We know have all the data we need in a single R DataFrame. The information we are
+interested in is the "content" column. Let's see how to extract this information.
+
+### Tokenization
+As we mentioned in the introduction
