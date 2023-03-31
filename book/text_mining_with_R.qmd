@@ -45,4 +45,45 @@ We know have all the data we need in a single R DataFrame. The information we ar
 interested in is the "content" column. Let's see how to extract this information.
 
 ### Tokenization
-As we mentioned in the introduction
+As we mentioned in the introduction, text data in unstructured data and it is up
+to us to define a data structure suitable for the kind of text analysis we want 
+to perform. We want our data structure to be comprehensive and such that can be easely 
+manipulated according to our needs. 
+
+The process of dividing a string of text into meaningful units is called **Tokenization**
+and these meaningful units are called **tokens**. A token can be a word, a phrase,
+a paragraphs, or a single character depending on the nature of our analysis. If,
+for example, we want just to exaplore how many times the name of a certain politician
+is mentioned in a speach, our tokens would probably be all the words of the speach and our analysis would consist on counting how many tokens are equal to the name of the politician.
+
+To perform good text mining, not only we want to optimally tokenize our text, but also 
+organize our tokes in a *tidy* way, quite litterally! For the R community, "tidy"
+has a very specific meaning, i.e. structuring data sets to make them consistent,
+easy to work, and easy to analyse. In our context it means having a single token 
+per data frame row. R allows us to perform all these operations in few lines thanks
+to the library ```tidytext```
+
+```{r}
+library(tidyverse)
+library(tidytext)
+
+tidy_content <- data_df %>% unnest_tokens(word, content)
+```
+
+In the line above we use the function ```unnest_tokens``` to tokenize the content
+of our DataFrame. First of all, we "feed" our DataFrame to the function using the
+workflow syntax ```data_df %>% unnest_tokens(...)```. This is equivalent to put
+the DataFrame as a first argument of the function, i.e. ```unnest_tokens(data_df,
+work,content)```. The workflow syntax is easier to interpret when data is manipulated
+and then fed again into another function. over and over again, so from now on we will always use this 
+syntax when possible. The other two arguments of the function are an output and
+an input column. Specifying *word* as output column we tell the function to tokenise
+text by word and to return the previous DataFrame with an additional column: word, indeed.
+The argument content points the function at the column that needs to be tokenised, 
+in thi case *content*.
+
+A quick view of the DataFrame ```tidy_content``` shows us that the *content* column
+is gone, while a column named *word* is now attached at the end of the DataFrame.
+If you need to know which word belongs to which content AFTER tokenization, remember
+to double check that the content in your initial DataFrame has a unique identifier
+associated with it (in our case, the column *issue*).
