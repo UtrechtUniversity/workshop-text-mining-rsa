@@ -44,7 +44,9 @@ in R studio. In particular, we gave instructions to convert the date of publicat
 We know have all the data we need in a single R DataFrame. The information we are
 interested in is the "content" column. Let's see how to extract this information.
 
-### Tokenization
+### Prepricessing
+
+#### Tokenization
 As we mentioned in the introduction, text data in unstructured data and it is up
 to us to define a data structure suitable for the kind of text analysis we want 
 to perform. We want our data structure to be comprehensive and such that can be easely 
@@ -87,3 +89,5 @@ is gone, while a column named *word* is now attached at the end of the DataFrame
 If you need to know which word belongs to which content AFTER tokenization, remember
 to double check that the content in your initial DataFrame has a unique identifier
 associated with it (in our case, the column *issue*).
+
+#### Cleaning data
