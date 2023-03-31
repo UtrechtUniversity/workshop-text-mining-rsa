@@ -1,0 +1,24 @@
+---
+title: "Text mining with R"
+format: html
+editor: visual
+---
+
+### Introduction
+
+In this session we will see how to perform basic **text mining** with R. As the word
+itself suggests, text mining refers to the process of extracting information and insights
+from text. Text mining can be extremely useful when looking for any sort of pattern,
+trend, or relantionships in large volumes of text data (articles, documents, emails, 
+social media posts, etc).<br>
+Text mining, or text analysis, can be a very challenging task as text data is often
+*unstructured*, i.e. it does not have a predefined format or structure. Furthermore, 
+text is written in natural language and contains all the ambiguity of human
+subjects. Considering that everything ever written is text, the volume of data available for 
+mining is huge and very "noisy", as text may contain irrelevant information, typos, etc.
+For these reasons, text mining requires quite sophisticated techniques to be perfomed.<br>
+Thanks for us, most of these techniques have already been implemented into ready-to-use
+packages in different programming languanges (including R) and in this session we will go through the basic steps of a general text mining process:
+data collection, preprocessing, feature extraction, text classification, and visualization. 
+
+
