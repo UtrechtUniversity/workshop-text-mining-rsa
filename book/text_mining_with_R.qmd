@@ -44,7 +44,7 @@ in R studio. In particular, we gave instructions to convert the date of publicat
 We know have all the data we need in a single R DataFrame. The information we are
 interested in is the "content" column. Let's see how to extract this information.
 
-### Prepricessing
+### Preprocessing
 
 #### Tokenization
 As we mentioned in the introduction, text data in unstructured data and it is up
@@ -91,3 +91,20 @@ to double check that the content in your initial DataFrame has a unique identifi
 associated with it (in our case, the column *issue*).
 
 #### Cleaning data
+
+As we mentioned before, text is unstructured data that can be very "noisy", i.e.
+containing a lot of not relevant information. Actually, the most common words in
+a text are words that have very little meaning, such as "the", "and", "a", etc.
+These words are referred as *stop words* and cleaning data from text mining includes
+removing stop words from our tokenised data:
+
+```{r}
+data(stop_words)
+
+tidy_clean_content <- tidy_content %>% anti_join(stop_words)
+```
+
+```stop_words``` is a dataframe containing all the stop words. Using ```anti_join```
+we select those rows (so words) in ```tidy_content``` that do **NOT** correspond
+to the stop words. In other words, with the few lines above, we cleaned up the 
+```tidy_content``` DataFrame from stop words.

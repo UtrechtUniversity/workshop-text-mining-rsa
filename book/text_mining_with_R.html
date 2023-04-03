@@ -118,8 +118,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p><code>read_delim</code> is a function to read coma separated files (csv) and more into R DataFrames. In this case we obtained all the necessary arguments clicking on “Import Dataset” in R studio. In particular, we gave instructions to convert the date of publication column (“date-pub”) data format (&lt;month_str&gt; &lt;day&gt;, &lt;year&gt;) into an R object.</p>
 <p>We know have all the data we need in a single R DataFrame. The information we are interested in is the “content” column. Let’s see how to extract this information.</p>
 </section>
-<section id="prepricessing" class="level3">
-<h3 class="anchored" data-anchor-id="prepricessing">Prepricessing</h3>
+<section id="preprocessing" class="level3">
+<h3 class="anchored" data-anchor-id="preprocessing">Preprocessing</h3>
 <section id="tokenization" class="level4">
 <h4 class="anchored" data-anchor-id="tokenization">Tokenization</h4>
 <p>As we mentioned in the introduction, text data in unstructured data and it is up to us to define a data structure suitable for the kind of text analysis we want to perform. We want our data structure to be comprehensive and such that can be easely manipulated according to our needs.</p>
@@ -146,6 +146,16 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="cleaning-data" class="level4">
 <h4 class="anchored" data-anchor-id="cleaning-data">Cleaning data</h4>
+<p>As we mentioned before, text is unstructured data that can be very “noisy”, i.e. containing a lot of not relevant information. Actually, the most common words in a text are words that have very little meaning, such as “the”, “and”, “a”, etc. These words are referred as <em>stop words</em> and cleaning data from text mining includes removing stop words from our tokenised data:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(stop_words)</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>tidy_clean_content <span class="ot">&lt;-</span> tidy_content <span class="sc">%&gt;%</span> <span class="fu">anti_join</span>(stop_words)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Joining with `by = join_by(word)`</code></pre>
+</div>
+</div>
+<p><code>stop_words</code> is a dataframe containing all the stop words. Using <code>anti_join</code> we select those rows (so words) in <code>tidy_content</code> that do <strong>NOT</strong> correspond to the stop words. In other words, with the few lines above, we cleaned up the <code>tidy_content</code> DataFrame from stop words.</p>
 </section>
 </section>
 
