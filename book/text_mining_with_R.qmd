@@ -10,36 +10,22 @@ A few lines introduction
 
 #### R DataFrames
 
-- reading;
-- selecting columns;
-- merging;
-- tidyverse pipelines.
+-   reading;
+-   selecting columns;
+-   merging;
+-   tidyverse pipelines.
 
 ### Introduction
 
-In this session we will see how to perform basic **text mining** with R. As the word
-itself suggests, text mining refers to the process of extracting information and insights
-from text. Text mining can be extremely useful when looking for any sort of pattern,
-trend, or relantionships in large volumes of text data (articles, documents, emails, 
-social media posts, etc).
+In this session we will see how to perform basic **text mining** with R. As the word itself suggests, text mining refers to the process of extracting information and insights from text. Text mining can be extremely useful when looking for any sort of pattern, trend, or relantionships in large volumes of text data (articles, documents, emails, social media posts, etc).
 
-Text mining, or text analysis, can be a very challenging task as text data is often
-*unstructured*, i.e. it does not have a predefined format or structure. Furthermore, 
-text is written in natural language and contains all the ambiguity of human
-subjects. Considering that everything ever written is text, the volume of data available for 
-mining is huge and very "noisy", as text may contain irrelevant information, typos, etc.
-For these reasons, text mining requires quite sophisticated techniques to be perfomed.
+Text mining, or text analysis, can be a very challenging task as text data is often *unstructured*, i.e. it does not have a predefined format or structure. Furthermore, text is written in natural language and contains all the ambiguity of human subjects. Considering that everything ever written is text, the volume of data available for mining is huge and very "noisy", as text may contain irrelevant information, typos, etc. For these reasons, text mining requires quite sophisticated techniques to be perfomed.
 
-Thanks for us, most of these techniques have already been implemented into ready-to-use
-packages in different programming languanges (including R) and in this session we will go through the basic steps of a general text mining process:
-data collection, preprocessing, feature extraction, text classification, and visualization. 
+Thanks for us, most of these techniques have already been implemented into ready-to-use packages in different programming languanges (including R) and in this session we will go through the basic steps of a general text mining process: data collection, preprocessing, feature extraction, text classification, and visualization.
 
 ### Reading data
 
-For this session we already collected data using the web application I-analyzer. In
-particular we looked for "european union" over the news of the Times Digital Archive
-between 1945 and 2012. The data are stored in a csv file and we are going to read
-it into an R dataframe
+For this session we already collected data using the web application I-analyzer. In particular we looked for "european union" over the news of the Times Digital Archive between 1945 and 2012. The data are stored in a csv file and we are going to read it into an R dataframe
 
 ```{r}
 library(readr)
@@ -49,32 +35,20 @@ data_df <- read_delim(data_file_name, delim = ";", escape_double = FALSE, col_ty
 
 print(colnames(data_df))
 ```
-```read_delim``` is a function to read coma separated files (csv) and more into R DataFrames. In this case we obtained all the necessary arguments clicking on "Import Dataset" 
-in R studio. In particular, we gave instructions to convert the date of publication column ("date-pub") data format (\<month_str\> \<day\>, \<year\>) into an R object.
 
-We know have all the data we need in a single R DataFrame. The information we are
-interested in is the "content" column. Let's see how to extract this information.
+`read_delim` is a function to read coma separated files (csv) and more into R DataFrames. In this case we obtained all the necessary arguments clicking on "Import Dataset" in R studio. In particular, we gave instructions to convert the date of publication column ("date-pub") data format (\<month_str\> \<day\>, \<year\>) into an R object.
+
+We know have all the data we need in a single R DataFrame. The information we are interested in is the "content" column. Let's see how to extract this information.
 
 ### Preprocessing
 
 #### Tokenization
-As we mentioned in the introduction, text data in unstructured data and it is up
-to us to define a data structure suitable for the kind of text analysis we want 
-to perform. We want our data structure to be comprehensive and such that can be easely 
-manipulated according to our needs. 
 
-The process of dividing a string of text into meaningful units is called **Tokenization**
-and these meaningful units are called **tokens**. A token can be a word, a phrase,
-a paragraphs, or a single character depending on the nature of our analysis. If,
-for example, we want just to exaplore how many times the name of a certain politician
-is mentioned in a speach, our tokens would probably be all the words of the speach and our analysis would consist on counting how many tokens are equal to the name of the politician.
+As we mentioned in the introduction, text data in unstructured data and it is up to us to define a data structure suitable for the kind of text analysis we want to perform. We want our data structure to be comprehensive and such that can be easely manipulated according to our needs.
 
-To perform good text mining, not only we want to optimally tokenize our text, but also 
-organize our tokes in a *tidy* way, quite litterally! For the R community, "tidy"
-has a very specific meaning, i.e. structuring data sets to make them consistent,
-easy to work, and easy to analyse. In our context it means having a single token 
-per data frame row. R allows us to perform all these operations in few lines thanks
-to the library ```tidytext```
+The process of dividing a string of text into meaningful units is called **Tokenization** and these meaningful units are called **tokens**. A token can be a word, a phrase, a paragraphs, or a single character depending on the nature of our analysis. If, for example, we want just to exaplore how many times the name of a certain politician is mentioned in a speach, our tokens would probably be all the words of the speach and our analysis would consist on counting how many tokens are equal to the name of the politician.
+
+To perform good text mining, not only we want to optimally tokenize our text, but also organize our tokes in a *tidy* way, quite litterally! For the R community, "tidy" has a very specific meaning, i.e. structuring data sets to make them consistent, easy to work, and easy to analyse. In our context it means having a single token per data frame row. R allows us to perform all these operations in few lines thanks to the library `tidytext`
 
 ```{r}
 library(tidyverse)
@@ -83,31 +57,13 @@ library(tidytext)
 tidy_content <- data_df %>% unnest_tokens(word, content)
 ```
 
-In the line above we use the function ```unnest_tokens``` to tokenize the content
-of our DataFrame. First of all, we "feed" our DataFrame to the function using the
-workflow syntax ```data_df %>% unnest_tokens(...)```. This is equivalent to put
-the DataFrame as a first argument of the function, i.e. ```unnest_tokens(data_df,
-work,content)```. The workflow syntax is easier to interpret when data is manipulated
-and then fed again into another function. over and over again, so from now on we will always use this 
-syntax when possible. The other two arguments of the function are an output and
-an input column. Specifying *word* as output column we tell the function to tokenise
-text by word and to return the previous DataFrame with an additional column: word, indeed.
-The argument content points the function at the column that needs to be tokenised, 
-in thi case *content*.
+In the line above we use the function `unnest_tokens` to tokenize the content of our DataFrame. First of all, we "feed" our DataFrame to the function using the workflow syntax `data_df %>% unnest_tokens(...)`. This is equivalent to put the DataFrame as a first argument of the function, i.e. `unnest_tokens(data_df, work,content)`. The workflow syntax is easier to interpret when data is manipulated and then fed again into another function. over and over again, so from now on we will always use this syntax when possible. The other two arguments of the function are an output and an input column. Specifying *word* as output column we tell the function to tokenise text by word and to return the previous DataFrame with an additional column: word, indeed. The argument content points the function at the column that needs to be tokenised, in thi case *content*.
 
-A quick view of the DataFrame ```tidy_content``` shows us that the *content* column
-is gone, while a column named *word* is now attached at the end of the DataFrame.
-If you need to know which word belongs to which content AFTER tokenization, remember
-to double check that the content in your initial DataFrame has a unique identifier
-associated with it (in our case, the column *issue*).
+A quick view of the DataFrame `tidy_content` shows us that the *content* column is gone, while a column named *word* is now attached at the end of the DataFrame. If you need to know which word belongs to which content AFTER tokenization, remember to double check that the content in your initial DataFrame has a unique identifier associated with it (in our case, the column *issue*).
 
 #### Cleaning data
 
-As we mentioned before, text is unstructured data that can be very "noisy", i.e.
-containing a lot of not relevant information. Actually, the most common words in
-a text are words that have very little meaning, such as "the", "and", "a", etc.
-These words are referred as *stop words* and cleaning data from text mining includes
-removing stop words from our tokenised data:
+As we mentioned before, text is unstructured data that can be very "noisy", i.e. containing a lot of not relevant information. Actually, the most common words in a text are words that have very little meaning, such as "the", "and", "a", etc. These words are referred as *stop words* and cleaning data from text mining includes removing stop words from our tokenised data:
 
 ```{r}
 data(stop_words)
@@ -115,21 +71,13 @@ data(stop_words)
 tidy_clean_content <- tidy_content %>% anti_join(stop_words)
 ```
 
-```stop_words``` is a dataframe containing all the stop words. Using ```anti_join```
-we select those rows (so words) in ```tidy_content``` that do **NOT** correspond
-to the stop words. In other words, with the few lines above, we cleaned up the 
-```tidy_content``` DataFrame from stop words.
+`stop_words` is a dataframe containing all the stop words. Using `anti_join` we select those rows (so words) in `tidy_content` that do **NOT** correspond to the stop words. In other words, with the few lines above, we cleaned up the `tidy_content` DataFrame from stop words.
 
 ### Text Analysis
 
 #### Counting words
 
-After having tokenised and cleaned our data, it's time to perform the most basic 
-text mining operation: count the times a certain word appears in our text. Even if
-conceptually it seems a quite trivial operation, by counting the frequency of each word
-in a text we can gain important insights about the general characteristics of the text.
-Furthermore, counting the frequency of specific words we can classify a
-text or define a model to identify the underlying topics or themes.
+After having tokenised and cleaned our data, it's time to perform the most basic text mining operation: count the times a certain word appears in our text. Even if conceptually it seems a quite trivial operation, by counting the frequency of each word in a text we can gain important insights about the general characteristics of the text. Furthermore, counting the frequency of specific words we can classify a text or define a model to identify the underlying topics or themes.
 
 ```{r}
 tidy_clean_content %>%
@@ -141,38 +89,15 @@ tidy_clean_content %>%
   labs(y = NULL)
 ```
 
-In this case we "inject" our data as input of the function ```count``` that, indeed,
-counts the identical entries of the column *word* sorting the result from high to
-low counts. In our analysis we want to focus on the most frequent words, let's 
-say the ones that appear more than 2000 times. To do that, we just need to feed
-our data to the function ```filter()``` specifying our count lower limit. After filtering we need to reorder
-our data to show the most frequent words first, we do that using ```mutate()``` and 
-```reorder()```. The last does indeed reorder the column *word* according to the values of the column *n* (word frequency). Finally, 
-we use the function ```ggplot``` to plot the data using a column geometry. 
+In this case we "inject" our data as input of the function `count` that, indeed, counts the identical entries of the column *word* sorting the result from high to low counts. In our analysis we want to focus on the most frequent words, let's say the ones that appear more than 2000 times. To do that, we just need to feed our data to the function `filter()` specifying our count lower limit. After filtering we need to reorder our data to show the most frequent words first, we do that using `mutate()` and `reorder()`. The last does indeed reorder the column *word* according to the values of the column *n* (word frequency). Finally, we use the function `ggplot` to plot the data using a column geometry.
 
-Looking at the data, we are not surprised that the second most frequent word is 
-"Europe" as we are analysing data extracted from quering "European Union". It is 
-significant that the third mentioned word is "vote". This may mean that all the times
-European Union was mentioned in the news, it was most of the time related to 
-decision making or elections within it.
+Looking at the data, we are not surprised that the second most frequent word is "Europe" as we are analysing data extracted from quering "European Union". It is significant that the third mentioned word is "vote". This may mean that all the times European Union was mentioned in the news, it was most of the time related to decision making or elections within it.
 
 #### Word classification and Sentiment Analysis
 
-Can we write software to evaluate if a sentence is sad or if the general mood of
-a story is positive or negative? We actually can and this may seem surprising as
-the mood of the *sentiment* related to a text seems some very subjective and highly
-affected by human ambiguity. According to wikipedia, **sentiment analysis** (also known as **opinion mining** or **emotion AI**) is the use of natural language processing, text analysis, computational linguistics, and biometrics to systematically identify, extract, quantify, and study affective states and subjective information. Sentiment analysis
-can be very complex, so complex that should deserve a dedicated course itself. In 
-this session we will perform a very basic sentiment analysis so that you can grasp
-its main principles and workflow.
+Can we write software to evaluate if a sentence is sad or if the general mood of a story is positive or negative? We actually can and this may seem surprising as the mood of the *sentiment* related to a text seems some very subjective and highly affected by human ambiguity. According to wikipedia, **sentiment analysis** (also known as **opinion mining** or **emotion AI**) is the use of natural language processing, text analysis, computational linguistics, and biometrics to systematically identify, extract, quantify, and study affective states and subjective information. Sentiment analysis can be very complex, so complex that should deserve a dedicated course itself. In this session we will perform a very basic sentiment analysis so that you can grasp its main principles and workflow.
 
-Sentiment analysis is based on the assumption that we can view a text as a combination
-of individual words and that, having assigned a sentiment to each individual word,
-the resulting sentiment of a test will the sum of the sentiments of its individual
-words. In other words, if most of the words in a text are positive, then the text
-can be classified as positive. Given this assumptions, to perform sentiment analisys,
-we need a database of words where a sentiment has been assigned to a word following
-specific conventions. What we need is a **lexicon**, a dataframe assigning a score to each word or phrase, indicating whether it is associated with positive or negative sentiment. For example, the word "happy" may have a positive score, while the word "sad" may have a negative score.
+Sentiment analysis is based on the assumption that we can view a text as a combination of individual words and that, having assigned a sentiment to each individual word, the resulting sentiment of a test will the sum of the sentiments of its individual words. In other words, if most of the words in a text are positive, then the text can be classified as positive. Given this assumptions, to perform sentiment analisys, we need a database of words where a sentiment has been assigned to a word following specific conventions. What we need is a **lexicon**, a dataframe assigning a score to each word or phrase, indicating whether it is associated with positive or negative sentiment. For example, the word "happy" may have a positive score, while the word "sad" may have a negative score.
 
 For our simple example, we already downloaded the NRC emotion lexicon. The NRC Emotion Lexicon is a list of English words and their associations with eight basic emotions (anger, fear, anticipation, trust, surprise, sadness, joy, and disgust) and two sentiments (negative and positive). If an emotion is associated with a word, its score will be 1, 0 otherwise.
 
@@ -183,10 +108,7 @@ joy_words <- nrc_lexicon_df  %>%
   filter(emotion == "joy" & score == 1)
 ```
 
-In the previous lines we read the lexicon into an R DataFrame and we extracted from
-it only the words associated with joy. Once we know which are the words associated
-with joy, we can count home many "joy words" there are in our entries and see
-if the news associated with "European Union" can be classified as joyful or not.
+In the previous lines we read the lexicon into an R DataFrame and we extracted from it only the words associated with joy. Once we know which are the words associated with joy, we can count home many "joy words" there are in our entries and see if the news associated with "European Union" can be classified as joyful or not.
 
 ```{r}
 issue_df <- tidy_clean_content %>%
@@ -203,15 +125,9 @@ issue_joy_df <- tidy_clean_content %>%
 
 issue_tot_df <- merge(issue_df, issue_joy_df, by='issue')
 ```
-The starting point is always our cleaned data ```tidy_clean_content```. We first 
-apply a filter to select news in the decade 2000-2010, then we group our data 
-according to the issue (remember, our data has been tokenized, so at the moment
-each row corresponds to a single word, not to a single news) and we count the
-number of words per issue. We repeat the same operation a second time, but now we
-join our dataframe with ```joy_words```, in this way we filter out only those words
-that, according to the NRC lexicon, are associated with joy. We finally merge the
-two resulting DataFrames for plotting convenience.
-  
+
+The starting point is always our cleaned data `tidy_clean_content`. We first apply a filter to select news in the decade 2000-2010, then we group our data according to the issue (remember, our data has been tokenized, so at the moment each row corresponds to a single word, not to a single news) and we count the number of words per issue. We repeat the same operation a second time, but now we join our dataframe with `joy_words`, in this way we filter out only those words that, according to the NRC lexicon, are associated with joy. We finally merge the two resulting DataFrames for plotting convenience.
+
 ```{r}
 issue_tot_df %>%
   mutate(per_cent_joy=joy_words_per_issue/words_per_issue*100) %>%
@@ -219,13 +135,62 @@ issue_tot_df %>%
   geom_col() +
   labs(x = "Date", y = "Joy words [%]", title = "Joyfulness about EU in 2000-2010")
 ```
-Inspecting the plot we can see that the percent of joy words never exceed the 8%. 
-That is a quite small percent, what can we deduce from that? Text mining is a powerful
-technique, but like any other kind of statistics needs to be properly read according
-to the context. First of all we do not exactly know if 8% is the average rate of joyness
-associated with European Union news. We don't even know if the Times, by default, 
-reports EU related news with a certain level of "coldness". Once established these
-level of "backgroud" or "bias" we can look at the plot to see eventual trends or 
-correlations with other significant events in time.
+
+Inspecting the plot we can see that the percent of joy words never exceed the 8%. That is a quite small percent, what can we deduce from that? Text mining is a powerful technique, but like any other kind of statistics needs to be properly read according to the context. First of all we do not exactly know if 8% is the average rate of joyness associated with European Union news. We don't even know if the Times, by default, reports EU related news with a certain level of "coldness". Once established these level of "backgroud" or "bias" we can look at the plot to see eventual trends or correlations with other significant events in time.
+
+#### Analyzing word and document frequency: tf-idf
+```{r}
+library(dplyr)
+library(tidytext)
+
+issue_words <- tidy_content %>%
+  unnest_tokens(word, text) %>%
+  count(issue, word, sort = TRUE)
+
+total_words <- issue_words %>% 
+  group_by(book) %>% 
+  summarize(total = sum(n))
+
+book_words <- left_join(book_words, total_words)
+```
 
 
+#### Relationships Between Words
+
+```{r}
+tidy_content_rel <- data_df %>% unnest_tokens(bigram, content, token="ngrams", n=2)
+```
+
+```{r}
+tidy_content_rel %>%
+  count(bigram, sort = TRUE) %>%
+  filter(n > 2000) %>%
+  mutate(bigram = reorder(bigram, n)) %>%
+  ggplot(aes(n, bigram)) +
+  geom_col() +
+  labs(y = NULL)
+```
+
+```{r}
+library(tidyr)
+
+bigrams_separated <- tidy_content_rel %>%
+  separate(bigram, c("word1", "word2"), sep = " ")
+
+bigrams_filtered <- bigrams_separated %>%
+  filter(!word1 %in% stop_words$word) %>%
+  filter(!word2 %in% stop_words$word)
+
+bigrams_united <- bigrams_filtered %>%
+  unite(bigram, word1, word2, sep = " ")
+```
+
+```{r}
+bigrams_united %>%
+  count(bigram, sort = TRUE) %>%
+  filter(n > 500) %>%
+  mutate(bigram = reorder(bigram, n)) %>%
+  ggplot(aes(n, bigram)) +
+  geom_col() +
+  labs(y = NULL)
+```
