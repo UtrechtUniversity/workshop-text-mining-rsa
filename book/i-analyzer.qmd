@@ -1,0 +1,22 @@
+# Text Mining with iAnalyzer
+
+iAnalyzer usdfsdfs
+
+## Slides
+
+<embed src="path/to/slides.pdf" type="application/pdf" width="100%" height="600px" />
+
+## Cheatsheet for Search Queries
+
+you can make a markdown table
+
+| dfsd | sdfsd | sdfsd
+| --- | --- | --- |
+| 9:00 | Walk-in, tech support | sdfsd |
+| 9:30 | Introductions | sdfs |
+
+## Exercise
+
+this is your exercise
+ 
+
