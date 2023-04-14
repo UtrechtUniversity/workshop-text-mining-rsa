@@ -4,6 +4,7 @@ format: html
 editor: visual
 ---
 
+
 ### Preliminaries
 
 A few lines introduction
@@ -27,6 +28,7 @@ Thanks for us, most of these techniques have already been implemented into ready
 
 For this session we already collected data using the web application I-analyzer. In particular we looked for "european union" over the news of the Times Digital Archive between 1945 and 2012. The data are stored in a csv file and we are going to read it into an R dataframe
 
+
 ```{r}
 library(readr)
 
@@ -35,6 +37,7 @@ data_df <- read_delim(data_file_name, delim = ";", escape_double = FALSE, col_ty
 
 print(colnames(data_df))
 ```
+
 
 `read_delim` is a function to read coma separated files (csv) and more into R DataFrames. In this case we obtained all the necessary arguments clicking on "Import Dataset" in R studio. In particular, we gave instructions to convert the date of publication column ("date-pub") data format (\<month_str\> \<day\>, \<year\>) into an R object.
 
@@ -50,12 +53,14 @@ The process of dividing a string of text into meaningful units is called **Token
 
 To perform good text mining, not only we want to optimally tokenize our text, but also organize our tokes in a *tidy* way, quite litterally! For the R community, "tidy" has a very specific meaning, i.e. structuring data sets to make them consistent, easy to work, and easy to analyse. In our context it means having a single token per data frame row. R allows us to perform all these operations in few lines thanks to the library `tidytext`
 
+
 ```{r}
 library(tidyverse)
 library(tidytext)
 
 tidy_content <- data_df %>% unnest_tokens(word, content)
 ```
+
 
 In the line above we use the function `unnest_tokens` to tokenize the content of our DataFrame. First of all, we "feed" our DataFrame to the function using the workflow syntax `data_df %>% unnest_tokens(...)`. This is equivalent to put the DataFrame as a first argument of the function, i.e. `unnest_tokens(data_df, work,content)`. The workflow syntax is easier to interpret when data is manipulated and then fed again into another function. over and over again, so from now on we will always use this syntax when possible. The other two arguments of the function are an output and an input column. Specifying *word* as output column we tell the function to tokenise text by word and to return the previous DataFrame with an additional column: word, indeed. The argument content points the function at the column that needs to be tokenised, in thi case *content*.
 
@@ -65,11 +70,13 @@ A quick view of the DataFrame `tidy_content` shows us that the *content* column 
 
 As we mentioned before, text is unstructured data that can be very "noisy", i.e. containing a lot of not relevant information. Actually, the most common words in a text are words that have very little meaning, such as "the", "and", "a", etc. These words are referred as *stop words* and cleaning data from text mining includes removing stop words from our tokenised data:
 
+
 ```{r}
 data(stop_words)
 
 tidy_clean_content <- tidy_content %>% anti_join(stop_words)
 ```
+
 
 `stop_words` is a dataframe containing all the stop words. Using `anti_join` we select those rows (so words) in `tidy_content` that do **NOT** correspond to the stop words. In other words, with the few lines above, we cleaned up the `tidy_content` DataFrame from stop words.
 
@@ -78,6 +85,7 @@ tidy_clean_content <- tidy_content %>% anti_join(stop_words)
 #### Counting words
 
 After having tokenised and cleaned our data, it's time to perform the most basic text mining operation: count the times a certain word appears in our text. Even if conceptually it seems a quite trivial operation, by counting the frequency of each word in a text we can gain important insights about the general characteristics of the text. Furthermore, counting the frequency of specific words we can classify a text or define a model to identify the underlying topics or themes.
+
 
 ```{r}
 tidy_clean_content %>%
@@ -88,6 +96,7 @@ tidy_clean_content %>%
   geom_col() +
   labs(y = NULL)
 ```
+
 
 In this case we "inject" our data as input of the function `count` that, indeed, counts the identical entries of the column *word* sorting the result from high to low counts. In our analysis we want to focus on the most frequent words, let's say the ones that appear more than 2000 times. To do that, we just need to feed our data to the function `filter()` specifying our count lower limit. After filtering we need to reorder our data to show the most frequent words first, we do that using `mutate()` and `reorder()`. The last does indeed reorder the column *word* according to the values of the column *n* (word frequency). Finally, we use the function `ggplot` to plot the data using a column geometry.
 
@@ -101,6 +110,7 @@ Sentiment analysis is based on the assumption that we can view a text as a combi
 
 For our simple example, we already downloaded the NRC emotion lexicon. The NRC Emotion Lexicon is a list of English words and their associations with eight basic emotions (anger, fear, anticipation, trust, surprise, sadness, joy, and disgust) and two sentiments (negative and positive). If an emotion is associated with a word, its score will be 1, 0 otherwise.
 
+
 ```{r}
 nrc_lexicon_df <- read.table("../data/NRC-Emotion-Lexicon-Wordlevel-v0.92.txt", header = FALSE, sep = "\t", stringsAsFactors = FALSE, col.names = c("word", "emotion", "score"))
 
@@ -108,7 +118,9 @@ joy_words <- nrc_lexicon_df  %>%
   filter(emotion == "joy" & score == 1)
 ```
 
+
 In the previous lines we read the lexicon into an R DataFrame and we extracted from it only the words associated with joy. Once we know which are the words associated with joy, we can count home many "joy words" there are in our entries and see if the news associated with "European Union" can be classified as joyful or not.
+
 
 ```{r}
 issue_df <- tidy_clean_content %>%
@@ -126,7 +138,9 @@ issue_joy_df <- tidy_clean_content %>%
 issue_tot_df <- merge(issue_df, issue_joy_df, by='issue')
 ```
 
+
 The starting point is always our cleaned data `tidy_clean_content`. We first apply a filter to select news in the decade 2000-2010, then we group our data according to the issue (remember, our data has been tokenized, so at the moment each row corresponds to a single word, not to a single news) and we count the number of words per issue. We repeat the same operation a second time, but now we join our dataframe with `joy_words`, in this way we filter out only those words that, according to the NRC lexicon, are associated with joy. We finally merge the two resulting DataFrames for plotting convenience.
+
 
 ```{r}
 issue_tot_df %>%
@@ -135,6 +149,7 @@ issue_tot_df %>%
   geom_col() +
   labs(x = "Date", y = "Joy words [%]", title = "Joyfulness about EU in 2000-2010")
 ```
+
 
 Inspecting the plot we can see that the percent of joy words never exceed the 8%. That is a quite small percent, what can we deduce from that? Text mining is a powerful technique, but like any other kind of statistics needs to be properly read according to the context. First of all we do not exactly know if 8% is the average rate of joyness associated with European Union news. We don't even know if the Times, by default, reports EU related news with a certain level of "coldness". Once established these level of "backgroud" or "bias" we can look at the plot to see eventual trends or correlations with other significant events in time.
 
@@ -167,6 +182,7 @@ the two quantitis, idf will work as a *weight* for the document frequenty alone,
 It is important to keep in mind that the tf-idf statistics is a *heuristic* process,
 i.e. it is a method that has been proved to be useful in text mining simply "by trying"
 and that it has not specific theoretical motivations behind it.
+
 
 
 ```{r}
@@ -234,7 +250,9 @@ issue_tf_idf <- issue_words %>%
 issue_tf_idf
 ```
 
+
 #### Relationships Between Words
+
 
 ```{r}
 tidy_content_rel <- data_df %>% unnest_tokens(bigram, content, token="ngrams", n=2)
@@ -273,3 +291,4 @@ bigrams_united %>%
   geom_col() +
   labs(y = NULL)
 ```
+
