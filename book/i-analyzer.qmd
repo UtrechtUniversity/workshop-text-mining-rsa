@@ -22,9 +22,6 @@ Operator    Description     Example/Explanation
 *	          wildcard        A wildcard for any number of characters, e.g. bank* will match banking, banks, banked, etc. The wildcard is only allowed at the end of a word, and cannot be used with phrases (between " quotes).
 ~N         fuzzy search     Describes fuzzy search. When placed after a term this signifies how many characters are allowed to differ. So bank~1 also matches bang, sank, dank etc. When placed after a phrase, this signifies how many words may differ
 ---------  --------------   ----------------
-
-
-
 	
 ## Exercise
 
