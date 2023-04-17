@@ -159,30 +159,11 @@ In the previous sessions we have seen how to compute and display the number of t
 
 We introduce a quantity called **inverse document frequency**:
 
-$$ idf(term) = log \Bigg( {n_{documents} \over n_{documents \space containing \space term}} \Bigg) $$
-How you can see from the equation, idf is a function of the term we want to focus on, this
-means that we can assign a unique idf to every single term in our text. idf is a *logarithmic* quantity, this means that it can be positive or negative depending on the ratio between the number of documents and the number of documents containing the term we want to focus on. Another consequence of the idf definition is that it is quantity that really make sense to consider only when we are exploring several documents or texts. 
+$$ idf(term) = log \Bigg( {n_{documents} \over n_{documents \space containing \space term}} \Bigg) $$ How you can see from the equation, idf is a function of the term we want to focus on, this means that we can assign a unique idf to every single term in our text. idf is a *logarithmic* quantity, this means that it can be positive or negative depending on the ratio between the number of documents and the number of documents containing the term we want to focus on. Another consequence of the idf definition is that it is quantity that really make sense to consider only when we are exploring several documents or texts.
 
-![idf](pictures/idf.jpeg)
-Let's see how idf work. If our selected term is present in *all* the documents of
-our sample, then the argument of the logarithm is 1 and idf will be 0. If our selected term
-is present in *less* documents than the total number of documents in our sample, then
-idf will be positive. The less present our term is, the larger idf will be (remember
-we are dealing with *inverse* document frequency). Can idf be negative? Not really, because
-that wold require our term being present in a number of document *larger* than the
-total number of documents in our sample, and that is impossible.
+![idf](pictures/idf.jpeg) Let's see how idf work. If our selected term is present in *all* the documents of our sample, then the argument of the logarithm is 1 and idf will be 0. If our selected term is present in *less* documents than the total number of documents in our sample, then idf will be positive. The less present our term is, the larger idf will be (remember we are dealing with *inverse* document frequency). Can idf be negative? Not really, because that wold require our term being present in a number of document *larger* than the total number of documents in our sample, and that is impossible.
 
-Now that we are familiar with idf how to use it? Our goal is still to measure how 
-important a word is to a document in a collection (or corpus) of documents. In the 
-previous sessions we saw how document frequency (df) alone is a misleading 
-indicator of the importance of a word as most frequent words are often meaningless.
-This time we will combine tf and idf into a single quantity called tf-idf. Multiplying
-the two quantitis, idf will work as a *weight* for the document frequenty alone,
-*adjusting* its magnitude according to the frequency of the term in the entire corpus. 
-It is important to keep in mind that the tf-idf statistics is a *heuristic* process,
-i.e. it is a method that has been proved to be useful in text mining simply "by trying"
-and that it has not specific theoretical motivations behind it.
-
+Now that we are familiar with idf how to use it? Our goal is still to measure how important a word is to a document in a collection (or corpus) of documents. In the previous sessions we saw how document frequency (df) alone is a misleading indicator of the importance of a word as most frequent words are often meaningless. This time we will combine tf and idf into a single quantity called tf-idf. Multiplying the two quantitis, idf will work as a *weight* for the document frequenty alone, *adjusting* its magnitude according to the frequency of the term in the entire corpus. It is important to keep in mind that the tf-idf statistics is a *heuristic* process, i.e. it is a method that has been proved to be useful in text mining simply "by trying" and that it has not specific theoretical motivations behind it.
 
 
 ```{r}
@@ -252,6 +233,23 @@ issue_tf_idf
 
 
 #### Relationships Between Words
+
+If we look at what we did so far to extract meaningful information from text, our
+methods look a quite over-simplification compared to the complexity of the human 
+language: we basically counted single words meausuring their frequency over different
+samples (single text or entire corpus) and assigned them arbitrary tags to quantify
+which emotion they were more representative for. 
+
+Counting single words is a well proven text mining techniques, but even more interesting
+is studying the *relation* between two or more words, i.e. which words tend to follow others
+immediately or tend to co-occur withing the same documents.
+
+In this session we will explore tidytext methods that focus on analysing and visualising
+the relationships between words.
+
+#### Tokenization by n-gram
+
+
 
 
 ```{r}
