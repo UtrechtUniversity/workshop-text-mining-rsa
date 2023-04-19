@@ -1,17 +1,48 @@
 # Text Mining with iAnalyzer
 
-iAnalyzer is a Webpage-based GUI for searching through / querying text corpora.
+iAnalyzer is a simple online tool for searching through / querying text corpora.
 
 We will use it today in the exercises in order to perform a search in the available text corpora and download the result (in the form of a CSV file), which you will use in the next session for further analysis in R.
-
-URL: https://ianalyzer.hum.uu.nl/
 
 
 ## Slides
 
-<embed src="https://github.com/UtrechtUniversity/workshop-text-mining-rsa/blob/i_analyzer_session/book/slides/slides_ianalyzer.pdf" type="application/pdf" width="100%" height="600px" />
+<embed src="slides/slides_ianalyzer.pdf" type="application/pdf" width="100%" height="600px" />
 
-## Cheatsheet for Search Queries
+
+## Exercise:
+
+To perform a first search, follow these steps:
+
+1. Go to the iAnalyzer website: https://ianalyzer.hum.uu.nl/  
+2. Login with your solisID
+3. Perform a search with these criteria:
+
+```{r table2, echo=FALSE, message=FALSE, warnings=FALSE, results='asis'}
+tabl <- "
+|                   |               |
+|-------            |---------------|
+| Corpus            | Times (select at the top left from the dropdown menu 'corpora') |
+| Query             | 'European Union'      |
+| Publication Date  | From 1945 onwards     |
+| OCR confidence    | 80-100 (explanation of the OCR score is at the bottom of the page)     |
+| Page Type         | Standard     |
+| On Front Page     | Yes (So leave 'false'-box unchecked)     |
+| Publication Date  | From 1945 onwards     |
+| Category          | News     |
+| Illustration      | No (So leave all boxes unchecked)     |
+"
+cat(tabl) # output the table in a format good for HTML/PDF/docx conversion
+```
+
+4. Check out the different visualizations (in the top, right next to the header 'Filters')
+5. Download the data in a CSV format (At the top of the page, "download CSV"). Make sure that before you download the file, you click on the small gears icon next to the download button, click "show default fields", and check the box "content". Otherwise, your downloaded file will not contain the actual text of the articles. 
+
+## Homework
+
+When you have managed to successfully download the CSV file (check for content in the file!), you can go ahead and perform your own search. For that, you need to first build a proper search string and then download the corresponding CSV file. Below you find a table ("cheat sheet") which explains the operators which you need to use for the search string. Please make sure that for the next session (where we are going to use R to analyze the text data), you have your CSV file ready!
+
+### Cheatsheet for Search Queries
 
 Operator    Description     Example/Explanation
 --------   --------------   ----------------
@@ -22,13 +53,6 @@ Operator    Description     Example/Explanation
 *	          wildcard        A wildcard for any number of characters, e.g. bank* will match banking, banks, banked, etc. The wildcard is only allowed at the end of a word, and cannot be used with phrases (between " quotes).
 ~N         fuzzy search     Describes fuzzy search. When placed after a term this signifies how many characters are allowed to differ. So bank~1 also matches bang, sank, dank etc. When placed after a phrase, this signifies how many words may differ
 ---------  --------------   ----------------
-	
-## Exercise
 
-1. Go to the iAnalyzer website: https://ianalyzer.hum.uu.nl/  
-2. Login with your solisID
-3. Try to build a search string for the following question:  [QUESTION]  and search within the Times corpus.
-4. Check out the different visualisations
-5. Download the data in a CSV format (check the "content" box)
- 
-
+### Explanation OCR scores
+ OCR stands for "Optical character recognition" and it is a key tool for text mining. OCR uses machine learning to extract words and lines of text from scans and images, which can then be used to perform quantitative text analysis or natural language processing.As you can imagine, dependent on the image/scan quality, the writing (machine vs. hand-written) etc., the automated recognition of characters will not be perfect. The OCR score is a metric used to quantify the accuracy of the text extraction (in other words, the score reflects how likely it is that there are errors in the text extraction)
