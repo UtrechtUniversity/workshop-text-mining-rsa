@@ -21,9 +21,69 @@ issue_words <- data_df %>%
   unnest_tokens(word, content) %>%
   count(issue, word, sort = TRUE)
 
+issue_words$n <- as.double(issue_words$n)
+
 issue_tf_idf <- issue_words %>%
   bind_tf_idf(word, issue, n)
 
 issue_tf_idf %>%
   arrange(tf_idf)
+```
+```{r}
+issue_words_the <- data_df %>%
+  unnest_tokens(word, content) %>%
+  filter(word=="the") %>%
+  count(issue, word, sort = TRUE)
+
+issue_tf_idf_the <- issue_words_the %>%
+  bind_tf_idf(word, issue, n)
+
+issue_tf_idf_the 
+```
+```
+
+```{r}
+total_words <- issue_words %>% 
+  group_by(issue) %>% 
+  summarize(total = sum(n))
+
+issue_total_words <- left_join(issue_words, total_words) %>% arrange(desc(issue)) %>% filter(word=="the")
+
+row_index <- which.max(issue_total_words$n)
+print(row_index)
+print(issue_total_words[row_index,])
+issue_sel <- 56145
+print(nrow(data_df %>% distinct(issue)))
+print(nrow(issue_total_words %>% filter(word=="the")))
+print(typeof(issue_words$n))
+```
+
+```{r}
+print(log(1305/1305))
+```
+
+```{r}
+doc_totals <- tapply(issue_words$n, issue_words$issue, sum)
+
+n_terms = table(issue_words$word)
+idf <- log(length(doc_totals) / n_terms)
+neg_rows <- idf[idf < 0 ]
+
+print(n_terms[n_terms$word=="the"])
+print(neg_rows)
+
+words <- as.character(issue_words[['word']])
+issue_words$idf <- as.numeric(idf[issue_words$words])
+```
+
+```{r}
+test <- issue_words[grepl("the", issue_words$word), ] %>%
+  arrange(issue)
+test2 <- issue_words[grepl("the", issue_words$word), ] %>%
+  arrange(issue) %>% distinct(issue)
+
+test
+
+print(nrow(test))
+print(nrow(test2))
 ```

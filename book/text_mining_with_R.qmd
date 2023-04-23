@@ -60,26 +60,49 @@ editor: visual
 
 ### Preliminaries
 
-A few lines introduction
-
-#### R DataFrames
-
--   reading;
--   selecting columns;
--   merging;
--   tidyverse pipelines.
+Few lines and scheme of tidyverse pipeline
 
 ### Introduction
 
-In this session we will see how to perform basic **text mining** with R. As the word itself suggests, text mining refers to the process of extracting information and insights from text. Text mining can be extremely useful when looking for any sort of pattern, trend, or relantionships in large volumes of text data (articles, documents, emails, social media posts, etc).
+In this session we will see how to perform basic **text mining** with R. Text mining refers to the process of extracting (*mining*) information and insights from text. As text is written with human language, it is by nature subjective and ambigous. However, text mining can be extremely useful when looking for any sort of pattern, trend, or relantionships in large volumes of text data (articles, documents, emails, social media posts, etc).
 
-Text mining, or text analysis, can be a very challenging task as text data is often *unstructured*, i.e. it does not have a predefined format or structure. Furthermore, text is written in natural language and contains all the ambiguity of human subjects. Considering that everything ever written is text, the volume of data available for mining is huge and very "noisy", as text may contain irrelevant information, typos, etc. For these reasons, text mining requires quite sophisticated techniques to be perfomed.
+Text mining, or text analysis, can be a very challenging task as text data is often *unstructured*, i.e. it does not have a predefined format or structure. Furthermore, as we said, text is written in natural language and contains all the ambiguity of human subjects. In addition to these aspects, considering that everything ever written is text, the volume of data available for mining is huge and very "noisy", i.e. it contains a lot of irrelevant information, typos, etc. For these and several other reasons, text mining requires quite sophisticated techniques to obtain meaningful results.
 
-Thanks for us, most of these techniques have already been implemented into ready-to-use packages in different programming languanges (including R) and in this session we will go through the basic steps of a general text mining process: data collection, preprocessing, feature extraction, text classification, and visualization.
+Thankfully, most of these techniques have already been implemented into *packages* ( ready-to-use pieces of code) in different programming languanges (including R). In
+particular, the package ```tidytext``` is designed to work with text data in a "tidy" and efficient manner. The package is built on top of the tidyverse suite of packages (you can read more about ```todytext``` <a url="https://github.com/juliasilge/tidytext">here</a>).
+```tidytext``` provides a set of tools (functions) for manipulating and analyzing text data, these tools allow users to easily convert unstructured text data into a structured format that can be analyzed using statistics. In this session we will go through the basic steps of the general text mining process using ```tidytext```, in particular we will use its functions to perform data collection, preprocessing, feature extraction, text classification, and visualization.
+
+The paragraphs of this session are organised in descriptive text, code with its output
+(DataFrames, computations, plots, etc), and code description. The descriptive text is
+simply plain text as the one you are reading right now. Code will be into grey boxes and its
+output will immidiatly follows those like in this example:
+
+```{r}
+print('Good luck guys!')
+```
+
+When necessary, code and outputs blocks are followed by a line-by-line explanation 
+of the operations executed in the code box:
+
+<div class="box type5">
+  <div class="sub-box">
+  <img src="pictures/icons/code_expl.png" alt="Icon" class="picture"/> 
+  <p style="margin-left: 10px;"><h5><strong>How does it work?</strong></h5></p>
+  </div>
+
+<p>
+  <ul>
+    <li>
+      The function `print()` displayed the custom message "Good luck guys!" as an
+      encouragement to all the students following the course.
+    </li>
+  </ul>
+</p>
+</div>
 
 ### Reading data
 
-For this session we already collected data using the web application I-analyzer. In particular we looked for "european union" over the news of the Times Digital Archive between 1945 and 2012. The data are stored in a csv file and we are going to read it into an R dataframe
+In this session we will work with data that we already collected using the web application <a url="https://ianalyzer.hum.uu.nl/home">I-Analyzer</a>. We obtained our data querying for "european union" over the news of the Times Digital Archive between 1945 and 2012. The data are stored in a coma-separated-values (csv) file and we are going to convert them into an R dataframe:
 
 ```{r}
 library(readr)
@@ -90,30 +113,82 @@ data_df <- read_delim(data_file_name, delim = ";", escape_double = FALSE, col_ty
 print(colnames(data_df))
 ```
 
-`read_delim` is a function to read coma separated files (csv) and more into R DataFrames. In this case we obtained all the necessary arguments clicking on "Import Dataset" in R studio. In particular, we gave instructions to convert the date of publication column ("date-pub") data format (\<month_str\> \<day\>, \<year\>) into an R object.
+<div class="box type5">
+  <div class="sub-box">
+  <img src="pictures/icons/code_expl.png" alt="Icon" class="picture"/> 
+  <p style="margin-left: 10px;"><h5><strong>How does it work?</strong></h5></p>
+  </div>
 
-We know have all the data we need in a single R DataFrame. The information we are interested in is the "content" column. Let's see how to extract this information.
+<p>
+  <ul>
+    <li>
+      We first load the library `readr` as it contains all sort of dunctions to 
+      read files into R DataFrames;
+    </li>
+    <li>
+      We store the name of our dataset into the variable ```data_file_name```. The name
+      includes the <em>realtive</em> path of the data, as the code is supposed to be
+      ran in the *book* folder of the provided material;
+    </li>
+    <li>
+      We read the data using `read_delim()`, a function to read coma separated files (csv) and       more into R DataFrames. In this case, we obtained all the necessary arguments clicking        on "Import Dataset" in the Environment window (top-right) of R studio. In particular, we       gave instructions to convert the date of publication column ("date-pub") data format          (\<month_str\> \<day\>, \<year\>) into an R date object;
+    </li>
+    <li>
+      We finally printed the names of the columns in our DataFrame using `colnames()`.
+    </li>
+  </ul>
+</p>
+</div>
+
+We now have all the data we need in a single R DataFrame, `data_df`, the starting point
+of our analysis. The information we are most interested in it's stored in the "content" column. Let's see how to extract this information.
 
 ### Preprocessing
 
 #### Tokenization
 
-As we mentioned in the introduction, text data in unstructured data and it is up to us to define a data structure suitable for the kind of text analysis we want to perform. We want our data structure to be comprehensive and such that can be easely manipulated according to our needs.
+As we mentioned in the introduction, text data in unstructured and it is up to us to define a data structure suitable for the kind of text analysis we want to perform. We want our data structure to be comprehensive and such that can be easily manipulated according to our needs. Having this goal in mind, a possibility is to divide text into either characters, words, or 
+paragraphs and to obtain a data set where each row contains one of these elements and all its relative information.
 
-The process of dividing a string of text into meaningful units is called **Tokenization** and these meaningful units are called **tokens**. A token can be a word, a phrase, a paragraphs, or a single character depending on the nature of our analysis. If, for example, we want just to exaplore how many times the name of a certain politician is mentioned in a speach, our tokens would probably be all the words of the speach and our analysis would consist on counting how many tokens are equal to the name of the politician.
+The process of dividing a string of text into meaningful units is called **Tokenization** and these meaningful units are called **tokens**. A token can be a word, a phrase, a paragraphs, or a single character depending on the nature of our analysis. If, for example, we want just to explore how many times the name of a certain politician is mentioned in a speach, our tokens would probably be all the words of the speech and our analysis would consist on counting how many tokens are equal to the name of the politician.
 
-To perform good text mining, not only we want to optimally tokenize our text, but also organize our tokes in a *tidy* way, quite litterally! For the R community, "tidy" has a very specific meaning, i.e. structuring data sets to make them consistent, easy to work, and easy to analyse. In our context it means having a single token per data frame row. R allows us to perform all these operations in few lines thanks to the library `tidytext`
+To perform "good" text mining, not only we want to optimally "tokenize" our text, but also organize our tokens in a *tidy* way, quite literally! For the R community, "tidy" has a very specific meaning, i.e. structuring data sets to make them consistent, easy to work, and easy to analyse. In our context it means having a single token per data frame row. R allows us to perform all these operations in few lines thanks to the library `tidytext`:
 
 ```{r}
-library(tidyverse)
 library(tidytext)
 
-tidy_content <- data_df %>% unnest_tokens(word, content)
+tidy_content <- data_df %>% unnest_tokens(word, content, token="words")
+
+tidy_content
 ```
 
-In the line above we use the function `unnest_tokens` to tokenize the content of our DataFrame. First of all, we "feed" our DataFrame to the function using the workflow syntax `data_df %>% unnest_tokens(...)`. This is equivalent to put the DataFrame as a first argument of the function, i.e. `unnest_tokens(data_df, work,content)`. The workflow syntax is easier to interpret when data is manipulated and then fed again into another function. over and over again, so from now on we will always use this syntax when possible. The other two arguments of the function are an output and an input column. Specifying *word* as output column we tell the function to tokenise text by word and to return the previous DataFrame with an additional column: word, indeed. The argument content points the function at the column that needs to be tokenised, in thi case *content*.
+<div class="box type5">
+  <div class="sub-box">
+  <img src="pictures/icons/code_expl.png" alt="Icon" class="picture"/> 
+  <p style="margin-left: 10px;"><h5><strong>How does it work?</strong></h5></p>
+  </div>
 
-A quick view of the DataFrame `tidy_content` shows us that the *content* column is gone, while a column named *word* is now attached at the end of the DataFrame. If you need to know which word belongs to which content AFTER tokenization, remember to double check that the content in your initial DataFrame has a unique identifier associated with it (in our case, the column *issue*).
+<p>
+  <ul>
+    <li>
+      We first load the library `tidytext` containing all the functions we need
+      for text mining;
+    </li>
+    <li>
+      We use the `tidytext` function `unnest_tokens()` to split the text stored
+      in the column *content* of our DataFrame `data_df` into words. First of all, 
+      we "feed" our raw data DataFrame to the function using the workflow syntax `data_df %>%       unnest_tokens(...)`. This is equivalent to specify the DataFrame as the first argument        of the function, i.e. `unnest_tokens(data_df, work,content,token="words")`. 
+      The other three arguments of the function specify the name of the column containing
+      the tokens (*word*), the text that needs to be tokenized (the column *content*),
+      and the kind of token (in our case, words).
+    </li>
+  </ul>
+</p>
+</div>
+
+In the code block above we use the function `unnest_tokens()` to tokenize the content of our DataFrame. A quick view of the resulting DataFrame `tidy_content` shows us that the *content* column is gone, while a column named *word* now appears at the end of the DataFrame. 
+How do we now which word belongs to which content AFTER tokenization? Is that information
+lost? The content in your raw data DataFrame has a unique identifier associated with it, in our case the identifier is stored in the column *issue*. Each word, or token, has therefore a unique identifier specifying from which content it came from.
 
 #### Cleaning data
 
@@ -406,7 +481,7 @@ issue_tf_idf %>%
 library(forcats)
 
 issue_tf_idf %>%
-  filter(total > 50000) %>%
+  semi_join(first_6_unique_issues, by="issue") %>%
   group_by(issue) %>%
   slice_max(tf_idf, n = 10) %>%
   ungroup() %>%
