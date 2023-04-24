@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>book - 2&nbsp; Base R</title>
+<title>book - 4&nbsp; Base R</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -20,6 +20,69 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1.6em;
   vertical-align: middle;
 }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
 
@@ -31,7 +94,7 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
 <link href="./references.html" rel="next">
-<link href="./intro.html" rel="prev">
+<link href="./i-analyzer.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -72,7 +135,7 @@ ul.task-list li input[type="checkbox"] {
   <header id="quarto-header" class="headroom fixed-top">
   <nav class="quarto-secondary-nav" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
     <div class="container-fluid d-flex justify-content-between">
-      <h1 class="quarto-secondary-nav-title"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Base R</span></h1>
+      <h1 class="quarto-secondary-nav-title"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Base R</span></h1>
       <button type="button" class="quarto-btn-toggle btn" aria-label="Show secondary navigation">
         <i class="bi bi-chevron-right"></i>
       </button>
@@ -97,17 +160,22 @@ ul.task-list li input[type="checkbox"] {
     <ul class="list-unstyled mt-1">
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./index.html" class="sidebar-item-text sidebar-link">Preface</a>
+  <a href="./index.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Welcome</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./intro.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introduction</span></a>
+  <a href="./intro.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Introduction</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./base-r.html" class="sidebar-item-text sidebar-link active"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Base R</span></a>
+  <a href="./i-analyzer.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Text Mining with iAnalyzer</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./base-r.html" class="sidebar-item-text sidebar-link active"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Base R</span></a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -124,12 +192,63 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#r-syntax-data-types" id="toc-r-syntax-data-types" class="nav-link active" data-scroll-target="#r-syntax-data-types"><span class="toc-section-number">2.1</span>  R Syntax &amp; Data Types</a>
+  <li><a href="#lets-get-started-what-is-r-and-rstudio" id="toc-lets-get-started-what-is-r-and-rstudio" class="nav-link active" data-scroll-target="#lets-get-started-what-is-r-and-rstudio"><span class="toc-section-number">4.1</span>  Let’s get started: what is R and RStudio</a>
   <ul class="collapse">
-  <li><a href="#slides" id="toc-slides" class="nav-link" data-scroll-target="#slides"><span class="toc-section-number">2.1.1</span>  Slides</a></li>
-  <li><a href="#video" id="toc-video" class="nav-link" data-scroll-target="#video"><span class="toc-section-number">2.1.2</span>  Video</a></li>
-  <li><a href="#exercise-1" id="toc-exercise-1" class="nav-link" data-scroll-target="#exercise-1"><span class="toc-section-number">2.1.3</span>  Exercise 1</a></li>
-  <li><a href="#solution" id="toc-solution" class="nav-link" data-scroll-target="#solution"><span class="toc-section-number">2.1.4</span>  Solution</a></li>
+  <li><a href="#slides" id="toc-slides" class="nav-link" data-scroll-target="#slides"><span class="toc-section-number">4.1.1</span>  Slides</a></li>
+  <li><a href="#code-chunk" id="toc-code-chunk" class="nav-link" data-scroll-target="#code-chunk"><span class="toc-section-number">4.1.2</span>  Code Chunk</a></li>
+  <li><a href="#video" id="toc-video" class="nav-link" data-scroll-target="#video"><span class="toc-section-number">4.1.3</span>  Video</a></li>
+  </ul></li>
+  <li><a href="#r-syntax-data-types" id="toc-r-syntax-data-types" class="nav-link" data-scroll-target="#r-syntax-data-types"><span class="toc-section-number">4.2</span>  R Syntax &amp; Data Types</a>
+  <ul class="collapse">
+  <li><a href="#slides-1" id="toc-slides-1" class="nav-link" data-scroll-target="#slides-1"><span class="toc-section-number">4.2.1</span>  Slides</a></li>
+  <li><a href="#code-chunk-1" id="toc-code-chunk-1" class="nav-link" data-scroll-target="#code-chunk-1"><span class="toc-section-number">4.2.2</span>  Code Chunk</a></li>
+  <li><a href="#video-1" id="toc-video-1" class="nav-link" data-scroll-target="#video-1"><span class="toc-section-number">4.2.3</span>  Video</a></li>
+  <li><a href="#exercise-1" id="toc-exercise-1" class="nav-link" data-scroll-target="#exercise-1"><span class="toc-section-number">4.2.4</span>  Exercise 1</a></li>
+  <li><a href="#solution-1" id="toc-solution-1" class="nav-link" data-scroll-target="#solution-1"><span class="toc-section-number">4.2.5</span>  Solution 1</a></li>
+  </ul></li>
+  <li><a href="#vectors" id="toc-vectors" class="nav-link" data-scroll-target="#vectors"><span class="toc-section-number">4.3</span>  Vectors</a>
+  <ul class="collapse">
+  <li><a href="#slides-3" id="toc-slides-3" class="nav-link" data-scroll-target="#slides-3"><span class="toc-section-number">4.3.1</span>  Slides</a></li>
+  <li><a href="#code-chunk-2" id="toc-code-chunk-2" class="nav-link" data-scroll-target="#code-chunk-2"><span class="toc-section-number">4.3.2</span>  Code Chunk</a></li>
+  <li><a href="#video-3" id="toc-video-3" class="nav-link" data-scroll-target="#video-3"><span class="toc-section-number">4.3.3</span>  Video</a></li>
+  <li><a href="#exercise-2" id="toc-exercise-2" class="nav-link" data-scroll-target="#exercise-2"><span class="toc-section-number">4.3.4</span>  Exercise 2</a></li>
+  <li><a href="#solution-2" id="toc-solution-2" class="nav-link" data-scroll-target="#solution-2"><span class="toc-section-number">4.3.5</span>  Solution 2</a></li>
+  </ul></li>
+  <li><a href="#data-structures" id="toc-data-structures" class="nav-link" data-scroll-target="#data-structures"><span class="toc-section-number">4.4</span>  Data structures</a>
+  <ul class="collapse">
+  <li><a href="#slides-5" id="toc-slides-5" class="nav-link" data-scroll-target="#slides-5"><span class="toc-section-number">4.4.1</span>  Slides</a></li>
+  <li><a href="#code-chunk-3" id="toc-code-chunk-3" class="nav-link" data-scroll-target="#code-chunk-3"><span class="toc-section-number">4.4.2</span>  Code Chunk</a></li>
+  <li><a href="#video-5" id="toc-video-5" class="nav-link" data-scroll-target="#video-5"><span class="toc-section-number">4.4.3</span>  Video</a></li>
+  <li><a href="#exercise-3" id="toc-exercise-3" class="nav-link" data-scroll-target="#exercise-3"><span class="toc-section-number">4.4.4</span>  Exercise 3</a></li>
+  <li><a href="#solution-3" id="toc-solution-3" class="nav-link" data-scroll-target="#solution-3"><span class="toc-section-number">4.4.5</span>  Solution 3</a></li>
+  </ul></li>
+  <li><a href="#missing-data" id="toc-missing-data" class="nav-link" data-scroll-target="#missing-data"><span class="toc-section-number">4.5</span>  Missing data</a>
+  <ul class="collapse">
+  <li><a href="#slides-7" id="toc-slides-7" class="nav-link" data-scroll-target="#slides-7"><span class="toc-section-number">4.5.1</span>  Slides</a></li>
+  <li><a href="#code-chunk-4" id="toc-code-chunk-4" class="nav-link" data-scroll-target="#code-chunk-4"><span class="toc-section-number">4.5.2</span>  Code Chunk</a></li>
+  <li><a href="#video-7" id="toc-video-7" class="nav-link" data-scroll-target="#video-7"><span class="toc-section-number">4.5.3</span>  Video</a></li>
+  <li><a href="#exercise-4" id="toc-exercise-4" class="nav-link" data-scroll-target="#exercise-4"><span class="toc-section-number">4.5.4</span>  Exercise 4</a></li>
+  <li><a href="#solution-4" id="toc-solution-4" class="nav-link" data-scroll-target="#solution-4"><span class="toc-section-number">4.5.5</span>  Solution 4</a></li>
+  </ul></li>
+  <li><a href="#indexing-vectors-and-lists" id="toc-indexing-vectors-and-lists" class="nav-link" data-scroll-target="#indexing-vectors-and-lists"><span class="toc-section-number">4.6</span>  Indexing vectors and lists</a>
+  <ul class="collapse">
+  <li><a href="#slides-9" id="toc-slides-9" class="nav-link" data-scroll-target="#slides-9"><span class="toc-section-number">4.6.1</span>  Slides</a></li>
+  <li><a href="#code-chunk-5" id="toc-code-chunk-5" class="nav-link" data-scroll-target="#code-chunk-5"><span class="toc-section-number">4.6.2</span>  Code Chunk</a></li>
+  <li><a href="#video-8" id="toc-video-8" class="nav-link" data-scroll-target="#video-8"><span class="toc-section-number">4.6.3</span>  Video</a></li>
+  <li><a href="#exercise-5" id="toc-exercise-5" class="nav-link" data-scroll-target="#exercise-5"><span class="toc-section-number">4.6.4</span>  Exercise 5</a></li>
+  <li><a href="#solution-5" id="toc-solution-5" class="nav-link" data-scroll-target="#solution-5"><span class="toc-section-number">4.6.5</span>  Solution 5</a></li>
+  </ul></li>
+  <li><a href="#indexing-a-data-frame" id="toc-indexing-a-data-frame" class="nav-link" data-scroll-target="#indexing-a-data-frame"><span class="toc-section-number">4.7</span>  Indexing a data frame</a>
+  <ul class="collapse">
+  <li><a href="#slides-11" id="toc-slides-11" class="nav-link" data-scroll-target="#slides-11"><span class="toc-section-number">4.7.1</span>  Slides</a></li>
+  <li><a href="#code-chunk-6" id="toc-code-chunk-6" class="nav-link" data-scroll-target="#code-chunk-6"><span class="toc-section-number">4.7.2</span>  Code Chunk</a></li>
+  <li><a href="#video-10" id="toc-video-10" class="nav-link" data-scroll-target="#video-10"><span class="toc-section-number">4.7.3</span>  Video</a></li>
+  <li><a href="#exercise-6" id="toc-exercise-6" class="nav-link" data-scroll-target="#exercise-6"><span class="toc-section-number">4.7.4</span>  Exercise 6</a></li>
+  <li><a href="#solution-6" id="toc-solution-6" class="nav-link" data-scroll-target="#solution-6"><span class="toc-section-number">4.7.5</span>  Solution 6</a></li>
+  </ul></li>
+  <li><a href="#recap" id="toc-recap" class="nav-link" data-scroll-target="#recap"><span class="toc-section-number">4.8</span>  Recap</a>
+  <ul class="collapse">
+  <li><a href="#slides-13" id="toc-slides-13" class="nav-link" data-scroll-target="#slides-13"><span class="toc-section-number">4.8.1</span>  Slides</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -139,7 +258,7 @@ ul.task-list li input[type="checkbox"] {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title d-none d-lg-block"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Base R</span></h1>
+<h1 class="title d-none d-lg-block"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Base R</span></h1>
 </div>
 
 
@@ -154,10 +273,55 @@ ul.task-list li input[type="checkbox"] {
 
 </header>
 
-<section id="r-syntax-data-types" class="level2" data-number="2.1">
-<h2 data-number="2.1" class="anchored" data-anchor-id="r-syntax-data-types"><span class="header-section-number">2.1</span> R Syntax &amp; Data Types</h2>
-<section id="slides" class="level3" data-number="2.1.1">
-<h3 data-number="2.1.1" class="anchored" data-anchor-id="slides"><span class="header-section-number">2.1.1</span> Slides</h3>
+<p>Hi there! This is the basic introduction to R and RStudio. This is a very first introduction and overview to understand the fundamental idea, structure and basic syntax of R to get you started. We will walk you through the slides and demonstrate most examples, but you can also revisit the slides or check out the videos in your own time. For each chapter, you will find a piece called “code chunk”, which you can copy into your R environment and run so you get the same output as you see on the slides. This safes you a lot of copying and typing along, so make use of it :) f There are small exercises with answer slides so you can get a hands-on experience. Try to do the exercises as they come and of course, you can consult the answer slides or videos if you get stuck.</p>
+<p>Some parts of the provided material go a bit further than what we want to cover here and exceed the goal of our basic introduction. We will skip these for now and indicate at which slide you can stop, but if you are motivated and curious you can just keep going.</p>
+<p>If you’re intrigued by the world of R and want to learn more, we offer an “Introduction to R” and many other courses - just check out <a href="https://www.uu.nl/en/research/research-data-management/walk-in-hours-workshops">our website</a>. Have fun and don’t hesitate to ask for help!</p>
+<section id="lets-get-started-what-is-r-and-rstudio" class="level2" data-number="4.1">
+<h2 data-number="4.1" class="anchored" data-anchor-id="lets-get-started-what-is-r-and-rstudio"><span class="header-section-number">4.1</span> Let’s get started: what is R and RStudio</h2>
+<p>This describes the basic idea of R and RStudio and how to work in the RStudio environment.</p>
+<section id="slides" class="level3" data-number="4.1.1">
+<h3 data-number="4.1.1" class="anchored" data-anchor-id="slides"><span class="header-section-number">4.1.1</span> Slides</h3>
+<p>For this part, just consider the slides 12 - 16.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div class="shareagain" style="min-width:300px;margin:1em auto;" data-exeternal="1">
+<iframe src="https://utrechtuniversity.github.io/workshop-introduction-to-R-and-data/slides/slides_introduction.html#12" width="400" height="300" style="border:2px solid currentColor;" loading="lazy" allowfullscreen=""></iframe>
+<script>fitvids('.shareagain', {players: 'iframe'});</script>
+</div>
+</div>
+</div>
+<p><a href="https://utrechtuniversity.github.io/workshop-introduction-to-R-and-data/slides/slides_introduction.html#12">Use this link to open slides in a new tab (refer to slide #12)</a></p>
+</section>
+<section id="code-chunk" class="level3" data-number="4.1.2">
+<h3 data-number="4.1.2" class="anchored" data-anchor-id="code-chunk"><span class="header-section-number">4.1.2</span> Code Chunk</h3>
+<p>This is an example of a so-called code chunk in which you write the actual code.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">#let's define x </span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="dv">6</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>x</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="st">"apple"</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>y</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="video" class="level3" data-number="4.1.3">
+<h3 data-number="4.1.3" class="anchored" data-anchor-id="video"><span class="header-section-number">4.1.3</span> Video</h3>
+<div class="cell">
+<div class="cell-output-display">
+<div class="vembedr">
+<div>
+<iframe src="https://www.youtube.com/embed/FFYSAUJ305o" width="533" height="300" frameborder="0" allowfullscreen="" data-external="1"></iframe>
+</div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="r-syntax-data-types" class="level2" data-number="4.2">
+<h2 data-number="4.2" class="anchored" data-anchor-id="r-syntax-data-types"><span class="header-section-number">4.2</span> R Syntax &amp; Data Types</h2>
+<p>Now we go a step further in the “language” of R and we learn how to assign variables and math functions, and what kind of different data types there are. We create vectors and lists. Just start at slide 18 and do the exercises as they come.</p>
+<section id="slides-1" class="level3" data-number="4.2.1">
+<h3 data-number="4.2.1" class="anchored" data-anchor-id="slides-1"><span class="header-section-number">4.2.1</span> Slides</h3>
 <div class="cell">
 <div class="cell-output-display">
 <div class="shareagain" style="min-width:300px;margin:1em auto;" data-exeternal="1">
@@ -168,8 +332,21 @@ ul.task-list li input[type="checkbox"] {
 </div>
 <p><a href="https://utrechtuniversity.github.io/workshop-introduction-to-R-and-data/slides/slides_introduction.html#18">Use this link to open slides in a new tab (refer to slide #18)</a></p>
 </section>
-<section id="video" class="level3" data-number="2.1.2">
-<h3 data-number="2.1.2" class="anchored" data-anchor-id="video"><span class="header-section-number">2.1.2</span> Video</h3>
+<section id="code-chunk-1" class="level3" data-number="4.2.2">
+<h3 data-number="4.2.2" class="anchored" data-anchor-id="code-chunk-1"><span class="header-section-number">4.2.2</span> Code Chunk</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co">#let's define x </span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="dv">1</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>x</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>x<span class="sc">*</span><span class="dv">3</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> x <span class="sc">+</span> <span class="dv">2</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="fu">log2</span>(y)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="video-1" class="level3" data-number="4.2.3">
+<h3 data-number="4.2.3" class="anchored" data-anchor-id="video-1"><span class="header-section-number">4.2.3</span> Video</h3>
 <div class="cell">
 <div class="cell-output-display">
 <div class="vembedr">
@@ -180,8 +357,8 @@ ul.task-list li input[type="checkbox"] {
 </div>
 </div>
 </section>
-<section id="exercise-1" class="level3" data-number="2.1.3">
-<h3 data-number="2.1.3" class="anchored" data-anchor-id="exercise-1"><span class="header-section-number">2.1.3</span> Exercise 1</h3>
+<section id="exercise-1" class="level3" data-number="4.2.4">
+<h3 data-number="4.2.4" class="anchored" data-anchor-id="exercise-1"><span class="header-section-number">4.2.4</span> Exercise 1</h3>
 <ol type="1">
 <li><p>Do the following calculation in R: one plus five, divided by nine.</p></li>
 <li><p>Assign the result of the calculation to a variable.</p></li>
@@ -189,10 +366,10 @@ ul.task-list li input[type="checkbox"] {
 <li><p>Round off the result to 1 decimal. Tip: use the Maths Functions section of the Base R cheat sheet!</p></li>
 </ol>
 </section>
-<section id="solution" class="level3" data-number="2.1.4">
-<h3 data-number="2.1.4" class="anchored" data-anchor-id="solution"><span class="header-section-number">2.1.4</span> Solution</h3>
-<section id="slides-1" class="level4 unnumbered">
-<h4 class="unnumbered anchored" data-anchor-id="slides-1">Slides</h4>
+<section id="solution-1" class="level3" data-number="4.2.5">
+<h3 data-number="4.2.5" class="anchored" data-anchor-id="solution-1"><span class="header-section-number">4.2.5</span> Solution 1</h3>
+<section id="slides-2" class="level4 unnumbered">
+<h4 class="unnumbered anchored" data-anchor-id="slides-2">Slides</h4>
 <div class="cell">
 <div class="cell-output-display">
 <div class="shareagain" style="min-width:300px;margin:1em auto;" data-exeternal="1">
@@ -203,8 +380,8 @@ ul.task-list li input[type="checkbox"] {
 </div>
 <p><a href="https://utrechtuniversity.github.io/workshop-introduction-to-R-and-data/slides/slides_introduction.html#27">Use this link to open slides in a new tab (refer to slide #27)</a></p>
 </section>
-<section id="video-1" class="level4 unnumbered">
-<h4 class="unnumbered anchored" data-anchor-id="video-1">Video</h4>
+<section id="video-2" class="level4 unnumbered">
+<h4 class="unnumbered anchored" data-anchor-id="video-2">Video</h4>
 <div class="cell">
 <div class="cell-output-display">
 <div class="vembedr">
@@ -214,9 +391,447 @@ ul.task-list li input[type="checkbox"] {
 </div>
 </div>
 </div>
-
-
 </section>
+</section>
+</section>
+<section id="vectors" class="level2" data-number="4.3">
+<h2 data-number="4.3" class="anchored" data-anchor-id="vectors"><span class="header-section-number">4.3</span> Vectors</h2>
+<p>Here, we create vectors and learn what a vector actually is! Just start at slide 28 and do the exercises as they come.</p>
+<section id="slides-3" class="level3" data-number="4.3.1">
+<h3 data-number="4.3.1" class="anchored" data-anchor-id="slides-3"><span class="header-section-number">4.3.1</span> Slides</h3>
+<div class="cell">
+<div class="cell-output-display">
+<div class="shareagain" style="min-width:300px;margin:1em auto;" data-exeternal="1">
+<iframe src="https://utrechtuniversity.github.io/workshop-introduction-to-R-and-data/slides/slides_introduction.html#28" width="400" height="300" style="border:2px solid currentColor;" loading="lazy" allowfullscreen=""></iframe>
+<script>fitvids('.shareagain', {players: 'iframe'});</script>
+</div>
+</div>
+</div>
+<p><a href="https://utrechtuniversity.github.io/workshop-introduction-to-R-and-data/slides/slides_introduction.html#28">Use this link to open slides in a new tab (refer to slide #28)</a></p>
+</section>
+<section id="code-chunk-2" class="level3" data-number="4.3.2">
+<h3 data-number="4.3.2" class="anchored" data-anchor-id="code-chunk-2"><span class="header-section-number">4.3.2</span> Code Chunk</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>)</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">c</span>(<span class="st">"a"</span>, <span class="st">"b"</span>, <span class="st">"c"</span>)</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="fu">c</span>(T, <span class="cn">TRUE</span>, F)</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="fu">c</span>(<span class="cn">TRUE</span>, <span class="st">"a"</span>, <span class="dv">3</span>)</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="co"># in mathematical operations</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>p <span class="ot">&lt;-</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">5</span></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>p</span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(p)</span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>p<span class="sc">*</span><span class="dv">2</span></span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>q <span class="ot">&lt;-</span> <span class="dv">5</span><span class="sc">:</span><span class="dv">1</span></span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>q</span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>p<span class="sc">*</span>q</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="video-3" class="level3" data-number="4.3.3">
+<h3 data-number="4.3.3" class="anchored" data-anchor-id="video-3"><span class="header-section-number">4.3.3</span> Video</h3>
+<div class="cell">
+<div class="cell-output-display">
+<div class="vembedr">
+<div>
+<iframe src="https://www.youtube.com/embed/XMFjteCdHbQ" width="533" height="300" frameborder="0" allowfullscreen="" data-external="1"></iframe>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="exercise-2" class="level3" data-number="4.3.4">
+<h3 data-number="4.3.4" class="anchored" data-anchor-id="exercise-2"><span class="header-section-number">4.3.4</span> Exercise 2</h3>
+<p>Meet Ann, Bob, Chloe, and Dan. 1. Make a character vector with their names, using the function c(). Save the vector as “name”.</p>
+<ol start="2" type="1">
+<li><p>How old are Ann, Bob, Chloe, and Dan? You decide! Design a numeric vector with their respective ages. Save it as “age”.</p></li>
+<li><p>What is their average age? Use a function in R to calculate this. Tip: use the Maths Functions section of the Base R cheat sheet!</p></li>
+</ol>
+</section>
+<section id="solution-2" class="level3" data-number="4.3.5">
+<h3 data-number="4.3.5" class="anchored" data-anchor-id="solution-2"><span class="header-section-number">4.3.5</span> Solution 2</h3>
+<section id="slides-4" class="level4 unnumbered">
+<h4 class="unnumbered anchored" data-anchor-id="slides-4">Slides</h4>
+<div class="cell">
+<div class="cell-output-display">
+<div class="shareagain" style="min-width:300px;margin:1em auto;" data-exeternal="1">
+<iframe src="https://utrechtuniversity.github.io/workshop-introduction-to-R-and-data/slides/slides_introduction.html#38" width="400" height="300" style="border:2px solid currentColor;" loading="lazy" allowfullscreen=""></iframe>
+<script>fitvids('.shareagain', {players: 'iframe'});</script>
+</div>
+</div>
+</div>
+<p><a href="https://utrechtuniversity.github.io/workshop-introduction-to-R-and-data/slides/slides_introduction.html#38">Use this link to open slides in a new tab (refer to slide #38)</a></p>
+</section>
+<section id="video-4" class="level4 unnumbered">
+<h4 class="unnumbered anchored" data-anchor-id="video-4">Video</h4>
+<div class="cell">
+<div class="cell-output-display">
+<div class="vembedr">
+<div>
+<iframe src="https://www.youtube.com/embed/rIieuoYT4z0" width="533" height="300" frameborder="0" allowfullscreen="" data-external="1"></iframe>
+</div>
+</div>
+</div>
+</div>
+</section>
+</section>
+</section>
+<section id="data-structures" class="level2" data-number="4.4">
+<h2 data-number="4.4" class="anchored" data-anchor-id="data-structures"><span class="header-section-number">4.4</span> Data structures</h2>
+<p>Here, we look at different data structures. Can we combine vectors, and lists? And how can we come up with a data frame? This will all be answered here. Just start at slide 41 and do the exercises as they come.</p>
+<section id="slides-5" class="level3" data-number="4.4.1">
+<h3 data-number="4.4.1" class="anchored" data-anchor-id="slides-5"><span class="header-section-number">4.4.1</span> Slides</h3>
+<div class="cell">
+<div class="cell-output-display">
+<div class="shareagain" style="min-width:300px;margin:1em auto;" data-exeternal="1">
+<iframe src="https://utrechtuniversity.github.io/workshop-introduction-to-R-and-data/slides/slides_introduction.html#41" width="400" height="300" style="border:2px solid currentColor;" loading="lazy" allowfullscreen=""></iframe>
+<script>fitvids('.shareagain', {players: 'iframe'});</script>
+</div>
+</div>
+</div>
+<p><a href="https://utrechtuniversity.github.io/workshop-introduction-to-R-and-data/slides/slides_introduction.html#41">Use this link to open slides in a new tab (refer to slide #41)</a></p>
+</section>
+<section id="code-chunk-3" class="level3" data-number="4.4.2">
+<h3 data-number="4.4.2" class="anchored" data-anchor-id="code-chunk-3"><span class="header-section-number">4.4.2</span> Code Chunk</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># vectors</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="co"># two vectors: name and age from exercise before</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>name</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>age</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="co">#combine vectors to a unidimensional vector:</span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="fu">c</span>(name,age)</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a><span class="co">#combine vectors to multidimensional list:</span></span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a><span class="fu">list</span>(name,age)</span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a><span class="co">#combine vectors to twodimensional data frame:</span></span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a><span class="fu">data.frame</span>(name,age)</span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a><span class="co">#factors</span></span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a>country <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"UK"</span>, <span class="st">"USA"</span>, <span class="st">"USA"</span>, <span class="st">"UK"</span>)</span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a><span class="fu">factor</span>(country)</span>
+<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a><span class="co">#usually as column in a data frame: a categorial variable</span></span>
+<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(name, age, <span class="at">country =</span> <span class="fu">factor</span>(country))</span>
+<span id="cb4-23"><a href="#cb4-23" aria-hidden="true" tabindex="-1"></a>df</span>
+<span id="cb4-24"><a href="#cb4-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-25"><a href="#cb4-25" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(df)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="video-5" class="level3" data-number="4.4.3">
+<h3 data-number="4.4.3" class="anchored" data-anchor-id="video-5"><span class="header-section-number">4.4.3</span> Video</h3>
+<div class="cell">
+<div class="cell-output-display">
+<div class="vembedr">
+<div>
+<iframe src="https://www.youtube.com/embed/Ffk2Kxa_b_M" width="533" height="300" frameborder="0" allowfullscreen="" data-external="1"></iframe>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="exercise-3" class="level3" data-number="4.4.4">
+<h3 data-number="4.4.4" class="anchored" data-anchor-id="exercise-3"><span class="header-section-number">4.4.4</span> Exercise 3</h3>
+<ol type="1">
+<li><p>Create a vector country containing four countries (use at least one duplicate!).</p></li>
+<li><p>Create a data frame combining name, age, and country, and save it as df.</p></li>
+<li><p>Check your dataframe with the function summary(). Does it contain a factor?</p></li>
+<li><p>Make sure your column country is a factor, and confirm this with summary().</p></li>
+<li><p>Create a list with your vectors name and age, and save it as mylist.</p></li>
+</ol>
+</section>
+<section id="solution-3" class="level3" data-number="4.4.5">
+<h3 data-number="4.4.5" class="anchored" data-anchor-id="solution-3"><span class="header-section-number">4.4.5</span> Solution 3</h3>
+<section id="slides-6" class="level4 unnumbered">
+<h4 class="unnumbered anchored" data-anchor-id="slides-6">Slides</h4>
+<div class="cell">
+<div class="cell-output-display">
+<div class="shareagain" style="min-width:300px;margin:1em auto;" data-exeternal="1">
+<iframe src="https://utrechtuniversity.github.io/workshop-introduction-to-R-and-data/slides/slides_introduction.html#48" width="400" height="300" style="border:2px solid currentColor;" loading="lazy" allowfullscreen=""></iframe>
+<script>fitvids('.shareagain', {players: 'iframe'});</script>
+</div>
+</div>
+</div>
+<p><a href="https://utrechtuniversity.github.io/workshop-introduction-to-R-and-data/slides/slides_introduction.html#48">Use this link to open slides in a new tab (refer to slide #48)</a></p>
+</section>
+<section id="video-6" class="level4 unnumbered">
+<h4 class="unnumbered anchored" data-anchor-id="video-6">Video</h4>
+<div class="cell">
+<div class="cell-output-display">
+<div class="vembedr">
+<div>
+<iframe src="https://www.youtube.com/embed/A1GsHC6pIio" width="533" height="300" frameborder="0" allowfullscreen="" data-external="1"></iframe>
+</div>
+</div>
+</div>
+</div>
+</section>
+</section>
+</section>
+<section id="missing-data" class="level2" data-number="4.5">
+<h2 data-number="4.5" class="anchored" data-anchor-id="missing-data"><span class="header-section-number">4.5</span> Missing data</h2>
+<p>What if for a data subject you do not have the data? How can you handle that in a data frame? We check here. Just start at slide 53 and do the exercises as they come.</p>
+<section id="slides-7" class="level3" data-number="4.5.1">
+<h3 data-number="4.5.1" class="anchored" data-anchor-id="slides-7"><span class="header-section-number">4.5.1</span> Slides</h3>
+<div class="cell">
+<div class="cell-output-display">
+<div class="shareagain" style="min-width:300px;margin:1em auto;" data-exeternal="1">
+<iframe src="https://utrechtuniversity.github.io/workshop-introduction-to-R-and-data/slides/slides_introduction.html#53" width="400" height="300" style="border:2px solid currentColor;" loading="lazy" allowfullscreen=""></iframe>
+<script>fitvids('.shareagain', {players: 'iframe'});</script>
+</div>
+</div>
+</div>
+<p><a href="https://utrechtuniversity.github.io/workshop-introduction-to-R-and-data/slides/slides_introduction.html#53">Use this link to open slides in a new tab (refer to slide #53)</a></p>
+</section>
+<section id="code-chunk-4" class="level3" data-number="4.5.2">
+<h3 data-number="4.5.2" class="anchored" data-anchor-id="code-chunk-4"><span class="header-section-number">4.5.2</span> Code Chunk</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Data is not available: NA</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>df<span class="sc">$</span>pet <span class="ot">&lt;-</span> <span class="fu">factor</span>(<span class="fu">c</span>(<span class="st">"cat"</span>, <span class="st">"none"</span>, <span class="st">"fish"</span>, <span class="cn">NA</span>))</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>df<span class="sc">$</span>pet</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="video-7" class="level3" data-number="4.5.3">
+<h3 data-number="4.5.3" class="anchored" data-anchor-id="video-7"><span class="header-section-number">4.5.3</span> Video</h3>
+<div class="cell">
+<div class="cell-output-display">
+<div class="vembedr">
+<div>
+<iframe src="https://www.youtube.com/embed/4gVvlg1Itzs" width="533" height="300" frameborder="0" allowfullscreen="" data-external="1"></iframe>
+</div>
+</div>
+</div>
+</div>
+<p>Start the video at</p>
+</section>
+<section id="exercise-4" class="level3" data-number="4.5.4">
+<h3 data-number="4.5.4" class="anchored" data-anchor-id="exercise-4"><span class="header-section-number">4.5.4</span> Exercise 4</h3>
+<p>Predict the results before you run the code. Does the real answer make sense to you?</p>
+</section>
+<section id="solution-4" class="level3" data-number="4.5.5">
+<h3 data-number="4.5.5" class="anchored" data-anchor-id="solution-4"><span class="header-section-number">4.5.5</span> Solution 4</h3>
+<section id="slides-8" class="level4 unnumbered">
+<h4 class="unnumbered anchored" data-anchor-id="slides-8">Slides</h4>
+<div class="cell">
+<div class="cell-output-display">
+<div class="shareagain" style="min-width:300px;margin:1em auto;" data-exeternal="1">
+<iframe src="https://utrechtuniversity.github.io/workshop-introduction-to-R-and-data/slides/slides_introduction.html#57" width="400" height="300" style="border:2px solid currentColor;" loading="lazy" allowfullscreen=""></iframe>
+<script>fitvids('.shareagain', {players: 'iframe'});</script>
+</div>
+</div>
+</div>
+<p><a href="https://utrechtuniversity.github.io/workshop-introduction-to-R-and-data/slides/slides_introduction.html#57">Use this link to open slides in a new tab (refer to slide #57)</a></p>
+</section>
+</section>
+</section>
+<section id="indexing-vectors-and-lists" class="level2" data-number="4.6">
+<h2 data-number="4.6" class="anchored" data-anchor-id="indexing-vectors-and-lists"><span class="header-section-number">4.6</span> Indexing vectors and lists</h2>
+<p>Here we explain how you get to one specific value or column or data entry in your vector, or list. Just start at slide 66 and do the exercises as they come.</p>
+<section id="slides-9" class="level3" data-number="4.6.1">
+<h3 data-number="4.6.1" class="anchored" data-anchor-id="slides-9"><span class="header-section-number">4.6.1</span> Slides</h3>
+<div class="cell">
+<div class="cell-output-display">
+<div class="shareagain" style="min-width:300px;margin:1em auto;" data-exeternal="1">
+<iframe src="https://utrechtuniversity.github.io/workshop-introduction-to-R-and-data/slides/slides_introduction.html#66" width="400" height="300" style="border:2px solid currentColor;" loading="lazy" allowfullscreen=""></iframe>
+<script>fitvids('.shareagain', {players: 'iframe'});</script>
+</div>
+</div>
+</div>
+<p><a href="https://utrechtuniversity.github.io/workshop-introduction-to-R-and-data/slides/slides_introduction.html#66">Use this link to open slides in a new tab (refer to slide #66)</a></p>
+</section>
+<section id="code-chunk-5" class="level3" data-number="4.6.2">
+<h3 data-number="4.6.2" class="anchored" data-anchor-id="code-chunk-5"><span class="header-section-number">4.6.2</span> Code Chunk</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># in vector name:selecting by position</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>name</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>name[<span class="dv">2</span>]</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>name[<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>]</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>name[<span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">2</span>,<span class="dv">1</span>)]</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a><span class="co"># in vector age: selcting by value</span></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>age</span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>age[age <span class="sc">&gt;</span> <span class="dv">40</span>]</span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>age <span class="sc">&gt;</span> <span class="dv">40</span></span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>name</span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>name[name <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"Chloe"</span>, <span class="st">"Ann"</span>, <span class="st">"Evie"</span>)]</span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a><span class="co"># selecting from list</span></span>
+<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a>mylist</span>
+<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a><span class="co"># selecting a list element</span></span>
+<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a>mylist[<span class="dv">1</span>]</span>
+<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a><span class="co"># subselecting in the list element</span></span>
+<span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a>mylist[<span class="dv">1</span>][<span class="dv">2</span>]</span>
+<span id="cb6-21"><a href="#cb6-21" aria-hidden="true" tabindex="-1"></a><span class="co"># selecting the content of a list element</span></span>
+<span id="cb6-22"><a href="#cb6-22" aria-hidden="true" tabindex="-1"></a>mylist[[<span class="dv">1</span>]]</span>
+<span id="cb6-23"><a href="#cb6-23" aria-hidden="true" tabindex="-1"></a><span class="co"># subselecting in the content of a list element</span></span>
+<span id="cb6-24"><a href="#cb6-24" aria-hidden="true" tabindex="-1"></a>mylist[[<span class="dv">1</span>]][[<span class="dv">2</span>]]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="video-8" class="level3" data-number="4.6.3">
+<h3 data-number="4.6.3" class="anchored" data-anchor-id="video-8"><span class="header-section-number">4.6.3</span> Video</h3>
+<div class="cell">
+<div class="cell-output-display">
+<div class="vembedr">
+<div>
+<iframe src="https://www.youtube.com/embed/e10nO2swYIE" width="533" height="300" frameborder="0" allowfullscreen="" data-external="1"></iframe>
+</div>
+</div>
+</div>
+</div>
+<p>Start the video at</p>
+</section>
+<section id="exercise-5" class="level3" data-number="4.6.4">
+<h3 data-number="4.6.4" class="anchored" data-anchor-id="exercise-5"><span class="header-section-number">4.6.4</span> Exercise 5</h3>
+<ol type="1">
+<li><p>Return only the first number in your vector age.</p></li>
+<li><p>Return the 2nd and 4th name in your vector name.</p></li>
+<li><p>Return only ages under 30 from your vector age.</p></li>
+<li><p>Return the name “Chloe” from your list mylist (see exercise 3).</p></li>
+</ol>
+</section>
+<section id="solution-5" class="level3" data-number="4.6.5">
+<h3 data-number="4.6.5" class="anchored" data-anchor-id="solution-5"><span class="header-section-number">4.6.5</span> Solution 5</h3>
+<section id="slides-10" class="level4 unnumbered">
+<h4 class="unnumbered anchored" data-anchor-id="slides-10">Slides</h4>
+<div class="cell">
+<div class="cell-output-display">
+<div class="shareagain" style="min-width:300px;margin:1em auto;" data-exeternal="1">
+<iframe src="https://utrechtuniversity.github.io/workshop-introduction-to-R-and-data/slides/slides_introduction.html#76" width="400" height="300" style="border:2px solid currentColor;" loading="lazy" allowfullscreen=""></iframe>
+<script>fitvids('.shareagain', {players: 'iframe'});</script>
+</div>
+</div>
+</div>
+<p><a href="https://utrechtuniversity.github.io/workshop-introduction-to-R-and-data/slides/slides_introduction.html#76">Use this link to open slides in a new tab (refer to slide #76)</a></p>
+</section>
+<section id="video-9" class="level4 unnumbered">
+<h4 class="unnumbered anchored" data-anchor-id="video-9">Video</h4>
+<div class="cell">
+<div class="cell-output-display">
+<div class="vembedr">
+<div>
+<iframe src="https://www.youtube.com/embed/4BZGGq-nBos" width="533" height="300" frameborder="0" allowfullscreen="" data-external="1"></iframe>
+</div>
+</div>
+</div>
+</div>
+</section>
+</section>
+</section>
+<section id="indexing-a-data-frame" class="level2" data-number="4.7">
+<h2 data-number="4.7" class="anchored" data-anchor-id="indexing-a-data-frame"><span class="header-section-number">4.7</span> Indexing a data frame</h2>
+<p>Here we explain how you get to one specific value or column or data entry in your data frame. Just start at slide 80 and do the exercises as they come.</p>
+<section id="slides-11" class="level3" data-number="4.7.1">
+<h3 data-number="4.7.1" class="anchored" data-anchor-id="slides-11"><span class="header-section-number">4.7.1</span> Slides</h3>
+<div class="cell">
+<div class="cell-output-display">
+<div class="shareagain" style="min-width:300px;margin:1em auto;" data-exeternal="1">
+<iframe src="https://utrechtuniversity.github.io/workshop-introduction-to-R-and-data/slides/slides_introduction.html#80" width="400" height="300" style="border:2px solid currentColor;" loading="lazy" allowfullscreen=""></iframe>
+<script>fitvids('.shareagain', {players: 'iframe'});</script>
+</div>
+</div>
+</div>
+<p><a href="https://utrechtuniversity.github.io/workshop-introduction-to-R-and-data/slides/slides_introduction.html#80">Use this link to open slides in a new tab (refer to slide #80)</a></p>
+</section>
+<section id="code-chunk-6" class="level3" data-number="4.7.2">
+<h3 data-number="4.7.2" class="anchored" data-anchor-id="code-chunk-6"><span class="header-section-number">4.7.2</span> Code Chunk</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co">#indexing columns</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="co"># by position</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>df[,<span class="dv">2</span>]</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="co"># by name as a character string</span></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>df[, <span class="st">"age"</span>]</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a><span class="co"># by name, as an object</span></span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>df<span class="sc">$</span>age</span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a><span class="co">#indexing rows</span></span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a><span class="co"># by position</span></span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>df[<span class="dv">2</span>,]</span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a><span class="co"># by content</span></span>
+<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a>df[df<span class="sc">$</span>name <span class="ot">=</span><span class="st">"Bob"</span>,]</span>
+<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a><span class="co">#combining rows and columns</span></span>
+<span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a>df[df<span class="sc">$</span>name <span class="ot">=</span> <span class="st">"Bob"</span>, <span class="st">"age"</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="video-10" class="level3" data-number="4.7.3">
+<h3 data-number="4.7.3" class="anchored" data-anchor-id="video-10"><span class="header-section-number">4.7.3</span> Video</h3>
+<div class="cell">
+<div class="cell-output-display">
+<div class="vembedr">
+<div>
+<iframe src="https://www.youtube.com/embed/m15hbXG6I-Y" width="533" height="300" frameborder="0" allowfullscreen="" data-external="1"></iframe>
+</div>
+</div>
+</div>
+</div>
+<p>Start the video at</p>
+</section>
+<section id="exercise-6" class="level3" data-number="4.7.4">
+<h3 data-number="4.7.4" class="anchored" data-anchor-id="exercise-6"><span class="header-section-number">4.7.4</span> Exercise 6</h3>
+<p>Before you start, please run this code:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span>(name,age,country)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<ol type="1">
+<li><p>From your dataframe df, return the entries for everyone living in a country of your choice.</p></li>
+<li><p>Return only the names of everyone in your data frame df under 40. (Hint: what information should you use for row indexing? What information should you use for column indexing?)</p></li>
+<li><p>Return the columns name and age together.</p></li>
+</ol>
+</section>
+<section id="solution-6" class="level3" data-number="4.7.5">
+<h3 data-number="4.7.5" class="anchored" data-anchor-id="solution-6"><span class="header-section-number">4.7.5</span> Solution 6</h3>
+<section id="slides-12" class="level4 unnumbered">
+<h4 class="unnumbered anchored" data-anchor-id="slides-12">Slides</h4>
+<div class="cell">
+<div class="cell-output-display">
+<div class="shareagain" style="min-width:300px;margin:1em auto;" data-exeternal="1">
+<iframe src="https://utrechtuniversity.github.io/workshop-introduction-to-R-and-data/slides/slides_introduction.html#89" width="400" height="300" style="border:2px solid currentColor;" loading="lazy" allowfullscreen=""></iframe>
+<script>fitvids('.shareagain', {players: 'iframe'});</script>
+</div>
+</div>
+</div>
+<p><a href="https://utrechtuniversity.github.io/workshop-introduction-to-R-and-data/slides/slides_introduction.html#89">Use this link to open slides in a new tab (refer to slide #89)</a></p>
+</section>
+<section id="video-11" class="level4 unnumbered">
+<h4 class="unnumbered anchored" data-anchor-id="video-11">Video</h4>
+<div class="cell">
+<div class="cell-output-display">
+<div class="vembedr">
+<div>
+<iframe src="https://www.youtube.com/embed/DUk9bfcSwbA" width="533" height="300" frameborder="0" allowfullscreen="" data-external="1"></iframe>
+</div>
+</div>
+</div>
+</div>
+</section>
+</section>
+</section>
+<section id="recap" class="level2" data-number="4.8">
+<h2 data-number="4.8" class="anchored" data-anchor-id="recap"><span class="header-section-number">4.8</span> Recap</h2>
+<section id="slides-13" class="level3" data-number="4.8.1">
+<h3 data-number="4.8.1" class="anchored" data-anchor-id="slides-13"><span class="header-section-number">4.8.1</span> Slides</h3>
+<div class="cell">
+<div class="cell-output-display">
+<div class="shareagain" style="min-width:300px;margin:1em auto;" data-exeternal="1">
+<iframe src="https://utrechtuniversity.github.io/workshop-introduction-to-R-and-data/slides/slides_introduction.html#92" width="400" height="300" style="border:2px solid currentColor;" loading="lazy" allowfullscreen=""></iframe>
+<script>fitvids('.shareagain', {players: 'iframe'});</script>
+</div>
+</div>
+</div>
+<p><a href="https://utrechtuniversity.github.io/workshop-introduction-to-R-and-data/slides/slides_introduction.html#92">Use this link to open slides in a new tab (refer to slide #92)</a></p>
+<p>You made it - yeah! This was the basic introduction to R to get you started. If you want to continue with the slides, feel free to do so :)</p>
+
+
 </section>
 </section>
 
@@ -356,8 +971,8 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./intro.html" class="pagination-link">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introduction</span></span>
+      <a href="./i-analyzer.html" class="pagination-link">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Text Mining with iAnalyzer</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
