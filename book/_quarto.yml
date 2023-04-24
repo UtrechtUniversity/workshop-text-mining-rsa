@@ -9,6 +9,7 @@ book:
   chapters:
     - index.qmd
     - intro.qmd
+    - i-analyzer.qmd
     - base-r.qmd
     - references.qmd
 
