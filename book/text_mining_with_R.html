@@ -384,34 +384,75 @@ Using the function <code>anti_join()</code> we select those rows (so words) in t
 <h3 class="anchored" data-anchor-id="text-analysis">Text Analysis</h3>
 <section id="counting-words" class="level4">
 <h4 class="anchored" data-anchor-id="counting-words">Counting words</h4>
-<p>After having tokenised and cleaned our data, it’s time to perform the most basic text mining operation: count the amount of times a certain word appears in our text. Even if conceptually it seems a quite trivial operation, by counting the frequency of each word in a text we can gain important insights about the general characteristics of the text. Furthermore, counting the frequency of specific words we can classify a text or define a model to identify the underlying topics or themes.</p>
+<p>After having tokenised and cleaned our data, it’s time to perform the most basic text mining operation: count the number of times a certain word appears in our text. Even if conceptually it seems a quite trivial operation, by counting the frequency of each word in a text we can gain important insights about the general characteristics of the text. Furthermore, counting the frequency of specific words (i.e.&nbsp;how many times they occur per sentence/text/paragraph/document/etc) we can classify a text or define a model to identify the underlying topic or theme.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>tidy_clean_content <span class="sc">%&gt;%</span></span>
-<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(word, <span class="at">sort =</span> <span class="cn">TRUE</span>) <span class="sc">%&gt;%</span></span>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>word_count <span class="ot">&lt;-</span> tidy_clean_content <span class="sc">%&gt;%</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(word) <span class="sc">%&gt;%</span></span>
 <span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(n <span class="sc">&gt;</span> <span class="dv">2000</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">word =</span> <span class="fu">reorder</span>(word, n)) <span class="sc">%&gt;%</span></span>
-<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(n, word)) <span class="sc">+</span></span>
-<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>() <span class="sc">+</span></span>
-<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">y =</span> <span class="cn">NULL</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">word =</span> <span class="fu">reorder</span>(word, n)) </span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>word_count <span class="sc">%&gt;%</span></span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(n, word)) <span class="sc">+</span></span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>() <span class="sc">+</span></span>
+<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">y =</span> <span class="cn">NULL</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="text_mining_with_R_files/figure-html/unnamed-chunk-9-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
-<p>In this case we “inject” our data as input of the function <code>count</code> that, indeed, counts the identical entries of the column <em>word</em> sorting the result from high to low counts. In our analysis we want to focus on the most frequent words, let’s say the ones that appear more than 2000 times. To do that, we just need to feed our data to the function <code>filter()</code> specifying our count lower limit. After filtering we need to reorder our data to show the most frequent words first, we do that using <code>mutate()</code> and <code>reorder()</code>. The last does indeed reorder the column <em>word</em> according to the values of the column <em>n</em> (word frequency). Finally, we use the function <code>ggplot</code> to plot the data using a column geometry.</p>
-<p>Looking at the data, we are not surprised that the second most frequent word is “Europe” as we are analysing data extracted from quering “European Union”. It is significant that the third mentioned word is “vote”. This may mean that all the times European Union was mentioned in the news, it was most of the time related to decision making or elections within it.</p>
+<div class="box type5">
+<div class="sub-box">
+<img src="pictures/icons/code_expl.png" alt="Icon" class="picture">
+<p style="margin-left: 10px;">
+</p><h5 class="anchored">
+<strong>How does it work?</strong>
+</h5>
+<p></p>
+</div>
+<p>
+</p><ul>
+<li>
+We “inject” our data as input of the function <code>count()</code> that, indeed, counts the identical entries of the column <em>word</em>. <code>count()</code> has an argument (<em>name</em>) that it is used to specify the name of the column where the count values will be stored. In this case, the <em>name</em> argument is omitted, therefore, by default the name of the column will be <em>n</em>. After using <code>count()</code>, the result is a DataFrame with two columns: the quantity that has been counted (<em>word</em>) and the result of the counting (<em>n</em>).<br> There are a lot of words in our text and it would be not very convenient plotting all of them, so we apply the function <code>filter()</code> to select only those words with count (column <em>n</em>) larger than 2000. We also want words to be displayed in descending order of counts, to do that we use the function <code>mutate()</code> to substitute the column <em>word</em> with the same column (<em>word</em>) arranged by counts (<em>n</em>). To rearrange the words in order of counts we use the function <code>reorder()</code>. We store the result in the DataFrame <em>word_count</em>;
+</li>
+<li>
+Time to plot! We “feed” our data to the function <code>ggplot()</code>, in it we specify x and y axis to plot with <code>aes(n, word)</code> (<code>aes</code> stand for aesthetic). <code>geom_col()</code> specified that type of plot, in this case a column chard or a bar chart, and <code>labs(y = NULL)</code> removes the y-axis label (as it is quite obvious that we are visualising words).
+</li>
+</ul>
+<p></p>
+</div>
+<p>Looking at the data, we are not surprised to see that the second most frequent word is “european” as we are analysing data extracted from querying “European Union”. It is interesting to note that the third word is “vote”. This may mean that all the times “European Union” was mentioned in the news, it wa,s most of the times, related to the topic of elections.</p>
 </section>
 <section id="word-classification-and-sentiment-analysis" class="level4">
 <h4 class="anchored" data-anchor-id="word-classification-and-sentiment-analysis">Word classification and Sentiment Analysis</h4>
-<p>Can we write software to evaluate if a sentence is sad or if the general mood of a story is positive or negative? We actually can and this may seem surprising as the mood of the <em>sentiment</em> related to a text seems some very subjective and highly affected by human ambiguity. According to wikipedia, <strong>sentiment analysis</strong> (also known as <strong>opinion mining</strong> or <strong>emotion AI</strong>) is the use of natural language processing, text analysis, computational linguistics, and biometrics to systematically identify, extract, quantify, and study affective states and subjective information. Sentiment analysis can be very complex, so complex that should deserve a dedicated course itself. In this session we will perform a very basic sentiment analysis so that you can grasp its main principles and workflow.</p>
-<p>Sentiment analysis is based on the assumption that we can view a text as a combination of individual words and that, having assigned a sentiment to each individual word, the resulting sentiment of a test will the sum of the sentiments of its individual words. In other words, if most of the words in a text are positive, then the text can be classified as positive. Given this assumptions, to perform sentiment analisys, we need a database of words where a sentiment has been assigned to a word following specific conventions. What we need is a <strong>lexicon</strong>, a dataframe assigning a score to each word or phrase, indicating whether it is associated with positive or negative sentiment. For example, the word “happy” may have a positive score, while the word “sad” may have a negative score.</p>
-<p>For our simple example, we already downloaded the NRC emotion lexicon. The NRC Emotion Lexicon is a list of English words and their associations with eight basic emotions (anger, fear, anticipation, trust, surprise, sadness, joy, and disgust) and two sentiments (negative and positive). If an emotion is associated with a word, its score will be 1, 0 otherwise.</p>
+<p>Can we run a text analysis to evaluate if a sentence is sad or if the general mood of a story is positive or negative? We actually can and this may seem surprising as the mood or the <em>sentiment</em> related to a text seems something very subjective and highly affected by human personal judgement and background. According to wikipedia, <strong>sentiment analysis</strong> (also known as <strong>opinion mining</strong> or <strong>emotion AI</strong>) is the use of natural language processing, text analysis, computational linguistics, and biometrics to systematically identify, extract, quantify, and study affective states and subjective information. Sentiment analysis can be very complex, so complex that should deserve a dedicated course. In this session we will perform a very basic sentiment analysis so that you can grasp its main principles and workflow.</p>
+<p>Sentiment analysis is based on the assumption that we can view a text as a combination of individual words and that, having assigned a sentiment to each individual word, the resulting sentiment of the text will be the sum of the sentiment of its individual words. For example, if most of the words in a text are positive, then the text can be classified as positive. Given this assumption, to perform sentiment analysis, we need a reference database of words where a sentiment has been assigned to each word following specific conventions. Such a database is called <strong>lexicon</strong>. For our practical purposes a lexicon is just a DataFrame where a score is assigned to words or phrases, the score indicating whether the corresponding word is associated with positive or negative sentiment. For example, the word “happy” will probably have a positive score, while the word “sad” may have a negative score.</p>
+<p>For our simple analysis, we already downloaded a lexicon, the <strong>NRC emotion lexicon</strong>. The NRC Emotion Lexicon is a list of English words and their associations with eight basic emotions (anger, fear, anticipation, trust, surprise, sadness, joy, and disgust) and two sentiments (negative and positive). If an emotion is associated with a word, its score will be 1, 0 otherwise.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>nrc_lexicon_df <span class="ot">&lt;-</span> <span class="fu">read.table</span>(<span class="st">"../data/NRC-Emotion-Lexicon-Wordlevel-v0.92.txt"</span>, <span class="at">header =</span> <span class="cn">FALSE</span>, <span class="at">sep =</span> <span class="st">"</span><span class="sc">\t</span><span class="st">"</span>, <span class="at">stringsAsFactors =</span> <span class="cn">FALSE</span>, <span class="at">col.names =</span> <span class="fu">c</span>(<span class="st">"word"</span>, <span class="st">"emotion"</span>, <span class="st">"score"</span>))</span>
 <span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>joy_words <span class="ot">&lt;-</span> nrc_lexicon_df  <span class="sc">%&gt;%</span> </span>
 <span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(emotion <span class="sc">==</span> <span class="st">"joy"</span> <span class="sc">&amp;</span> score <span class="sc">==</span> <span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>In the previous lines we read the lexicon into an R DataFrame and we extracted from it only the words associated with joy. Once we know which are the words associated with joy, we can count home many “joy words” there are in our entries and see if the news associated with “European Union” can be classified as joyful or not.</p>
+<div class="box type5">
+<div class="sub-box">
+<img src="pictures/icons/code_expl.png" alt="Icon" class="picture">
+<p style="margin-left: 10px;">
+</p><h5 class="anchored">
+<strong>How does it work?</strong>
+</h5>
+<p></p>
+</div>
+<p>
+</p><ul>
+<li>
+The NRC emotion lexicon is located in the data folder and it is stored in a .txt file (even if technically it is a tab separated values file). To read its content into an R DataFrame we use the same procedure we used for our raw data;
+</li>
+<li>
+Once we have stored the lexicon into the DataFrame <em>nrc_lexicon_df</em> we can filter only the “happy” words applying the function <code>filter()</code> and specifying that only words with emotion <em>joy</em> and score 1 are going to be considered. The result is stored into the DataFrame <em>joy_words</em>.
+</li>
+</ul>
+<p></p>
+</div>
+<p>In the previous lines we read the lexicon into an R DataFrame and we extracted from it only the words associated with joy. Once we know which are the words associated with joy, we can count how many “joy words” there are in our text and see if the news associated with “European Union” can be classified as “joyful” or not.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>issue_df <span class="ot">&lt;-</span> tidy_clean_content <span class="sc">%&gt;%</span></span>
 <span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="st">`</span><span class="at">date-pub</span><span class="st">`</span><span class="sc">&gt;=</span><span class="st">'2000-01-01'</span> <span class="sc">&amp;</span> <span class="st">`</span><span class="at">date-pub</span><span class="st">`</span> <span class="sc">&lt;</span> <span class="st">'2010-01-01'</span>) <span class="sc">%&gt;%</span></span>
@@ -428,6 +469,26 @@ Using the function <code>anti_join()</code> we select those rows (so words) in t
 <pre><code>Joining with `by = join_by(word)`</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>issue_tot_df <span class="ot">&lt;-</span> <span class="fu">merge</span>(issue_df, issue_joy_df, <span class="at">by=</span><span class="st">'issue'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="box type5">
+<div class="sub-box">
+<img src="pictures/icons/code_expl.png" alt="Icon" class="picture">
+<p style="margin-left: 10px;">
+</p><h5 class="anchored">
+<strong>How does it work?</strong>
+</h5>
+<p></p>
+</div>
+<p>
+</p><ul>
+<li>
+We first apply the <code>filter()</code> function to our <em>tidy_clean_content</em> data set to select data between two specific dates in order to reduce the size of our data set. We then apply the function <code>group_by()</code>. On the surface, the function does not perform any action, but from now own any further operation in the pipeline will be perfomed on groups or rows. The way rows are grouped is determined by the argument of the function, in this case <em>issue</em>. The <code>n()</code> function counts the number of rows in the DataFrame and when applied after <code>group_by(issue)</code> it counts the number of rows (words) for groups of rows sharing the same value in the <em>issue</em> column, i.e.&nbsp;the number of words in each issue. The function <code>reframe()</code> changes the format of the output DataFrame creating two columns: <em>words_per_issue</em> containing the total number of words in each issue (result of <code>n()</code>) and <em>date</em> storing the date of publication. Finally, the function <code>unique()</code> will keep only unique values of the issue;
+</li>
+<li>
+Once we have stored the lexicon into the DataFrame <em>nrc_lexicon_df</em> we can filter only the “happy” words applying the function <code>filter()</code> and specifying that only words with emotion <em>joy</em> and score 1 are going to be considered. The result is stored into the DataFrame <em>joy_words</em>.
+</li>
+</ul>
+<p></p>
 </div>
 <p>The starting point is always our cleaned data <code>tidy_clean_content</code>. We first apply a filter to select news in the decade 2000-2010, then we group our data according to the issue (remember, our data has been tokenized, so at the moment each row corresponds to a single word, not to a single news) and we count the number of words per issue. We repeat the same operation a second time, but now we join our dataframe with <code>joy_words</code>, in this way we filter out only those words that, according to the NRC lexicon, are associated with joy. We finally merge the two resulting DataFrames for plotting convenience.</p>
 <div class="cell">

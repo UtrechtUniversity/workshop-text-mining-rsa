@@ -334,9 +334,10 @@ word_count %>%
       There are a lot of words in our text and it would be not very convenient plotting 
       all of them, so we apply the function `filter()` to select only those words with 
       count (column *n*) larger than 2000. We also want words to be displayed in 
-      descending order of counts, to do that we use the function `mutate()' to 
+      descending order of counts, to do that we use the function `mutate()` to 
       substitute the column *word* with the same column (*word*) arranged by counts (*n*).
-      To rearrange the words in order of counts we use the function `reorder()`;
+      To rearrange the words in order of counts we use the function `reorder()`. We
+      store the result in the DataFrame *word_count*;
     </li>
     <li>
       Time to plot! We "feed" our data to the function `ggplot()`, in it we specify
@@ -353,11 +354,11 @@ Looking at the data, we are not surprised to see that the second most frequent w
 
 #### Word classification and Sentiment Analysis
 
-Can we write software to evaluate if a sentence is sad or if the general mood of a story is positive or negative? We actually can and this may seem surprising as the mood of the *sentiment* related to a text seems some very subjective and highly affected by human ambiguity. According to wikipedia, **sentiment analysis** (also known as **opinion mining** or **emotion AI**) is the use of natural language processing, text analysis, computational linguistics, and biometrics to systematically identify, extract, quantify, and study affective states and subjective information. Sentiment analysis can be very complex, so complex that should deserve a dedicated course itself. In this session we will perform a very basic sentiment analysis so that you can grasp its main principles and workflow.
+Can we run a text analysis to evaluate if a sentence is sad or if the general mood of a story is positive or negative? We actually can and this may seem surprising as the mood or the *sentiment* related to a text seems something very subjective and highly affected by human personal judgement and background. According to wikipedia, **sentiment analysis** (also known as **opinion mining** or **emotion AI**) is the use of natural language processing, text analysis, computational linguistics, and biometrics to systematically identify, extract, quantify, and study affective states and subjective information. Sentiment analysis can be very complex, so complex that should deserve a dedicated course. In this session we will perform a very basic sentiment analysis so that you can grasp its main principles and workflow.
 
-Sentiment analysis is based on the assumption that we can view a text as a combination of individual words and that, having assigned a sentiment to each individual word, the resulting sentiment of a test will the sum of the sentiments of its individual words. In other words, if most of the words in a text are positive, then the text can be classified as positive. Given this assumptions, to perform sentiment analisys, we need a database of words where a sentiment has been assigned to a word following specific conventions. What we need is a **lexicon**, a dataframe assigning a score to each word or phrase, indicating whether it is associated with positive or negative sentiment. For example, the word "happy" may have a positive score, while the word "sad" may have a negative score.
+Sentiment analysis is based on the assumption that we can view a text as a combination of individual words and that, having assigned a sentiment to each individual word, the resulting sentiment of the text will be the sum of the sentiment of its individual words. For example, if most of the words in a text are positive, then the text can be classified as positive. Given this assumption, to perform sentiment analysis, we need a reference database of words where a sentiment has been assigned to each word following specific conventions. Such a database is called **lexicon**. For our practical purposes a lexicon is just a DataFrame where a score is assigned to words or phrases, the score indicating whether the corresponding word is associated with positive or negative sentiment. For example, the word "happy" will probably have a positive score, while the word "sad" may have a negative score.
 
-For our simple example, we already downloaded the NRC emotion lexicon. The NRC Emotion Lexicon is a list of English words and their associations with eight basic emotions (anger, fear, anticipation, trust, surprise, sadness, joy, and disgust) and two sentiments (negative and positive). If an emotion is associated with a word, its score will be 1, 0 otherwise.
+For our simple analysis, we already downloaded a lexicon, the **NRC emotion lexicon**. The NRC Emotion Lexicon is a list of English words and their associations with eight basic emotions (anger, fear, anticipation, trust, surprise, sadness, joy, and disgust) and two sentiments (negative and positive). If an emotion is associated with a word, its score will be 1, 0 otherwise.
 
 ```{r}
 nrc_lexicon_df <- read.table("../data/NRC-Emotion-Lexicon-Wordlevel-v0.92.txt", header = FALSE, sep = "\t", stringsAsFactors = FALSE, col.names = c("word", "emotion", "score"))
@@ -366,7 +367,34 @@ joy_words <- nrc_lexicon_df  %>%
   filter(emotion == "joy" & score == 1)
 ```
 
-In the previous lines we read the lexicon into an R DataFrame and we extracted from it only the words associated with joy. Once we know which are the words associated with joy, we can count home many "joy words" there are in our entries and see if the news associated with "European Union" can be classified as joyful or not.
+<div class="box type5">
+  <div class="sub-box">
+  <img src="pictures/icons/code_expl.png" alt="Icon" class="picture"/> 
+  <p style="margin-left: 10px;"><h5><strong>How does it work?</strong></h5></p>
+  </div>
+
+<p>
+  <ul>
+    <li>
+      The NRC emotion lexicon is located in the data folder and it is stored in
+      a .txt file (even if technically it is a tab separated values file). To read
+      its content into an R DataFrame we use the same procedure we used for our
+      raw data;
+    </li>
+    <li>
+      Once we have stored the lexicon into the DataFrame *nrc_lexicon_df* we can
+      filter only the "happy" words applying the function `filter()` and specifying
+      that only words with emotion *joy* and score 1 are going to be considered.
+      The result is stored into the DataFrame *joy_words*.
+    </li>
+  </ul>
+</p>
+</div>
+
+In the previous lines we read the lexicon into an R DataFrame and we extracted from it 
+only the words associated with joy. Once we know which are the words associated with joy, 
+we can count how many "joy words" there are in our text and see if the news associated 
+with "European Union" can be classified as "joyful" or not.
 
 ```{r}
 issue_df <- tidy_clean_content %>%
@@ -384,7 +412,46 @@ issue_joy_df <- tidy_clean_content %>%
 issue_tot_df <- merge(issue_df, issue_joy_df, by='issue')
 ```
 
-The starting point is always our cleaned data `tidy_clean_content`. We first apply a filter to select news in the decade 2000-2010, then we group our data according to the issue (remember, our data has been tokenized, so at the moment each row corresponds to a single word, not to a single news) and we count the number of words per issue. We repeat the same operation a second time, but now we join our dataframe with `joy_words`, in this way we filter out only those words that, according to the NRC lexicon, are associated with joy. We finally merge the two resulting DataFrames for plotting convenience.
+<div class="box type5">
+  <div class="sub-box">
+  <img src="pictures/icons/code_expl.png" alt="Icon" class="picture"/> 
+  <p style="margin-left: 10px;"><h5><strong>How does it work?</strong></h5></p>
+  </div>
+
+<p>
+  <ul>
+    <li>
+      We first apply the `filter()` function to our *tidy_clean_content* data set
+      to select data between two specific dates in order to reduce the size of our
+      data set. We then apply the function `group_by()`. On the surface, the function
+      does not perform any action, but from now own any further operation in the 
+      pipeline will be perfomed on groups or rows. The way rows are grouped is determined
+      by the argument of the function, in this case *issue*. The `n()` function
+      counts the number of rows in the DataFrame and when applied after `group_by(issue)`
+      it counts the number of rows (words) for groups of rows sharing the same
+      value in the *issue* column, i.e. the number of words in each issue. The function
+      `reframe()` changes the format of the output DataFrame creating two columns:
+      *words_per_issue* containing the total number of words in each issue (result
+      of `n()`) and *date* storing the date of publication. Finally, the function
+      `unique()` will keep only unique values of the issue;
+    </li>
+    <li>
+      We repeat the same operation of the previous code, but this time we join
+      our DataFrame with *joy_words* using the function `inner_join()'. In this 
+      way, only "happy words" will be selected from *tidy_clean_content*;
+    </li>
+    <li>
+      We finally merge the two previously created DataFrames so to have total number
+      of words and total number of joy words per issue in the same DataFrame.
+    </li>
+  </ul>
+</p>
+</div>
+
+The starting point is always our cleaned data `tidy_clean_content`. We first apply a filter to select news in the decade 2000-2010, then we group our data according to the issue (remember, our data has been tokenized, so at the moment each row corresponds to a single word, not to a single news or issue) and we count the number of words per issue and 
+the number of joy words per issue. The reason for this double computation is that we 
+would like to compare the total number of joy words with the total number of words
+in each issue, to obtain in this way the percentage of joy words per issue.
 
 ```{r}
 issue_tot_df %>%
@@ -394,7 +461,39 @@ issue_tot_df %>%
   labs(x = "Date", y = "Joy words [%]", title = "Joyfulness about EU in 2000-2010")
 ```
 
-Inspecting the plot we can see that the percent of joy words never exceed the 8%. That is a quite small percent, what can we deduce from that? Text mining is a powerful technique, but like any other kind of statistics needs to be properly read according to the context. First of all we do not exactly know if 8% is the average rate of joyness associated with European Union news. We don't even know if the Times, by default, reports EU related news with a certain level of "coldness". Once established these level of "backgroud" or "bias" we can look at the plot to see eventual trends or correlations with other significant events in time.
+<div class="box type5">
+  <div class="sub-box">
+  <img src="pictures/icons/code_expl.png" alt="Icon" class="picture"/> 
+  <p style="margin-left: 10px;"><h5><strong>How does it work?</strong></h5></p>
+  </div>
+
+<p>
+  <ul>
+    <li>
+      Time to plot! We first add a column to our DataFrame for plotting convenience.
+      We use the function `mutate()` to add the column *per_cent_joy* that, indeed,
+      stores the percent of joy words per issue;
+    </li>
+    <li>
+      We use `ggplot(aes())`, `geom_col()`, and `labs()` to specify x and y axis in
+      out plot, the type of plot, and the labels for our axes, respectively.
+    </li>
+    <li>
+
+    </li>
+  </ul>
+</p>
+
+</div>
+
+Inspecting the plot we can see that the percent of joy words never exceed the 8% and that there is a decreasing joy trend up to 2006 while values go back to a more average
+4% level in 2007. 
+8% is a quite small value, what can we deduce from that? Text mining is a powerful technique, but like any other kind of statistics needs to be properly read according to the context. First of all, we would like to know if 8% is a particularly low value (as it seems like) or it is just the average level of joy associated with European Union news. We may even find out that the Times, by default, reports EU related news with a certain level of "coldness" so that 8% would represent a totally normal value in our sample. 
+One of the main challenges in this case (and in general statistics) is establishing the proper level of "background joy level" or even the presence of a "joy bias" (a factor that can influence the results of an experiment in a particular direction, in our case low
+joy). Only determining these factors would allow us to obtain meaningfull conclusion
+from our "joy" levels. A deep sentimental analysis of the sample is out of the scope
+of this course, but you may try yourself to figure out yourself ways to make our
+sentiment analysis conclusions more consistent.
 
 #### Analyzing word and document frequency: tf-idf
 
