@@ -58,6 +58,7 @@ editor: visual
 }
 ```
 
+
 ### Preliminaries
 
 Few lines and scheme of tidyverse pipeline
@@ -721,4 +722,5 @@ bigram_tf_idf <- tidy_content_rel_clean %>%
 
 bigram_tf_idf
 ```
+
 
