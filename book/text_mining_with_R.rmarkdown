@@ -263,10 +263,12 @@ if (are_there_na) {
 
 As we mentioned before, text is unstructured data that can be very "noisy", i.e. containing a lot of not relevant information. Actually, the most common words in a text are words that have very little meaning, such as "the", "and", "a", etc. These words are referred as *stop words* and cleaning data from text mining includes removing stop words from our tokenised data:
 
-```{r}
+```{r, warning=FALSE, message=FALSE}
 data(stop_words)
 
 tidy_clean_content <- tidy_content %>% anti_join(stop_words)
+
+tidy_clean_content
 ```
 
 <div class="box type5">
@@ -300,21 +302,55 @@ perfomed basic data cleaning and our data set is now ready for some analysis.
 
 #### Counting words
 
-After having tokenised and cleaned our data, it's time to perform the most basic text mining operation: count the times a certain word appears in our text. Even if conceptually it seems a quite trivial operation, by counting the frequency of each word in a text we can gain important insights about the general characteristics of the text. Furthermore, counting the frequency of specific words we can classify a text or define a model to identify the underlying topics or themes.
+After having tokenised and cleaned our data, it's time to perform the most basic text mining operation: count the number of times a certain word appears in our text. Even if conceptually it seems a quite trivial operation, by counting the frequency of each word in a text we can gain important insights about the general characteristics of the text. Furthermore, counting the frequency of specific words (i.e. how many times they occur per sentence/text/paragraph/document/etc) we can classify a text or define a model to identify the underlying topic or theme.
 
 ```{r}
-tidy_clean_content %>%
-  count(word, sort = TRUE) %>%
+word_count <- tidy_clean_content %>%
+  count(word) %>%
   filter(n > 2000) %>%
-  mutate(word = reorder(word, n)) %>%
+  mutate(word = reorder(word, n)) 
+
+word_count %>%
   ggplot(aes(n, word)) +
   geom_col() +
   labs(y = NULL)
 ```
 
-In this case we "inject" our data as input of the function `count` that, indeed, counts the identical entries of the column *word* sorting the result from high to low counts. In our analysis we want to focus on the most frequent words, let's say the ones that appear more than 2000 times. To do that, we just need to feed our data to the function `filter()` specifying our count lower limit. After filtering we need to reorder our data to show the most frequent words first, we do that using `mutate()` and `reorder()`. The last does indeed reorder the column *word* according to the values of the column *n* (word frequency). Finally, we use the function `ggplot` to plot the data using a column geometry.
+<div class="box type5">
+  <div class="sub-box">
+  <img src="pictures/icons/code_expl.png" alt="Icon" class="picture"/> 
+  <p style="margin-left: 10px;"><h5><strong>How does it work?</strong></h5></p>
+  </div>
 
-Looking at the data, we are not surprised that the second most frequent word is "Europe" as we are analysing data extracted from quering "European Union". It is significant that the third mentioned word is "vote". This may mean that all the times European Union was mentioned in the news, it was most of the time related to decision making or elections within it.
+<p>
+  <ul>
+    <li>
+      We "inject" our data as input of the function `count()` that, indeed, counts 
+      the identical entries of the column *word*. `count()` has an argument (*name*) 
+      that it is used to specify the name of the column where the count values will be stored.
+      In this case, the *name* argument is omitted, therefore, by default the name
+      of the column will be *n*. After using `count()`, the result is a DataFrame
+      with two columns: the quantity that has been counted (*word*) and the result
+      of the counting (*n*).<br>
+      There are a lot of words in our text and it would be not very convenient plotting 
+      all of them, so we apply the function `filter()` to select only those words with 
+      count (column *n*) larger than 2000. We also want words to be displayed in 
+      descending order of counts, to do that we use the function `mutate()' to 
+      substitute the column *word* with the same column (*word*) arranged by counts (*n*).
+      To rearrange the words in order of counts we use the function `reorder()`;
+    </li>
+    <li>
+      Time to plot! We "feed" our data to the function `ggplot()`, in it we specify
+      x and y axis to plot with `aes(n, word)` (`aes` stand for aesthetic). `geom_col()`
+      specified that type of plot, in this case a column chard or a bar chart, and
+      `labs(y = NULL)` removes the y-axis label (as it is quite obvious that we are
+      visualising words).
+    </li>
+  </ul>
+</p>
+</div>
+
+Looking at the data, we are not surprised to see that the second most frequent word is "european" as we are analysing data extracted from querying "European Union". It is interesting to note that the third word is "vote". This may mean that all the times "European Union" was mentioned in the news, it wa,s most of the times, related to the topic of elections.
 
 #### Word classification and Sentiment Analysis
 

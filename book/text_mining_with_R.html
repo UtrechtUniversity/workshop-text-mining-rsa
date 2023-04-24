@@ -347,19 +347,44 @@ We use a conditional statement IF … ELSE … to print two messages depending o
 <div class="cell">
 <div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(stop_words)</span>
 <span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>tidy_clean_content <span class="ot">&lt;-</span> tidy_content <span class="sc">%&gt;%</span> <span class="fu">anti_join</span>(stop_words)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Joining with `by = join_by(word)`</code></pre>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>tidy_clean_content <span class="ot">&lt;-</span> tidy_content <span class="sc">%&gt;%</span> <span class="fu">anti_join</span>(stop_words)</span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>tidy_clean_content</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 0 × 9
+# … with 9 variables: author &lt;chr&gt;, category &lt;chr&gt;, date-pub &lt;date&gt;,
+#   edition &lt;lgl&gt;, issue &lt;dbl&gt;, query &lt;chr&gt;, title &lt;chr&gt;, volume &lt;lgl&gt;,
+#   word &lt;chr&gt;</code></pre>
 </div>
 </div>
-<p><code>stop_words</code> is a dataframe containing all the stop words. Using <code>anti_join</code> we select those rows (so words) in <code>tidy_content</code> that do <strong>NOT</strong> correspond to the stop words. In other words, with the few lines above, we cleaned up the <code>tidy_content</code> DataFrame from stop words.</p>
+<div class="box type5">
+<div class="sub-box">
+<img src="pictures/icons/code_expl.png" alt="Icon" class="picture">
+<p style="margin-left: 10px;">
+</p><h5 class="anchored">
+<strong>How does it work?</strong>
+</h5>
+<p></p>
+</div>
+<p>
+</p><ul>
+<li>
+<code>data(stop_words)</code> loads a data set containing the most commonly used stop words in English language into the R environment. If you are in R studio you will now see in your Environment tab (the top-right one) a new DataFrame called <em>stop_words</em>;
+</li>
+<li>
+Using the function <code>anti_join()</code> we select those rows (so words) in the DataFrame <em>tidy_content</em> that do <strong>NOT</strong> match the stop words. In other words, we created a new DataFrame (<em>tidy_clean_content</em>) removing all the stop words listed in <em>stop_words</em> from <em>tidy_content</em>.
+</li>
+</ul>
+<p></p>
+</div>
+<p>With the few lines of code above, we cleaned up the <code>tidy_content</code> DataFrame from stop words. We perfomed basic data cleaning and our data set is now ready for some analysis.</p>
 </section>
 </section>
 <section id="text-analysis" class="level3">
 <h3 class="anchored" data-anchor-id="text-analysis">Text Analysis</h3>
 <section id="counting-words" class="level4">
 <h4 class="anchored" data-anchor-id="counting-words">Counting words</h4>
-<p>After having tokenised and cleaned our data, it’s time to perform the most basic text mining operation: count the times a certain word appears in our text. Even if conceptually it seems a quite trivial operation, by counting the frequency of each word in a text we can gain important insights about the general characteristics of the text. Furthermore, counting the frequency of specific words we can classify a text or define a model to identify the underlying topics or themes.</p>
+<p>After having tokenised and cleaned our data, it’s time to perform the most basic text mining operation: count the amount of times a certain word appears in our text. Even if conceptually it seems a quite trivial operation, by counting the frequency of each word in a text we can gain important insights about the general characteristics of the text. Furthermore, counting the frequency of specific words we can classify a text or define a model to identify the underlying topics or themes.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>tidy_clean_content <span class="sc">%&gt;%</span></span>
 <span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(word, <span class="at">sort =</span> <span class="cn">TRUE</span>) <span class="sc">%&gt;%</span></span>
