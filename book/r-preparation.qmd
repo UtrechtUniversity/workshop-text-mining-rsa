@@ -1,0 +1,63 @@
+# Preparation {.unnumbered}
+
+In the next session, we will get started with R & RStudio. You are required to complete the installation and preparation described on this page prior to attending the session. We will not have time to run through these steps during the meeting. 
+
+## Install R & RStudio
+
+::: {.panel-tabset}
+
+### Personal Laptop
+
+By personal laptop, we mean a laptop where you have administrator rights.
+
+1. Install R from [https://cran.rstudio.com/](https://cran.rstudio.com/)
+2. Install RStudio from [https://www.rstudio.com/products/rstudio/download/#download](https://www.rstudio.com/products/rstudio/download/#download) (if you are unsure about which link to click, you should probably use the top list with "installers". From that, choose the installer for your operating system.)
+ 
+### Utrecht University laptop
+
+1. Open Software Center
+2. Install “R for Windows”
+ 
+Installing R packages on a Utrecht University laptop can be hard. This is because R packages are installed on a so-called 'mounted' drive. This causes problems with the performance. Check the installation:
+
+3. Open RStudio
+4. Look for a window that says "Console" (probably bottom left of your screen).
+5. Write the following line of code in your console: .libPaths()
+6. Hit ‘enter’.
+
+If the resulting path is a local address (e.g. starting with C:/), you are fine and can skip the next few steps. If it starts with // you are installing packages on a mounted drive. This will affect the performance, so you will want to correct that:
+
+7. Create a folder R-packages on a local drive.
+8. Copy the location to that drive. For example: C:/Users/User/R-packages
+9. Run the following line of code in the console: file.edit(file.path("~", ".Rprofile"))
+10. RStudio now opens an editor window.
+11. Paste .libPaths("C:/Users/User/R-packages") (or whatever path you copied in 8.) in the editor, and save the file.
+12. Restart your R session.
+13. At the window on the bottom right of your screen, select the tab "packages"
+14. Click on “install”. A window opens. In this window, is Install to library pointing to C:/Users/User/R-packages? (or whatever path you copied in 8.).
+
+:::
+
+## Explore R & RStudio
+
+Watch the following 7-minute video to get an idea of how R & RStudio works. Try to follow along on your own computer! The slides are also available for reference.
+
+### Video
+
+```{r video intro, echo=FALSE}
+
+vembedr::embed_url("https://www.youtube.com/watch?v=FFYSAUJ305o")
+```
+
+### Slides
+
+For this part, just consider the slides 12 - 16. 
+
+```{r embed-xaringan-1, echo=FALSE}
+
+#https://utrechtuniversity.github.io/workshop-introduction-to-R-and-data/slides/slides_introduction.html#12
+
+xaringanExtra::embed_xaringan(url = "https://utrechtuniversity.github.io/workshop-introduction-to-R-and-data/slides/slides_introduction.html#12", ratio = "4:3")
+```
+
+[Use this link to open slides in a new tab (refer to slide #12)](https://utrechtuniversity.github.io/workshop-introduction-to-R-and-data/slides/slides_introduction.html#12)

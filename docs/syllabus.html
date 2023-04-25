@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Text Mining with I-Analyzer &amp; R - Text Mining with iAnalyzer</title>
+<title>Text Mining with I-Analyzer &amp; R - Syllabus</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -30,8 +30,8 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./base-r.html" rel="next">
-<link href="./schedule.html" rel="prev">
+<link href="./outline-and-schedule.html" rel="next">
+<link href="./index.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -70,7 +70,7 @@ ul.task-list li input[type="checkbox"] {
   <header id="quarto-header" class="headroom fixed-top">
   <nav class="quarto-secondary-nav" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
     <div class="container-fluid d-flex justify-content-between">
-      <h1 class="quarto-secondary-nav-title">Text Mining with iAnalyzer</h1>
+      <h1 class="quarto-secondary-nav-title">Syllabus</h1>
       <button type="button" class="quarto-btn-toggle btn" aria-label="Show secondary navigation">
         <i class="bi bi-chevron-right"></i>
       </button>
@@ -100,12 +100,12 @@ ul.task-list li input[type="checkbox"] {
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./syllabus.html" class="sidebar-item-text sidebar-link">Syllabus</a>
+  <a href="./syllabus.html" class="sidebar-item-text sidebar-link active">Syllabus</a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./schedule.html" class="sidebar-item-text sidebar-link">Schedule</a>
+  <a href="./outline-and-schedule.html" class="sidebar-item-text sidebar-link">Course Outline &amp; Schedule</a>
   </div>
 </li>
         <li class="sidebar-item sidebar-item-section">
@@ -118,7 +118,17 @@ ul.task-list li input[type="checkbox"] {
       <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./i-analyzer.html" class="sidebar-item-text sidebar-link active">Text Mining with iAnalyzer</a>
+  <a href="./ianalyzer-preparation.html" class="sidebar-item-text sidebar-link">Preparation</a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./ianalyzer-session.html" class="sidebar-item-text sidebar-link">Text Mining with iAnalyzer</a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./ianalyzer-homework.html" class="sidebar-item-text sidebar-link">Homework</a>
   </div>
 </li>
       </ul>
@@ -133,7 +143,17 @@ ul.task-list li input[type="checkbox"] {
       <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./base-r.html" class="sidebar-item-text sidebar-link">Base R</a>
+  <a href="./r-preparation.html" class="sidebar-item-text sidebar-link">Preparation</a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./r-session.html" class="sidebar-item-text sidebar-link">Base R</a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./r-homework.html" class="sidebar-item-text sidebar-link">Homework</a>
   </div>
 </li>
       </ul>
@@ -157,26 +177,14 @@ ul.task-list li input[type="checkbox"] {
 </nav>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        <nav id="TOC" role="doc-toc" class="toc-active">
-    <h2 id="toc-title">Table of contents</h2>
-   
-  <ul>
-  <li><a href="#slides" id="toc-slides" class="nav-link active" data-scroll-target="#slides">Slides</a></li>
-  <li><a href="#exercise" id="toc-exercise" class="nav-link" data-scroll-target="#exercise">Exercise:</a></li>
-  <li><a href="#homework" id="toc-homework" class="nav-link" data-scroll-target="#homework">Homework</a>
-  <ul class="collapse">
-  <li><a href="#cheatsheet-for-search-queries" id="toc-cheatsheet-for-search-queries" class="nav-link" data-scroll-target="#cheatsheet-for-search-queries">Cheatsheet for Search Queries</a></li>
-  <li><a href="#explanation-ocr-scores" id="toc-explanation-ocr-scores" class="nav-link" data-scroll-target="#explanation-ocr-scores">Explanation OCR scores</a></li>
-  </ul></li>
-  </ul>
-</nav>
+        
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title d-none d-lg-block">Text Mining with iAnalyzer</h1>
+<h1 class="title d-none d-lg-block">Syllabus</h1>
 </div>
 
 
@@ -191,126 +199,9 @@ ul.task-list li input[type="checkbox"] {
 
 </header>
 
-<p>iAnalyzer is a simple online tool for searching through / querying text corpora.</p>
-<p>We will use it today in the exercises in order to perform a search in the available text corpora and download the result (in the form of a CSV file), which you will use in the next session for further analysis in R.</p>
-<section id="slides" class="level2">
-<h2 class="anchored" data-anchor-id="slides">Slides</h2>
-<embed src="slides/slides_ianalyzer.pdf" type="application/pdf" width="100%" height="600px">
-</section>
-<section id="exercise" class="level2">
-<h2 class="anchored" data-anchor-id="exercise">Exercise:</h2>
-<p>To perform a first search, follow these steps:</p>
-<ol type="1">
-<li>Go to the iAnalyzer website: https://ianalyzer.hum.uu.nl/<br>
-</li>
-<li>Login with your solisID</li>
-<li>Perform a search with these criteria:</li>
-</ol>
-<div class="cell" data-warnings="false">
-<table class="table table-sm table-striped">
-<colgroup>
-<col style="width: 31%">
-<col style="width: 68%">
-</colgroup>
-<tbody>
-<tr class="odd">
-<td>Corpus</td>
-<td>Times (select at the top left from the dropdown menu ‘corpora’)</td>
-</tr>
-<tr class="even">
-<td>Query</td>
-<td>‘European Union’</td>
-</tr>
-<tr class="odd">
-<td>Publication Date</td>
-<td>From 1945 onwards</td>
-</tr>
-<tr class="even">
-<td>OCR confidence</td>
-<td>80-100 (explanation of the OCR score is at the bottom of the page)</td>
-</tr>
-<tr class="odd">
-<td>Page Type</td>
-<td>Standard</td>
-</tr>
-<tr class="even">
-<td>On Front Page</td>
-<td>Yes (So leave ‘false’-box unchecked)</td>
-</tr>
-<tr class="odd">
-<td>Publication Date</td>
-<td>From 1945 onwards</td>
-</tr>
-<tr class="even">
-<td>Category</td>
-<td>News</td>
-</tr>
-<tr class="odd">
-<td>Illustration</td>
-<td>No (So leave all boxes unchecked)</td>
-</tr>
-</tbody>
-</table>
-</div>
-<ol start="4" type="1">
-<li>Check out the different visualizations (in the top, right next to the header ‘Filters’)</li>
-<li>Download the data in a CSV format (At the top of the page, “download CSV”). Make sure that before you download the file, you click on the small gears icon next to the download button, click “show default fields”, and check the box “content”. Otherwise, your downloaded file will not contain the actual text of the articles.</li>
-</ol>
-</section>
-<section id="homework" class="level2">
-<h2 class="anchored" data-anchor-id="homework">Homework</h2>
-<p>When you have managed to successfully download the CSV file (check for content in the file!), you can go ahead and perform your own search. For that, you need to first build a proper search string and then download the corresponding CSV file. Below you find a table (“cheat sheet”) which explains the operators which you need to use for the search string. Please make sure that for the next session (where we are going to use R to analyze the text data), you have your CSV file ready!</p>
-<section id="cheatsheet-for-search-queries" class="level3">
-<h3 class="anchored" data-anchor-id="cheatsheet-for-search-queries">Cheatsheet for Search Queries</h3>
-<table class="table">
-<thead>
-<tr class="header">
-<th>Operator</th>
-<th style="text-align: center;">Description</th>
-<th>Example/Explanation</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>+</td>
-<td style="text-align: center;">means AND</td>
-<td>bank +assets</td>
-</tr>
-<tr class="even">
-<td>|</td>
-<td style="text-align: center;">means OR</td>
-<td>bank |assets -&gt; Note that OR is already the default way to combine search terms, so “bank assets” would be sufficient in this example.</td>
-</tr>
-<tr class="odd">
-<td>-</td>
-<td style="text-align: center;">means NOT</td>
-<td>bank -assets</td>
-</tr>
-<tr class="even">
-<td>” ”</td>
-<td style="text-align: center;">entire phrase</td>
-<td>allows the search for an entire phrase: “the assets of the bank”</td>
-</tr>
-<tr class="odd">
-<td>*</td>
-<td style="text-align: center;">wildcard</td>
-<td>A wildcard for any number of characters, e.g.&nbsp;bank* will match banking, banks, banked, etc. The wildcard is only allowed at the end of a word, and cannot be used with phrases (between ” quotes).</td>
-</tr>
-<tr class="even">
-<td>~N</td>
-<td style="text-align: center;">fuzzy search</td>
-<td>Describes fuzzy search. When placed after a term this signifies how many characters are allowed to differ. So bank~1 also matches bang, sank, dank etc. When placed after a phrase, this signifies how many words may differ</td>
-</tr>
-</tbody>
-</table>
-</section>
-<section id="explanation-ocr-scores" class="level3">
-<h3 class="anchored" data-anchor-id="explanation-ocr-scores">Explanation OCR scores</h3>
-<p>OCR stands for “Optical character recognition” and it is a key tool for text mining. OCR uses machine learning to extract words and lines of text from scans and images, which can then be used to perform quantitative text analysis or natural language processing.As you can imagine, dependent on the image/scan quality, the writing (machine vs.&nbsp;hand-written) etc., the automated recognition of characters will not be perfect. The OCR score is a metric used to quantify the accuracy of the text extraction (in other words, the score reflects how likely it is that there are errors in the text extraction)</p>
+<embed src="documents/LEG-SA-11_TextMining_Syllabus.pdf" type="application/pdf" width="100%" height="600px">
 
 
-</section>
-</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
@@ -448,13 +339,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./schedule.html" class="pagination-link">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Schedule</span>
+      <a href="./index.html" class="pagination-link">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Welcome</span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./base-r.html" class="pagination-link">
-        <span class="nav-page-text">Base R</span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./outline-and-schedule.html" class="pagination-link">
+        <span class="nav-page-text">Course Outline &amp; Schedule</span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

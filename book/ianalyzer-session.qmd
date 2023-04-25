@@ -1,4 +1,4 @@
-# Text Mining with iAnalyzer
+# Text Mining with iAnalyzer {.unnumbered}
 
 iAnalyzer is a simple online tool for searching through / querying text corpora.
 
@@ -11,6 +11,8 @@ We will use it today in the exercises in order to perform a search in the availa
 
 
 ## Exercise:
+
+_Before starting, create a folder for this course and a subfolder for today's session in an accessible location on your computer_.
 
 To perform a first search, follow these steps:
 
@@ -38,16 +40,12 @@ cat(tabl) # output the table in a format good for HTML/PDF/docx conversion
 4. Check out the different visualizations (in the top, right next to the header 'Filters')
 5. Download the data in a CSV format (At the top of the page, "download CSV"). Make sure that before you download the file, you click on the small gears icon next to the download button, click "show default fields", and check the box "content". Otherwise, your downloaded file will not contain the actual text of the articles. 
 
-## Homework
-
-When you have managed to successfully download the CSV file (check for content in the file!), you can go ahead and perform your own search. For that, you need to first build a proper search string and then download the corresponding CSV file. Below you find a table ("cheat sheet") which explains the operators which you need to use for the search string. Please make sure that for the next session (where we are going to use R to analyze the text data), you have your CSV file ready!
-
 ### Cheatsheet for Search Queries
 
 Operator    Description     Example/Explanation
 --------   --------------   ----------------
 +           means AND       bank +assets
-|           means OR        bank |assets -> Note that OR is already the default way to combine search terms, so "bank assets" would be sufficient in this example.
+|           means OR        bank |assets -> Note that OR is already the default way to combine search terms, so _bank assets_ would be sufficient in this example.
 -           means NOT       bank -assets
 " "         entire phrase   allows the search for an entire phrase: “the assets of the bank”
 *	          wildcard        A wildcard for any number of characters, e.g. bank* will match banking, banks, banked, etc. The wildcard is only allowed at the end of a word, and cannot be used with phrases (between " quotes).

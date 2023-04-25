@@ -1,0 +1,522 @@
+# Base R {.unnumbered}
+
+Hi there! This is the basic introduction to R and RStudio. 
+This is a very first introduction and overview to understand the fundamental idea, structure and basic syntax of R to get you started. We will walk you through the slides and demonstrate most examples, but you can also revisit the slides or check out the videos in your own time. For each chapter, you will find a piece called "code chunk", which you can copy into your R environment and run so you get the same output as you see on the slides. This safes you a lot of copying and typing along, so make use of it :) f 
+There are small exercises with answer slides so you can get a hands-on experience. Try to do the exercises as they come and of course, you can consult the answer slides or videos if you get stuck. 
+
+Some parts of the provided material go a bit further than what we want to cover here and exceed the goal of our basic introduction. We will skip these for now and indicate at which slide you can stop, but if you are motivated and curious you can just keep going. 
+
+If you're intrigued by the world of R and want to learn more, we offer an "Introduction to R" and many other courses - just check out [our website](https://www.uu.nl/en/research/research-data-management/walk-in-hours-workshops). Have fun and don't hesitate to ask for help!
+
+
+## Let's get started: what is R and RStudio 
+This describes the basic idea of R and RStudio and how to work in the RStudio environment.
+
+### Slides
+For this part, just consider the slides 12 - 16. 
+
+```{r embed-xaringan-1, echo=FALSE}
+
+#https://utrechtuniversity.github.io/workshop-introduction-to-R-and-data/slides/slides_introduction.html#12
+
+xaringanExtra::embed_xaringan(url = "https://utrechtuniversity.github.io/workshop-introduction-to-R-and-data/slides/slides_introduction.html#12", ratio = "4:3")
+```
+
+[Use this link to open slides in a new tab (refer to slide #12)](https://utrechtuniversity.github.io/workshop-introduction-to-R-and-data/slides/slides_introduction.html#12)
+
+
+### Code Chunk
+This is an example of a so-called code chunk in which you write the actual code.
+
+```{r code chunk start, echo=TRUE, eval = FALSE}
+#let's define x 
+x <- 6
+x
+
+y <- "apple"
+y
+```
+
+
+### Video
+
+```{r video intro, echo=FALSE}
+
+vembedr::embed_url("https://www.youtube.com/watch?v=FFYSAUJ305o")
+```
+
+
+
+
+
+## R Syntax & Data Types
+
+Now we go a step further in the "language" of R and we learn how to assign variables and math functions, and what kind of different data types there are. We create vectors and lists.
+Just start at slide 18 and do the exercises as they come. 
+
+### Slides
+
+
+```{r embed-xaringan-2, echo=FALSE}
+
+#https://utrechtuniversity.github.io/workshop-introduction-to-R-and-data/slides/slides_introduction.html#18
+
+xaringanExtra::embed_xaringan(url = "https://utrechtuniversity.github.io/workshop-introduction-to-R-and-data/slides/slides_introduction.html#18", ratio = "4:3")
+```
+
+[Use this link to open slides in a new tab (refer to slide #18)](https://utrechtuniversity.github.io/workshop-introduction-to-R-and-data/slides/slides_introduction.html#18)
+
+### Code Chunk
+
+```{r code chunk syntax, echo=TRUE, eval = FALSE}
+#let's define x 
+x <- 1
+x
+
+x*3
+
+y <- x + 2
+log2(y)
+```
+
+
+### Video
+
+```{r video syntax, echo=FALSE}
+
+vembedr::embed_url("https://www.youtube.com/watch?v=S8zTmEvpYYk")
+```
+ 
+
+### Exercise 1
+
+1. Do the following calculation in R: one plus five, divided by nine.
+
+2. Assign the result of the calculation to a variable.
+
+3. Test if the result of your calculation is larger than 1.
+
+4. Round off the result to 1 decimal. Tip: use the Maths Functions section of the Base R cheat sheet!
+
+### Solution 1
+
+#### Slides {-}
+
+```{r embed-xaringan-3, echo=FALSE}
+
+xaringanExtra::embed_xaringan(url = "https://utrechtuniversity.github.io/workshop-introduction-to-R-and-data/slides/slides_introduction.html#27", ratio = "4:3")
+
+```
+
+[Use this link to open slides in a new tab (refer to slide #27)](https://utrechtuniversity.github.io/workshop-introduction-to-R-and-data/slides/slides_introduction.html#27)
+
+#### Video {-}
+
+```{r ex 1 sol, echo=FALSE}
+vembedr::embed_url("https://www.youtube.com/watch?v=V8za6GR7u8Q")
+```
+
+
+
+## Vectors
+
+Here, we create vectors and learn what a vector actually is! 
+Just start at slide 28 and do the exercises as they come. 
+
+### Slides
+
+
+```{r embed-xaringan-4, echo=FALSE}
+
+#https://utrechtuniversity.github.io/workshop-introduction-to-R-and-data/slides/slides_introduction.html#28
+
+xaringanExtra::embed_xaringan(url = "https://utrechtuniversity.github.io/workshop-introduction-to-R-and-data/slides/slides_introduction.html#28", ratio = "4:3")
+```
+
+[Use this link to open slides in a new tab (refer to slide #28)](https://utrechtuniversity.github.io/workshop-introduction-to-R-and-data/slides/slides_introduction.html#28)
+
+### Code Chunk
+
+```{r code chunk vectors, echo=TRUE, eval = FALSE}
+
+c(1,2,3)
+c("a", "b", "c")
+c(T, TRUE, F)
+
+c(TRUE, "a", 3)
+
+# in mathematical operations
+
+p <- 1:5
+p
+mean(p)
+p*2
+
+q <- 5:1
+q
+
+p*q
+
+```
+
+### Video
+
+```{r video vector, echo=FALSE}
+
+vembedr::embed_url("https://www.youtube.com/watch?v=XMFjteCdHbQ")
+```
+
+### Exercise 2
+
+Meet Ann, Bob, Chloe, and Dan.
+1. Make a character vector with their names, using the function c(). Save the vector as "name".
+
+2. How old are Ann, Bob, Chloe, and Dan? You decide! Design a numeric vector with their respective ages. Save it as "age".
+
+3. What is their average age? Use a function in R to calculate this. Tip: use the Maths Functions section of the Base R cheat sheet!
+
+
+### Solution 2
+
+#### Slides {-}
+
+```{r embed-xaringan-5, echo=FALSE}
+
+
+xaringanExtra::embed_xaringan(url = "https://utrechtuniversity.github.io/workshop-introduction-to-R-and-data/slides/slides_introduction.html#38", ratio = "4:3")
+```
+
+[Use this link to open slides in a new tab (refer to slide #38)](https://utrechtuniversity.github.io/workshop-introduction-to-R-and-data/slides/slides_introduction.html#38)
+
+#### Video {-}
+
+```{r ex 2 sol, echo=FALSE}
+vembedr::embed_url("https://www.youtube.com/watch?v=rIieuoYT4z0")
+```
+
+
+## Data structures
+
+Here, we look at different data structures. Can we combine vectors, and lists? And how can we come up with a data frame? This will all be answered here.
+Just start at slide 41 and do the exercises as they come. 
+
+### Slides
+
+
+```{r embed-xaringan-6, echo=FALSE}
+
+#https://utrechtuniversity.github.io/workshop-introduction-to-R-and-data/slides/slides_introduction.html#41
+
+xaringanExtra::embed_xaringan(url = "https://utrechtuniversity.github.io/workshop-introduction-to-R-and-data/slides/slides_introduction.html#41", ratio = "4:3")
+```
+
+[Use this link to open slides in a new tab (refer to slide #41)](https://utrechtuniversity.github.io/workshop-introduction-to-R-and-data/slides/slides_introduction.html#41)
+
+### Code Chunk
+
+```{r code chunk data structure, echo=TRUE, eval = FALSE}
+
+
+# vectors
+# two vectors: name and age from exercise before
+name
+age
+
+#combine vectors to a unidimensional vector:
+c(name,age)
+
+#combine vectors to multidimensional list:
+list(name,age)
+
+#combine vectors to twodimensional data frame:
+data.frame(name,age)
+
+#factors
+
+country <- c("UK", "USA", "USA", "UK")
+factor(country)
+
+#usually as column in a data frame: a categorial variable
+
+df <- data.frame(name, age, country = factor(country))
+df
+
+summary(df)
+```
+
+### Video
+
+```{r video data structures, echo=FALSE}
+
+vembedr::embed_url("https://www.youtube.com/watch?v=Ffk2Kxa_b_M")
+```
+
+
+### Exercise 3
+
+1. Create a vector country containing four countries (use at least one duplicate!).
+
+2. Create a data frame combining name, age, and country, and save it as df.
+
+3. Check your dataframe with the function summary(). Does it contain a factor?
+
+4. Make sure your column country is a factor, and confirm this with summary().
+
+5. Create a list with your vectors name and age, and save it as mylist.
+
+
+### Solution 3
+
+#### Slides {-}
+
+```{r embed-xaringan-7, echo=FALSE}
+
+xaringanExtra::embed_xaringan(url = "https://utrechtuniversity.github.io/workshop-introduction-to-R-and-data/slides/slides_introduction.html#48", ratio = "4:3")
+```
+
+[Use this link to open slides in a new tab (refer to slide #48)](https://utrechtuniversity.github.io/workshop-introduction-to-R-and-data/slides/slides_introduction.html#48)
+
+#### Video {-}
+
+```{r ex 3 sol, echo=FALSE}
+vembedr::embed_url("https://www.youtube.com/watch?v=A1GsHC6pIio")
+```
+
+## Missing data
+
+What if for a data subject you do not have the data? How can you handle that in a data frame? We check here.
+Just start at slide 53 and do the exercises as they come. 
+
+### Slides
+
+
+```{r embed-xaringan-8, echo=FALSE}
+
+#https://utrechtuniversity.github.io/workshop-introduction-to-R-and-data/slides/slides_introduction.html#53
+
+xaringanExtra::embed_xaringan(url = "https://utrechtuniversity.github.io/workshop-introduction-to-R-and-data/slides/slides_introduction.html#53", ratio = "4:3")
+```
+
+[Use this link to open slides in a new tab (refer to slide #53)](https://utrechtuniversity.github.io/workshop-introduction-to-R-and-data/slides/slides_introduction.html#53)
+
+### Code Chunk
+
+```{r code chunk missing data, echo=TRUE, eval = FALSE}
+
+# Data is not available: NA
+df$pet <- factor(c("cat", "none", "fish", NA))
+df$pet
+
+```
+
+### Video
+
+```{r video missing data, echo=FALSE}
+
+vembedr::embed_url("https://www.youtube.com/watch?v=4gVvlg1Itzs")
+```
+Start the video at 
+
+### Exercise 4
+
+
+Predict the results before you run the code. Does the real answer make sense to you?
+
+
+### Solution 4
+
+#### Slides {-}
+
+```{r embed-xaringan-9, echo=FALSE}
+
+xaringanExtra::embed_xaringan(url = "https://utrechtuniversity.github.io/workshop-introduction-to-R-and-data/slides/slides_introduction.html#57", ratio = "4:3")
+```
+
+[Use this link to open slides in a new tab (refer to slide #57)](https://utrechtuniversity.github.io/workshop-introduction-to-R-and-data/slides/slides_introduction.html#57)
+
+
+## Indexing vectors and lists
+
+Here we explain how you get to one specific value or column or data entry in your vector, or list.
+Just start at slide 66 and do the exercises as they come. 
+
+### Slides
+
+
+```{r embed-xaringan-10, echo=FALSE}
+
+#https://utrechtuniversity.github.io/workshop-introduction-to-R-and-data/slides/slides_introduction.html#66
+
+xaringanExtra::embed_xaringan(url = "https://utrechtuniversity.github.io/workshop-introduction-to-R-and-data/slides/slides_introduction.html#66", ratio = "4:3")
+```
+
+[Use this link to open slides in a new tab (refer to slide #66)](https://utrechtuniversity.github.io/workshop-introduction-to-R-and-data/slides/slides_introduction.html#66)
+
+### Code Chunk 
+
+```{r code chunk index 1, echo=TRUE, eval = FALSE}
+# in vector name:selecting by position
+name
+name[2]
+name[1:3]
+name[c(2,2,1)]
+
+# in vector age: selcting by value
+age
+age[age > 40]
+age > 40
+
+name
+name[name %in% c("Chloe", "Ann", "Evie")]
+
+# selecting from list
+mylist
+# selecting a list element
+mylist[1]
+# subselecting in the list element
+mylist[1][2]
+# selecting the content of a list element
+mylist[[1]]
+# subselecting in the content of a list element
+mylist[[1]][[2]]
+
+```
+
+### Video
+
+```{r video indexing vectors, echo=FALSE}
+
+vembedr::embed_url("https://www.youtube.com/watch?v=e10nO2swYIE")
+```
+Start the video at 
+
+### Exercise 5
+
+1. Return only the first number in your vector age.
+
+2. Return the 2nd and 4th name in your vector name.
+
+3. Return only ages under 30 from your vector age.
+
+4. Return the name "Chloe" from your list mylist (see exercise 3).
+
+
+### Solution 5
+
+#### Slides {-}
+
+```{r embed-xaringan-11, echo=FALSE}
+
+xaringanExtra::embed_xaringan(url = "https://utrechtuniversity.github.io/workshop-introduction-to-R-and-data/slides/slides_introduction.html#76", ratio = "4:3")
+```
+
+[Use this link to open slides in a new tab (refer to slide #76)](https://utrechtuniversity.github.io/workshop-introduction-to-R-and-data/slides/slides_introduction.html#76)
+
+#### Video {-}
+
+```{r ex 5 sol, echo=FALSE}
+vembedr::embed_url("https://www.youtube.com/watch?v=4BZGGq-nBos")
+```
+
+
+## Indexing a data frame 
+
+Here we explain how you get to one specific value or column or data entry in your data frame.
+Just start at slide 80 and do the exercises as they come.  
+
+### Slides
+
+
+```{r embed-xaringan-12, echo=FALSE}
+
+#https://utrechtuniversity.github.io/workshop-introduction-to-R-and-data/slides/slides_introduction.html#80
+
+xaringanExtra::embed_xaringan(url = "https://utrechtuniversity.github.io/workshop-introduction-to-R-and-data/slides/slides_introduction.html#80", ratio = "4:3")
+```
+
+[Use this link to open slides in a new tab (refer to slide #80)](https://utrechtuniversity.github.io/workshop-introduction-to-R-and-data/slides/slides_introduction.html#80)
+
+### Code Chunk 
+
+```{r code chunk index 2, echo=TRUE, eval = FALSE}
+
+#indexing columns
+# by position
+df[,2]
+
+# by name as a character string
+df[, "age"]
+
+# by name, as an object
+df$age
+
+#indexing rows
+# by position
+df[2,]
+
+# by content
+df[df$name ="Bob",]
+
+#combining rows and columns
+df[df$name = "Bob", "age"]
+
+```
+
+### Video
+
+```{r video indexing data frames, echo=FALSE}
+
+vembedr::embed_url("https://www.youtube.com/watch?v=m15hbXG6I-Y")
+```
+Start the video at 
+
+### Exercise 6
+
+Before you start, please run this code:
+```{r, eval = FALSE}
+
+rm(name,age,country)
+
+```
+
+1. From your dataframe df, return the entries for everyone living in a country of your choice.
+
+2. Return only the names of everyone in your data frame df under 40. 
+   (Hint: what information should you use for row indexing? 
+	 What information should you use for column indexing?)
+	 
+3. Return the columns name and age together.
+	
+
+### Solution 6
+
+#### Slides {-}
+
+```{r embed-xaringan-13, echo=FALSE}
+xaringanExtra::embed_xaringan(url = "https://utrechtuniversity.github.io/workshop-introduction-to-R-and-data/slides/slides_introduction.html#89", ratio = "4:3")
+```
+
+[Use this link to open slides in a new tab (refer to slide #89)](https://utrechtuniversity.github.io/workshop-introduction-to-R-and-data/slides/slides_introduction.html#89)
+
+#### Video {-}
+
+```{r ex 6 sol, echo=FALSE}
+vembedr::embed_url("https://www.youtube.com/watch?v=DUk9bfcSwbA")
+```
+
+## Recap
+
+### Slides
+
+
+```{r embed-xaringan-14, echo=FALSE}
+
+#https://utrechtuniversity.github.io/workshop-introduction-to-R-and-data/slides/slides_introduction.html#92
+
+xaringanExtra::embed_xaringan(url = "https://utrechtuniversity.github.io/workshop-introduction-to-R-and-data/slides/slides_introduction.html#92", ratio = "4:3")
+```
+
+[Use this link to open slides in a new tab (refer to slide #92)](https://utrechtuniversity.github.io/workshop-introduction-to-R-and-data/slides/slides_introduction.html#92)
+
+You made it - yeah! This was the basic introduction to R to get you started. If you want to continue with the slides, feel free to do so :) 
+

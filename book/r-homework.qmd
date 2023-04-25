@@ -1,0 +1,10 @@
+# Homework {.unnumbered}
+
+As homework, you are required to:
+
+**1. Complete the Base R exercises conducted during the session.**
+
+This is if you didn't already finish it during the meeting. 
+You will be required to show the completed exercises as part of the grading of the course.
+
+Use the videos and slides as a reference for completing the exercises. If you get stuck, you can reach out to the instructors on Mondays between 15:00-17:00 either online or at the University Library in the City Center.

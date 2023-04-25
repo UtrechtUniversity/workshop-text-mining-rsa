@@ -3,15 +3,28 @@ project:
   output-dir: ../docs
 
 book:
-  title: "book"
-  author: "Jane Doe"
-  date: "28-3-2023"
+  title: "Text Mining with I-Analyzer & R"
+  author: "Research Data Management Support"
+  date: "04-25-2023"
   chapters:
     - index.qmd
-    - intro.qmd
-    - i-analyzer.qmd
-    - base-r.qmd
+    - syllabus.qmd
+    - outline-and-schedule.qmd
+    - part: "1 I-Analyzer"
+      chapters:
+      - ianalyzer-preparation.qmd
+      - ianalyzer-session.qmd
+      - ianalyzer-homework.qmd
+    - part: "2 Base R" 
+      chapters:
+      - r-preparation.qmd
+      - r-session.qmd
+      - r-homework.qmd
+    - part: "3 Guest Lecture & Literature Review"
+    - part: "4 TidyText"
+    - part: "5 Reproducible Reports"
     - references.qmd
+
 
 bibliography: references.bib
 

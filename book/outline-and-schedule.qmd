@@ -1,0 +1,115 @@
+# Course Outline & Schedule {.unnumbered}
+
+The course consists of 5 meetings. Each meeting involves some preparation beforehand and homework afterwards. The preparation and homework will be necessary to ensure an efficient use of lesson time and you will be building up your final assignment as you go.  
+
+::: {.panel-tabset}
+
+## Meeting 1
+
+In this meeting, we will introduce students to I-Analyzer. I-Analyzer is an online text and data mining application developed by the Digital Humanities Lab at Utrecht University. We will work on the Times Newspapers corpus in iAnalyzer.
+
+We will then proceed with exploring how you can process the corpora in I-Analyzer. This will include:
+
+- Searching and filtering the corpus, as well as visualizing the results. 
+
+- Creating subsets of the data (corpus) and exporting it for further analysis in R.
+
+**Homework**
+
+- Complete the exercise started in class.
+
+- Conduct a new query in I-Analyzer and export the results.
+
+## Meeting 2
+
+**Preparation**
+
+- Install R & RStudio.
+
+- Watch a video introducing R & RStudio.
+
+**Session**
+
+The day of the course will be an introduction to R. This will include:
+
+- R Syntax & Data Types
+
+- Vectors in R
+
+- Data Structures
+
+- Missing Data
+
+- Indexing Vectors & Lists
+
+- Indexing a Data Frame
+
+Note that we do not cover programming techniques such as if statements, functions, loops. The aim of this session is to familiarize students with R and present some basic data wrangling operations.
+
+**Homework**
+
+- Complete the Base R exercises started in class.
+
+## Meeting 3
+
+**Preparation**
+
+Review recommended literature and provide a small presentation (possibly in groups) on selected papers.
+
+**Session**
+
+This meeting will start off with a guest lecture from prof. dr. Femke van Esch who is based at the Utrecht School of Governance. The topic will not be text mining in and of itself, but a broader discussion of the opportunities provided by computational methods and techniques in LEG disciplines.
+
+Thereafter, we will will dive into the presentations and discussion of literature. The final assignment includes a reflection assignment, the discussion here can provide a basis for that.
+
+**Homework**
+
+Make a start on your reflection assignment with some rough notes.
+
+## Meeting 4
+
+**Preparation**
+
+- Install the necessary packages required for the TidyText session: `tidyverse` & `tidytext`
+
+- Create a folder structure for the next session, place the necessary files in the appropriate locations.
+
+**Session**
+
+The meeting is where we will dive into text-mining with R. This will include:
+
+- importing and tidying textual data in R (tidy text format)
+
+- sentiment analysis 
+
+- analyzing word and document frequency (tf-idf)
+
+- calculating and visualizing relationships between words (n-grams and correlations)
+
+- identifying themes and subjects within textual data (topic modeling)
+
+**Homework**
+
+- Complete the text mining exercises in R that we started during the session. If you get stuck, the instructors are available for help on Mondays from 15:00-17:00 either online or at the University Library in the City Center.
+
+## Meeting 5
+
+**Preparation**
+
+- Finalize your research question and dataset for final assignment, if you haven't done so already.
+
+- Watch a video on R Markdown.
+
+**Session**
+
+Students will have already been working in R Markdown documents for Day 2 & Day 3, but we will take a step further to add prose/text between the code and ‘knit’ or render the R Markdown file to pdf or HTML. This is a fully reproducible workflow which weaves together text, code, results into one output file.
+
+The resulting text-mining report can be eventually be submitted for grading, along with the reflection report.
+
+**Homework**
+
+Work on the final assignment.
+
+:::
+
+In additional to the 5 instructional meetings, we can reserve an optional meeting(s) 6 & 7 in case they are required to refresh some concepts or if additional support is required for the assignments. This can be decided with the students and instructors as we go through the course.

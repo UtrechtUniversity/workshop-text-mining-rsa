@@ -1,0 +1,3 @@
+# Syllabus {.unnumbered}
+
+<embed src="documents/LEG-SA-11_TextMining_Syllabus.pdf" type="application/pdf" width="100%" height="600px" />

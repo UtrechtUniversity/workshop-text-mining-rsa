@@ -2,99 +2,120 @@
   {
     "objectID": "index.html",
     "href": "index.html",
-    "title": "book",
+    "title": "Text Mining with I-Analyzer & R",
     "section": "",
-    "text": "1 Welcome"
+    "text": "Welcome\nText mining methods are quickly gaining popularity among researchers, including those from Law, Economics and Governance (LEG) disciplines. Text mining exploits sizeable collections of digitized texts for automatic analysis, using software such as R or Python. For example, newspaper articles have been to measure economic sentiments and digitized court records to analyze the evolution of jurisdiction.\nIn this course, we will get you up to speed with a simple workflow for data-driven research using digitized text collections, and learn to reflect on the pros and cons of using methods like these. We will start with selecting relevant texts in iAnalyzer and creating a dataset based on your own research question. After an introduction to R, you will gradually learn to analyze your dataset. This also allows you to develop general skills in R that are becoming ever more useful in the complex analysis of data. By the end of the course, you will be able to answer a simple research question based on your dataset, and to use an ‘Open Science’ approach to report on your workflow and the pros and cons of text-mining.\nAfter completing this module, students will be able to:\n\nprocess substantial datasets containing textual information;\nselect subsets of digitized text collections such as newspapers for analysis;\nimport and harmonize textual data in R;\nvisualize textual data using n-grams and relations between words;\nautomatically identify themes and subjects within textual data (topic modeling);\nreflect on the benefits and drawbacks of using text-mining methods for research."
   },
   {
-    "objectID": "intro.html",
-    "href": "intro.html",
-    "title": "2  Introduction",
+    "objectID": "outline-and-schedule.html",
+    "href": "outline-and-schedule.html",
+    "title": "Course Outline & Schedule",
     "section": "",
-    "text": "This is a book created from markdown and executable code.\nSee Knuth (1984) for additional discussion of literate programming.\nHelloooooos wassuuup\n\n\n\n\nKnuth, Donald E. 1984. “Literate Programming.” Comput. J. 27 (2): 97–111. https://doi.org/10.1093/comjnl/27.2.97."
+    "text": "The course consists of 5 meetings. Each meeting involves some preparation beforehand and homework afterwards. The preparation and homework will be necessary to ensure an efficient use of lesson time and you will be building up your final assignment as you go.\n\nMeeting 1Meeting 2Meeting 3Meeting 4Meeting 5\n\n\nIn this meeting, we will introduce students to I-Analyzer. I-Analyzer is an online text and data mining application developed by the Digital Humanities Lab at Utrecht University. We will work on the Times Newspapers corpus in iAnalyzer.\nWe will then proceed with exploring how you can process the corpora in I-Analyzer. This will include:\n\nSearching and filtering the corpus, as well as visualizing the results.\nCreating subsets of the data (corpus) and exporting it for further analysis in R.\n\nHomework\n\nComplete the exercise started in class.\nConduct a new query in I-Analyzer and export the results.\n\n\n\nPreparation\n\nInstall R & RStudio.\nWatch a video introducing R & RStudio.\n\nSession\nThe day of the course will be an introduction to R. This will include:\n\nR Syntax & Data Types\nVectors in R\nData Structures\nMissing Data\nIndexing Vectors & Lists\nIndexing a Data Frame\n\nNote that we do not cover programming techniques such as if statements, functions, loops. The aim of this session is to familiarize students with R and present some basic data wrangling operations.\nHomework\n\nComplete the Base R exercises started in class.\n\n\n\nPreparation\nReview recommended literature and provide a small presentation (possibly in groups) on selected papers.\nSession\nThis meeting will start off with a guest lecture from prof. dr. Femke van Esch who is based at the Utrecht School of Governance. The topic will not be text mining in and of itself, but a broader discussion of the opportunities provided by computational methods and techniques in LEG disciplines.\nThereafter, we will will dive into the presentations and discussion of literature. The final assignment includes a reflection assignment, the discussion here can provide a basis for that.\nHomework\nMake a start on your reflection assignment with some rough notes.\n\n\nPreparation\n\nInstall the necessary packages required for the TidyText session: tidyverse & tidytext\nCreate a folder structure for the next session, place the necessary files in the appropriate locations.\n\nSession\nThe meeting is where we will dive into text-mining with R. This will include:\n\nimporting and tidying textual data in R (tidy text format)\nsentiment analysis\nanalyzing word and document frequency (tf-idf)\ncalculating and visualizing relationships between words (n-grams and correlations)\nidentifying themes and subjects within textual data (topic modeling)\n\nHomework\n\nComplete the text mining exercises in R that we started during the session. If you get stuck, the instructors are available for help on Mondays from 15:00-17:00 either online or at the University Library in the City Center.\n\n\n\nPreparation\n\nFinalize your research question and dataset for final assignment, if you haven’t done so already.\nWatch a video on R Markdown.\n\nSession\nStudents will have already been working in R Markdown documents for Day 2 & Day 3, but we will take a step further to add prose/text between the code and ‘knit’ or render the R Markdown file to pdf or HTML. This is a fully reproducible workflow which weaves together text, code, results into one output file.\nThe resulting text-mining report can be eventually be submitted for grading, along with the reflection report.\nHomework\nWork on the final assignment.\n\n\n\nIn additional to the 5 instructional meetings, we can reserve an optional meeting(s) 6 & 7 in case they are required to refresh some concepts or if additional support is required for the assignments. This can be decided with the students and instructors as we go through the course."
   },
   {
-    "objectID": "i-analyzer.html#slides",
-    "href": "i-analyzer.html#slides",
-    "title": "3  Text Mining with iAnalyzer",
-    "section": "3.1 Slides",
-    "text": "3.1 Slides"
-  },
-  {
-    "objectID": "i-analyzer.html#exercise",
-    "href": "i-analyzer.html#exercise",
-    "title": "3  Text Mining with iAnalyzer",
-    "section": "3.2 Exercise:",
-    "text": "3.2 Exercise:\nTo perform a first search, follow these steps:\n\nGo to the iAnalyzer website: https://ianalyzer.hum.uu.nl/\n\nLogin with your solisID\nPerform a search with these criteria:\n\n\n\n\n\n\n\n\n\nCorpus\nTimes (select at the top left from the dropdown menu ‘corpora’)\n\n\nQuery\n‘European Union’\n\n\nPublication Date\nFrom 1945 onwards\n\n\nOCR confidence\n80-100 (explanation of the OCR score is at the bottom of the page)\n\n\nPage Type\nStandard\n\n\nOn Front Page\nYes (So leave ‘false’-box unchecked)\n\n\nPublication Date\nFrom 1945 onwards\n\n\nCategory\nNews\n\n\nIllustration\nNo (So leave all boxes unchecked)\n\n\n\n\n\nCheck out the different visualizations (in the top, right next to the header ‘Filters’)\nDownload the data in a CSV format (At the top of the page, “download CSV”). Make sure that before you download the file, you click on the small gears icon next to the download button, click “show default fields”, and check the box “content”. Otherwise, your downloaded file will not contain the actual text of the articles."
-  },
-  {
-    "objectID": "i-analyzer.html#homework",
-    "href": "i-analyzer.html#homework",
-    "title": "3  Text Mining with iAnalyzer",
-    "section": "3.3 Homework",
-    "text": "3.3 Homework\nWhen you have managed to successfully download the CSV file (check for content in the file!), you can go ahead and perform your own search. For that, you need to first build a proper search string and then download the corresponding CSV file. Below you find a table (“cheat sheet”) which explains the operators which you need to use for the search string. Please make sure that for the next session (where we are going to use R to analyze the text data), you have your CSV file ready!\n\n3.3.1 Cheatsheet for Search Queries\n\n\n\nOperator\nDescription\nExample/Explanation\n\n\n\n\n+\nmeans AND\nbank +assets\n\n\n|\nmeans OR\nbank |assets -> Note that OR is already the default way to combine search terms, so “bank assets” would be sufficient in this example.\n\n\n-\nmeans NOT\nbank -assets\n\n\n” ”\nentire phrase\nallows the search for an entire phrase: “the assets of the bank”\n\n\n*\nwildcard\nA wildcard for any number of characters, e.g. bank* will match banking, banks, banked, etc. The wildcard is only allowed at the end of a word, and cannot be used with phrases (between ” quotes).\n\n\n~N\nfuzzy search\nDescribes fuzzy search. When placed after a term this signifies how many characters are allowed to differ. So bank~1 also matches bang, sank, dank etc. When placed after a phrase, this signifies how many words may differ\n\n\n\n\n\n3.3.2 Explanation OCR scores\nOCR stands for “Optical character recognition” and it is a key tool for text mining. OCR uses machine learning to extract words and lines of text from scans and images, which can then be used to perform quantitative text analysis or natural language processing.As you can imagine, dependent on the image/scan quality, the writing (machine vs. hand-written) etc., the automated recognition of characters will not be perfect. The OCR score is a metric used to quantify the accuracy of the text extraction (in other words, the score reflects how likely it is that there are errors in the text extraction)"
-  },
-  {
-    "objectID": "base-r.html#lets-get-started-what-is-r-and-rstudio",
-    "href": "base-r.html#lets-get-started-what-is-r-and-rstudio",
-    "title": "4  Base R",
-    "section": "4.1 Let’s get started: what is R and RStudio",
-    "text": "4.1 Let’s get started: what is R and RStudio\nThis describes the basic idea of R and RStudio and how to work in the RStudio environment.\n\n4.1.1 Slides\nFor this part, just consider the slides 12 - 16.\n\n\n\n\n\n\n\n\nUse this link to open slides in a new tab (refer to slide #12)\n\n\n4.1.2 Code Chunk\nThis is an example of a so-called code chunk in which you write the actual code.\n\n#let's define x \nx <- 6\nx\n\ny <- \"apple\"\ny\n\n\n\n4.1.3 Video"
-  },
-  {
-    "objectID": "base-r.html#r-syntax-data-types",
-    "href": "base-r.html#r-syntax-data-types",
-    "title": "4  Base R",
-    "section": "4.2 R Syntax & Data Types",
-    "text": "4.2 R Syntax & Data Types\nNow we go a step further in the “language” of R and we learn how to assign variables and math functions, and what kind of different data types there are. We create vectors and lists. Just start at slide 18 and do the exercises as they come.\n\n4.2.1 Slides\n\n\n\n\n\n\n\n\nUse this link to open slides in a new tab (refer to slide #18)\n\n\n4.2.2 Code Chunk\n\n#let's define x \nx <- 1\nx\n\nx*3\n\ny <- x + 2\nlog2(y)\n\n\n\n4.2.3 Video\n\n\n\n\n\n\n\n\n\n\n\n4.2.4 Exercise 1\n\nDo the following calculation in R: one plus five, divided by nine.\nAssign the result of the calculation to a variable.\nTest if the result of your calculation is larger than 1.\nRound off the result to 1 decimal. Tip: use the Maths Functions section of the Base R cheat sheet!\n\n\n\n4.2.5 Solution 1\n\nSlides\n\n\n\n\n\n\n\n\nUse this link to open slides in a new tab (refer to slide #27)\n\n\nVideo"
-  },
-  {
-    "objectID": "base-r.html#vectors",
-    "href": "base-r.html#vectors",
-    "title": "4  Base R",
-    "section": "4.3 Vectors",
-    "text": "4.3 Vectors\nHere, we create vectors and learn what a vector actually is! Just start at slide 28 and do the exercises as they come.\n\n4.3.1 Slides\n\n\n\n\n\n\n\n\nUse this link to open slides in a new tab (refer to slide #28)\n\n\n4.3.2 Code Chunk\n\nc(1,2,3)\nc(\"a\", \"b\", \"c\")\nc(T, TRUE, F)\n\nc(TRUE, \"a\", 3)\n\n# in mathematical operations\n\np <- 1:5\np\nmean(p)\np*2\n\nq <- 5:1\nq\n\np*q\n\n\n\n4.3.3 Video\n\n\n\n\n\n\n\n\n\n\n\n4.3.4 Exercise 2\nMeet Ann, Bob, Chloe, and Dan. 1. Make a character vector with their names, using the function c(). Save the vector as “name”.\n\nHow old are Ann, Bob, Chloe, and Dan? You decide! Design a numeric vector with their respective ages. Save it as “age”.\nWhat is their average age? Use a function in R to calculate this. Tip: use the Maths Functions section of the Base R cheat sheet!\n\n\n\n4.3.5 Solution 2\n\nSlides\n\n\n\n\n\n\n\n\nUse this link to open slides in a new tab (refer to slide #38)\n\n\nVideo"
-  },
-  {
-    "objectID": "base-r.html#data-structures",
-    "href": "base-r.html#data-structures",
-    "title": "4  Base R",
-    "section": "4.4 Data structures",
-    "text": "4.4 Data structures\nHere, we look at different data structures. Can we combine vectors, and lists? And how can we come up with a data frame? This will all be answered here. Just start at slide 41 and do the exercises as they come.\n\n4.4.1 Slides\n\n\n\n\n\n\n\n\nUse this link to open slides in a new tab (refer to slide #41)\n\n\n4.4.2 Code Chunk\n\n# vectors\n# two vectors: name and age from exercise before\nname\nage\n\n#combine vectors to a unidimensional vector:\nc(name,age)\n\n#combine vectors to multidimensional list:\nlist(name,age)\n\n#combine vectors to twodimensional data frame:\ndata.frame(name,age)\n\n#factors\n\ncountry <- c(\"UK\", \"USA\", \"USA\", \"UK\")\nfactor(country)\n\n#usually as column in a data frame: a categorial variable\n\ndf <- data.frame(name, age, country = factor(country))\ndf\n\nsummary(df)\n\n\n\n4.4.3 Video\n\n\n\n\n\n\n\n\n\n\n\n4.4.4 Exercise 3\n\nCreate a vector country containing four countries (use at least one duplicate!).\nCreate a data frame combining name, age, and country, and save it as df.\nCheck your dataframe with the function summary(). Does it contain a factor?\nMake sure your column country is a factor, and confirm this with summary().\nCreate a list with your vectors name and age, and save it as mylist.\n\n\n\n4.4.5 Solution 3\n\nSlides\n\n\n\n\n\n\n\n\nUse this link to open slides in a new tab (refer to slide #48)\n\n\nVideo"
-  },
-  {
-    "objectID": "base-r.html#missing-data",
-    "href": "base-r.html#missing-data",
-    "title": "4  Base R",
-    "section": "4.5 Missing data",
-    "text": "4.5 Missing data\nWhat if for a data subject you do not have the data? How can you handle that in a data frame? We check here. Just start at slide 53 and do the exercises as they come.\n\n4.5.1 Slides\n\n\n\n\n\n\n\n\nUse this link to open slides in a new tab (refer to slide #53)\n\n\n4.5.2 Code Chunk\n\n# Data is not available: NA\ndf$pet <- factor(c(\"cat\", \"none\", \"fish\", NA))\ndf$pet\n\n\n\n4.5.3 Video\n\n\n\n\n\n\n\n\n\nStart the video at\n\n\n4.5.4 Exercise 4\nPredict the results before you run the code. Does the real answer make sense to you?\n\n\n4.5.5 Solution 4\n\nSlides\n\n\n\n\n\n\n\n\nUse this link to open slides in a new tab (refer to slide #57)"
-  },
-  {
-    "objectID": "base-r.html#indexing-vectors-and-lists",
-    "href": "base-r.html#indexing-vectors-and-lists",
-    "title": "4  Base R",
-    "section": "4.6 Indexing vectors and lists",
-    "text": "4.6 Indexing vectors and lists\nHere we explain how you get to one specific value or column or data entry in your vector, or list. Just start at slide 66 and do the exercises as they come.\n\n4.6.1 Slides\n\n\n\n\n\n\n\n\nUse this link to open slides in a new tab (refer to slide #66)\n\n\n4.6.2 Code Chunk\n\n# in vector name:selecting by position\nname\nname[2]\nname[1:3]\nname[c(2,2,1)]\n\n# in vector age: selcting by value\nage\nage[age > 40]\nage > 40\n\nname\nname[name %in% c(\"Chloe\", \"Ann\", \"Evie\")]\n\n# selecting from list\nmylist\n# selecting a list element\nmylist[1]\n# subselecting in the list element\nmylist[1][2]\n# selecting the content of a list element\nmylist[[1]]\n# subselecting in the content of a list element\nmylist[[1]][[2]]\n\n\n\n4.6.3 Video\n\n\n\n\n\n\n\n\n\nStart the video at\n\n\n4.6.4 Exercise 5\n\nReturn only the first number in your vector age.\nReturn the 2nd and 4th name in your vector name.\nReturn only ages under 30 from your vector age.\nReturn the name “Chloe” from your list mylist (see exercise 3).\n\n\n\n4.6.5 Solution 5\n\nSlides\n\n\n\n\n\n\n\n\nUse this link to open slides in a new tab (refer to slide #76)\n\n\nVideo"
-  },
-  {
-    "objectID": "base-r.html#indexing-a-data-frame",
-    "href": "base-r.html#indexing-a-data-frame",
-    "title": "4  Base R",
-    "section": "4.7 Indexing a data frame",
-    "text": "4.7 Indexing a data frame\nHere we explain how you get to one specific value or column or data entry in your data frame. Just start at slide 80 and do the exercises as they come.\n\n4.7.1 Slides\n\n\n\n\n\n\n\n\nUse this link to open slides in a new tab (refer to slide #80)\n\n\n4.7.2 Code Chunk\n\n#indexing columns\n# by position\ndf[,2]\n\n# by name as a character string\ndf[, \"age\"]\n\n# by name, as an object\ndf$age\n\n#indexing rows\n# by position\ndf[2,]\n\n# by content\ndf[df$name =\"Bob\",]\n\n#combining rows and columns\ndf[df$name = \"Bob\", \"age\"]\n\n\n\n4.7.3 Video\n\n\n\n\n\n\n\n\n\nStart the video at\n\n\n4.7.4 Exercise 6\nBefore you start, please run this code:\n\nrm(name,age,country)\n\n\nFrom your dataframe df, return the entries for everyone living in a country of your choice.\nReturn only the names of everyone in your data frame df under 40. (Hint: what information should you use for row indexing? What information should you use for column indexing?)\nReturn the columns name and age together.\n\n\n\n4.7.5 Solution 6\n\nSlides\n\n\n\n\n\n\n\n\nUse this link to open slides in a new tab (refer to slide #89)\n\n\nVideo"
-  },
-  {
-    "objectID": "base-r.html#recap",
-    "href": "base-r.html#recap",
-    "title": "4  Base R",
-    "section": "4.8 Recap",
-    "text": "4.8 Recap\n\n4.8.1 Slides\n\n\n\n\n\n\n\n\nUse this link to open slides in a new tab (refer to slide #92)\nYou made it - yeah! This was the basic introduction to R to get you started. If you want to continue with the slides, feel free to do so :)"
-  },
-  {
-    "objectID": "references.html",
-    "href": "references.html",
-    "title": "References",
+    "objectID": "ianalyzer-preparation.html",
+    "href": "ianalyzer-preparation.html",
+    "title": "Preparation",
     "section": "",
-    "text": "Knuth, Donald E. 1984. “Literate Programming.” Comput.\nJ. 27 (2): 97–111. https://doi.org/10.1093/comjnl/27.2.97."
+    "text": "No preparation is required for this meeting."
+  },
+  {
+    "objectID": "ianalyzer-session.html#slides",
+    "href": "ianalyzer-session.html#slides",
+    "title": "Text Mining with iAnalyzer",
+    "section": "Slides",
+    "text": "Slides"
+  },
+  {
+    "objectID": "ianalyzer-session.html#exercise",
+    "href": "ianalyzer-session.html#exercise",
+    "title": "Text Mining with iAnalyzer",
+    "section": "Exercise:",
+    "text": "Exercise:\nBefore starting, create a folder for this course and a subfolder for today’s session in an accessible location on your computer.\nTo perform a first search, follow these steps:\n\nGo to the iAnalyzer website: https://ianalyzer.hum.uu.nl/\n\nLogin with your solisID\nPerform a search with these criteria:\n\n\n\n\n\n\n\n\n\nCorpus\nTimes (select at the top left from the dropdown menu ‘corpora’)\n\n\nQuery\n‘European Union’\n\n\nPublication Date\nFrom 1945 onwards\n\n\nOCR confidence\n80-100 (explanation of the OCR score is at the bottom of the page)\n\n\nPage Type\nStandard\n\n\nOn Front Page\nYes (So leave ‘false’-box unchecked)\n\n\nPublication Date\nFrom 1945 onwards\n\n\nCategory\nNews\n\n\nIllustration\nNo (So leave all boxes unchecked)\n\n\n\n\n\nCheck out the different visualizations (in the top, right next to the header ‘Filters’)\nDownload the data in a CSV format (At the top of the page, “download CSV”). Make sure that before you download the file, you click on the small gears icon next to the download button, click “show default fields”, and check the box “content”. Otherwise, your downloaded file will not contain the actual text of the articles.\n\n\nCheatsheet for Search Queries\n\n\n\nOperator\nDescription\nExample/Explanation\n\n\n\n\n+\nmeans AND\nbank +assets\n\n\n|\nmeans OR\nbank |assets -> Note that OR is already the default way to combine search terms, so bank assets would be sufficient in this example.\n\n\n-\nmeans NOT\nbank -assets\n\n\n” ”\nentire phrase\nallows the search for an entire phrase: “the assets of the bank”\n\n\n*\nwildcard\nA wildcard for any number of characters, e.g. bank* will match banking, banks, banked, etc. The wildcard is only allowed at the end of a word, and cannot be used with phrases (between ” quotes).\n\n\n~N\nfuzzy search\nDescribes fuzzy search. When placed after a term this signifies how many characters are allowed to differ. So bank~1 also matches bang, sank, dank etc. When placed after a phrase, this signifies how many words may differ\n\n\n\n\n\nExplanation OCR scores\nOCR stands for “Optical character recognition” and it is a key tool for text mining. OCR uses machine learning to extract words and lines of text from scans and images, which can then be used to perform quantitative text analysis or natural language processing.As you can imagine, dependent on the image/scan quality, the writing (machine vs. hand-written) etc., the automated recognition of characters will not be perfect. The OCR score is a metric used to quantify the accuracy of the text extraction (in other words, the score reflects how likely it is that there are errors in the text extraction)"
+  },
+  {
+    "objectID": "ianalyzer-homework.html",
+    "href": "ianalyzer-homework.html",
+    "title": "Homework",
+    "section": "",
+    "text": "As homework, you are required to:\n1. Complete the I-Analyzer exercise conducted during the session.\nThis is if you didn’t already finish it during the meeting. You will be required to show the exported dataset as part of the grading of the course.\n2. Create your own text mining dataset using I-Analyzer.\nThis exercise will form the basis of your final assignment.\n\nThink about a research question you would like to answer using the Times Newspapers corpus in I-Analyzer.\nConstruct a query in line with your research question and document it for reference and reproducibility. You can refer to the cheatsheet for building search queries on the previous page.\nRun the query in I-Analyzer.\nExport the results as a csv file and save it in an accessible location.\n\nDon’t forget the preparation for the next session!"
+  },
+  {
+    "objectID": "r-preparation.html#install-r-rstudio",
+    "href": "r-preparation.html#install-r-rstudio",
+    "title": "Preparation",
+    "section": "Install R & RStudio",
+    "text": "Install R & RStudio\n\nPersonal LaptopUtrecht University laptop\n\n\nBy personal laptop, we mean a laptop where you have administrator rights.\n\nInstall R from https://cran.rstudio.com/\nInstall RStudio from https://www.rstudio.com/products/rstudio/download/#download (if you are unsure about which link to click, you should probably use the top list with “installers”. From that, choose the installer for your operating system.)\n\n\n\n\nOpen Software Center\nInstall “R for Windows”\n\nInstalling R packages on a Utrecht University laptop can be hard. This is because R packages are installed on a so-called ‘mounted’ drive. This causes problems with the performance. Check the installation:\n\nOpen RStudio\nLook for a window that says “Console” (probably bottom left of your screen).\nWrite the following line of code in your console: .libPaths()\nHit ‘enter’.\n\nIf the resulting path is a local address (e.g. starting with C:/), you are fine and can skip the next few steps. If it starts with // you are installing packages on a mounted drive. This will affect the performance, so you will want to correct that:\n\nCreate a folder R-packages on a local drive.\nCopy the location to that drive. For example: C:/Users/User/R-packages\nRun the following line of code in the console: file.edit(file.path(“~”, “.Rprofile”))\nRStudio now opens an editor window.\nPaste .libPaths(“C:/Users/User/R-packages”) (or whatever path you copied in 8.) in the editor, and save the file.\nRestart your R session.\nAt the window on the bottom right of your screen, select the tab “packages”\nClick on “install”. A window opens. In this window, is Install to library pointing to C:/Users/User/R-packages? (or whatever path you copied in 8.)."
+  },
+  {
+    "objectID": "r-preparation.html#explore-r-rstudio",
+    "href": "r-preparation.html#explore-r-rstudio",
+    "title": "Preparation",
+    "section": "Explore R & RStudio",
+    "text": "Explore R & RStudio\nWatch the following 7-minute video to get an idea of how R & RStudio works. Try to follow along on your own computer! The slides are also available for reference.\n\nVideo\n\n\n\n\n\n\n\n\n\n\n\nSlides\nFor this part, just consider the slides 12 - 16.\n\n\n\n\n\n\n\n\nUse this link to open slides in a new tab (refer to slide #12)"
+  },
+  {
+    "objectID": "r-session.html#lets-get-started-what-is-r-and-rstudio",
+    "href": "r-session.html#lets-get-started-what-is-r-and-rstudio",
+    "title": "Base R",
+    "section": "Let’s get started: what is R and RStudio",
+    "text": "Let’s get started: what is R and RStudio\nThis describes the basic idea of R and RStudio and how to work in the RStudio environment.\n\nSlides\nFor this part, just consider the slides 12 - 16.\n\n\n\n\n\n\n\n\nUse this link to open slides in a new tab (refer to slide #12)\n\n\nCode Chunk\nThis is an example of a so-called code chunk in which you write the actual code.\n\n#let's define x \nx <- 6\nx\n\ny <- \"apple\"\ny\n\n\n\nVideo"
+  },
+  {
+    "objectID": "r-session.html#r-syntax-data-types",
+    "href": "r-session.html#r-syntax-data-types",
+    "title": "Base R",
+    "section": "R Syntax & Data Types",
+    "text": "R Syntax & Data Types\nNow we go a step further in the “language” of R and we learn how to assign variables and math functions, and what kind of different data types there are. We create vectors and lists. Just start at slide 18 and do the exercises as they come.\n\nSlides\n\n\n\n\n\n\n\n\nUse this link to open slides in a new tab (refer to slide #18)\n\n\nCode Chunk\n\n#let's define x \nx <- 1\nx\n\nx*3\n\ny <- x + 2\nlog2(y)\n\n\n\nVideo\n\n\n\n\n\n\n\n\n\n\n\nExercise 1\n\nDo the following calculation in R: one plus five, divided by nine.\nAssign the result of the calculation to a variable.\nTest if the result of your calculation is larger than 1.\nRound off the result to 1 decimal. Tip: use the Maths Functions section of the Base R cheat sheet!\n\n\n\nSolution 1\n\nSlides\n\n\n\n\n\n\n\n\nUse this link to open slides in a new tab (refer to slide #27)\n\n\nVideo"
+  },
+  {
+    "objectID": "r-session.html#vectors",
+    "href": "r-session.html#vectors",
+    "title": "Base R",
+    "section": "Vectors",
+    "text": "Vectors\nHere, we create vectors and learn what a vector actually is! Just start at slide 28 and do the exercises as they come.\n\nSlides\n\n\n\n\n\n\n\n\nUse this link to open slides in a new tab (refer to slide #28)\n\n\nCode Chunk\n\nc(1,2,3)\nc(\"a\", \"b\", \"c\")\nc(T, TRUE, F)\n\nc(TRUE, \"a\", 3)\n\n# in mathematical operations\n\np <- 1:5\np\nmean(p)\np*2\n\nq <- 5:1\nq\n\np*q\n\n\n\nVideo\n\n\n\n\n\n\n\n\n\n\n\nExercise 2\nMeet Ann, Bob, Chloe, and Dan. 1. Make a character vector with their names, using the function c(). Save the vector as “name”.\n\nHow old are Ann, Bob, Chloe, and Dan? You decide! Design a numeric vector with their respective ages. Save it as “age”.\nWhat is their average age? Use a function in R to calculate this. Tip: use the Maths Functions section of the Base R cheat sheet!\n\n\n\nSolution 2\n\nSlides\n\n\n\n\n\n\n\n\nUse this link to open slides in a new tab (refer to slide #38)\n\n\nVideo"
+  },
+  {
+    "objectID": "r-session.html#data-structures",
+    "href": "r-session.html#data-structures",
+    "title": "Base R",
+    "section": "Data structures",
+    "text": "Data structures\nHere, we look at different data structures. Can we combine vectors, and lists? And how can we come up with a data frame? This will all be answered here. Just start at slide 41 and do the exercises as they come.\n\nSlides\n\n\n\n\n\n\n\n\nUse this link to open slides in a new tab (refer to slide #41)\n\n\nCode Chunk\n\n# vectors\n# two vectors: name and age from exercise before\nname\nage\n\n#combine vectors to a unidimensional vector:\nc(name,age)\n\n#combine vectors to multidimensional list:\nlist(name,age)\n\n#combine vectors to twodimensional data frame:\ndata.frame(name,age)\n\n#factors\n\ncountry <- c(\"UK\", \"USA\", \"USA\", \"UK\")\nfactor(country)\n\n#usually as column in a data frame: a categorial variable\n\ndf <- data.frame(name, age, country = factor(country))\ndf\n\nsummary(df)\n\n\n\nVideo\n\n\n\n\n\n\n\n\n\n\n\nExercise 3\n\nCreate a vector country containing four countries (use at least one duplicate!).\nCreate a data frame combining name, age, and country, and save it as df.\nCheck your dataframe with the function summary(). Does it contain a factor?\nMake sure your column country is a factor, and confirm this with summary().\nCreate a list with your vectors name and age, and save it as mylist.\n\n\n\nSolution 3\n\nSlides\n\n\n\n\n\n\n\n\nUse this link to open slides in a new tab (refer to slide #48)\n\n\nVideo"
+  },
+  {
+    "objectID": "r-session.html#missing-data",
+    "href": "r-session.html#missing-data",
+    "title": "Base R",
+    "section": "Missing data",
+    "text": "Missing data\nWhat if for a data subject you do not have the data? How can you handle that in a data frame? We check here. Just start at slide 53 and do the exercises as they come.\n\nSlides\n\n\n\n\n\n\n\n\nUse this link to open slides in a new tab (refer to slide #53)\n\n\nCode Chunk\n\n# Data is not available: NA\ndf$pet <- factor(c(\"cat\", \"none\", \"fish\", NA))\ndf$pet\n\n\n\nVideo\n\n\n\n\n\n\n\n\n\nStart the video at\n\n\nExercise 4\nPredict the results before you run the code. Does the real answer make sense to you?\n\n\nSolution 4\n\nSlides\n\n\n\n\n\n\n\n\nUse this link to open slides in a new tab (refer to slide #57)"
+  },
+  {
+    "objectID": "r-session.html#indexing-vectors-and-lists",
+    "href": "r-session.html#indexing-vectors-and-lists",
+    "title": "Base R",
+    "section": "Indexing vectors and lists",
+    "text": "Indexing vectors and lists\nHere we explain how you get to one specific value or column or data entry in your vector, or list. Just start at slide 66 and do the exercises as they come.\n\nSlides\n\n\n\n\n\n\n\n\nUse this link to open slides in a new tab (refer to slide #66)\n\n\nCode Chunk\n\n# in vector name:selecting by position\nname\nname[2]\nname[1:3]\nname[c(2,2,1)]\n\n# in vector age: selcting by value\nage\nage[age > 40]\nage > 40\n\nname\nname[name %in% c(\"Chloe\", \"Ann\", \"Evie\")]\n\n# selecting from list\nmylist\n# selecting a list element\nmylist[1]\n# subselecting in the list element\nmylist[1][2]\n# selecting the content of a list element\nmylist[[1]]\n# subselecting in the content of a list element\nmylist[[1]][[2]]\n\n\n\nVideo\n\n\n\n\n\n\n\n\n\nStart the video at\n\n\nExercise 5\n\nReturn only the first number in your vector age.\nReturn the 2nd and 4th name in your vector name.\nReturn only ages under 30 from your vector age.\nReturn the name “Chloe” from your list mylist (see exercise 3).\n\n\n\nSolution 5\n\nSlides\n\n\n\n\n\n\n\n\nUse this link to open slides in a new tab (refer to slide #76)\n\n\nVideo"
+  },
+  {
+    "objectID": "r-session.html#indexing-a-data-frame",
+    "href": "r-session.html#indexing-a-data-frame",
+    "title": "Base R",
+    "section": "Indexing a data frame",
+    "text": "Indexing a data frame\nHere we explain how you get to one specific value or column or data entry in your data frame. Just start at slide 80 and do the exercises as they come.\n\nSlides\n\n\n\n\n\n\n\n\nUse this link to open slides in a new tab (refer to slide #80)\n\n\nCode Chunk\n\n#indexing columns\n# by position\ndf[,2]\n\n# by name as a character string\ndf[, \"age\"]\n\n# by name, as an object\ndf$age\n\n#indexing rows\n# by position\ndf[2,]\n\n# by content\ndf[df$name =\"Bob\",]\n\n#combining rows and columns\ndf[df$name = \"Bob\", \"age\"]\n\n\n\nVideo\n\n\n\n\n\n\n\n\n\nStart the video at\n\n\nExercise 6\nBefore you start, please run this code:\n\nrm(name,age,country)\n\n\nFrom your dataframe df, return the entries for everyone living in a country of your choice.\nReturn only the names of everyone in your data frame df under 40. (Hint: what information should you use for row indexing? What information should you use for column indexing?)\nReturn the columns name and age together.\n\n\n\nSolution 6\n\nSlides\n\n\n\n\n\n\n\n\nUse this link to open slides in a new tab (refer to slide #89)\n\n\nVideo"
+  },
+  {
+    "objectID": "r-session.html#recap",
+    "href": "r-session.html#recap",
+    "title": "Base R",
+    "section": "Recap",
+    "text": "Recap\n\nSlides\n\n\n\n\n\n\n\n\nUse this link to open slides in a new tab (refer to slide #92)\nYou made it - yeah! This was the basic introduction to R to get you started. If you want to continue with the slides, feel free to do so :)"
+  },
+  {
+    "objectID": "r-homework.html",
+    "href": "r-homework.html",
+    "title": "Homework",
+    "section": "",
+    "text": "As homework, you are required to:\n1. Complete the Base R exercises conducted during the session.\nThis is if you didn’t already finish it during the meeting. You will be required to show the completed exercises as part of the grading of the course.\nUse the videos and slides as a reference for completing the exercises. If you get stuck, you can reach out to the instructors on Mondays between 15:00-17:00 either online or at the University Library in the City Center."
   }
 ]

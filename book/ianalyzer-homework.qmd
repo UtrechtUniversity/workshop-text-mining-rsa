@@ -1,0 +1,22 @@
+# Homework {.unnumbered}
+
+As homework, you are required to:
+
+**1. Complete the I-Analyzer exercise conducted during the session.**
+
+_This is if you didn't already finish it during the meeting._ 
+You will be required to show the exported dataset as part of the grading of the course.
+
+**2. Create your own text mining dataset using I-Analyzer.**
+
+This exercise will form the basis of your final assignment. 
+
+- Think about a research question you would like to answer using the _Times Newspapers_ corpus in I-Analyzer.
+
+- Construct a query in line with your research question and document it for reference and reproducibility. You can refer to the cheatsheet for building search queries on the previous page. 
+
+- Run the query in I-Analyzer.
+
+- Export the results as a csv file and save it in an accessible location.
+
+_**Don't forget the preparation for the next session!**_
