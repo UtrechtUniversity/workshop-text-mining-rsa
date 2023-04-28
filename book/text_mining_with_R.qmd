@@ -111,6 +111,7 @@ library(readr)
 data_file_name <- '../data/times_ocr=80_100&date=1945-01-01_2010-12-31&query=_european_union_&category=News.csv'
 data_df <- read_delim(data_file_name, delim = ";", escape_double = FALSE, col_types = cols(`date-pub` = col_date(format = "%B %d, %Y")), trim_ws = TRUE)
 
+print(nrow(data_df))
 print(colnames(data_df))
 ```
 
@@ -198,10 +199,10 @@ present in `tidy_content`, each word, or token, has therefore a unique identifie
 
 Cleaning data is an essential step in any data analysis process. Before you can analyse a dataset, you need to ensure that the data is accurate (data values are correct and free from errors), complete, and consistent (uniform and following a standard format or structure). Data cleaning is the process of identifying and correcting or removing errors, inconsistencies, and inaccuracies from a dataset. The output of I-Analyzer data (the csv file we are using for our analysis) is already a consistent data set, however, every time one of our programs performs some sort of operation on the data set, errors may be introduced.
 The absolute nightmare of every data scientist are missing or undefined values, these usually appear in our data sets as "NA" (Not Available) or "NaN" (Not a Number). NA is used in R (and some other programming languages) to represent missing or undefined values in data. You will find NaN more often in Python or Javascript programming. In general NA is used for non-numeric data types like characters and NaN for numeric data types, but the most important thing to remember is that you want to find our if your data set contains any of these values as they may severely affect your data analysis results.
-Does our DataFrame contain any NA values? Let's find out!
+Does our DataFrame contain any NA values in the issue column? Let's find out!
 
 ```{r}
-are_there_na <- any(is.na(tidy_content))
+are_there_na <- any(is.na(tidy_content$issue))
 if (are_there_na) {
   print('WARNING! There are NA in your data!')
 } else {
@@ -244,13 +245,13 @@ from our data set using the function `na.omit()` that, indeed, removes all the r
 containing NA returning a "clean" DataFrame:
 
 ```{r}
-tidy_content <- na.omit(tidy_content)
+tidy_content <- tidy_content[!is.na(tidy_content$issue), ]
 ```
 
 Let's check if there are still NA in our data set:
 
 ```{r}
-are_there_na <- any(is.na(tidy_content))
+are_there_na <- any(is.na(tidy_content$issue))
 if (are_there_na) {
   print('WARNING! There are NA in your data!')
 } else {
@@ -304,6 +305,8 @@ perfomed basic data cleaning and our data set is now ready for some analysis.
 After having tokenised and cleaned our data, it's time to perform the most basic text mining operation: count the number of times a certain word appears in our text. Even if conceptually it seems a quite trivial operation, by counting the frequency of each word in a text we can gain important insights about the general characteristics of the text. Furthermore, counting the frequency of specific words (i.e. how many times they occur per sentence/text/paragraph/document/etc) we can classify a text or define a model to identify the underlying topic or theme.
 
 ```{r}
+library(ggplot2)
+
 word_count <- tidy_clean_content %>%
   count(word) %>%
   filter(n > 2000) %>%
@@ -350,7 +353,20 @@ word_count %>%
 </p>
 </div>
 
-Looking at the data, we are not surprised to see that the second most frequent word is "european" as we are analysing data extracted from querying "European Union". It is interesting to note that the third word is "vote". This may mean that all the times "European Union" was mentioned in the news, it wa,s most of the times, related to the topic of elections.
+Looking at the data, we are not surprised to see that the second most frequent word is "european" as we are analysing data extracted from querying  "European Union". It is interesting to note that the third word is "vote". This may mean that all the times "European Union" was mentioned in the news, it wa,s most of the times, related to the topic of elections.
+
+A very popular way to visualise the most common words in a sample of texts is a **word cloud**. 
+A word cloud is a graphical representation of words where the size of each word indicates its frequency within a given data set. Visualising our data using a word cloud is not
+particularly useful for quantitative analysis, but it can be very effective when communicating text mining results. Obtaining a word cloud plot in R is as easy as all the tasks
+we performed so far, we just need to download the package `workcloud` and use the
+function `wordcloud()` as follows:
+
+```{r}
+library(wordcloud)
+
+word_count %>%
+  with(wordcloud(word, n, max.words = 1000))
+```
 
 #### Word classification and Sentiment Analysis
 
@@ -497,7 +513,7 @@ sentiment analysis conclusions more consistent.
 
 #### Analyzing word and document frequency: tf-idf
 
-In the previous sessions we have seen how to compute and display the number of times a term appears in a text and we compared that number with the total number of words in that text. This quantity is also known as *term frequency* (tf) and it is generally considered an indicator of the importance of a term in a text. In text mining the goal is trying to find a way (or several ways) to extract the topic (or the sentiment, or any other information) from a text, but is the most frequent term in that text a good indicator of what the text is about? Well, in most of the cases it does not for two main reasons: 1) the most frequent terms are usually meaningless (e.g. stop words) and 2) the fact that a term is not used very often, it does not necesserily imply that it is not important or representative for the entire text. 
+In the previous sessions we have seen how to compute and display the number of times a term appears in a text. When we divide that number by the total number of words in that text we obtain a quantity called *term frequency* (tf). The term frequency quantifies how often a word occurs in a text and at first glance it may be considered as an indicator of the importance of that term in a text. One of the goals of text mining is trying to find a way (or several ways) to extract the topic (or the sentiment or any other information) from a text, but is the most frequent term in that text a good indicator of what the text is about? Is the most frequent term the most important word in the text? Well, in most of the cases it is not and this because of for two main reasons: 1) as we already found, the most frequent terms are usually meaningless (e.g. stop words) and 2) the fact that a term is not used very often it does not necessarily imply that it is not important or representative for the entire text. 
 
 In the previous sessions we tried to deal with the first reason filtering out stop words from our text. In this session we will see how to take into account those terms that are not that frequent in a text but that can still be important to deduce its general meaning/topic/sentiment. At the same time we will define a new statistical quantity
 that will allow us to filter out the most frequent meaningless words without "manually"
@@ -507,23 +523,22 @@ Let's introduce a quantity called **inverse document frequency (idf)**:
 
 $$ idf(term) = log \Bigg( {n_{documents} \over n_{documents \space containing \space term}} \Bigg) $$ 
 
-How you can see from the equation, idf is a function of the term we want to focus on, this means that we can assign a unique idf to every single term in our text. Assuming that we
+As you can see from the equation, idf is a function of the term we want to focus on, this means that we can assign a unique idf to every single term in our text. Assuming that we
 have a sample (a set) of different documents, we start computing the document frequency
 in the sample, i.e. the ratio between the number of documents containing our selected
-term and the total number documents in the sample. We then invert this quantity (that
-is why we talk of *inverse* document frequency) and we apply the natural logarithm
-to it. Why the logarithm? The logarithmic function has to advantages: 1) it makes easy to
-"deal" with either very small or very big numbers (it makes these numbers easy to plot
-for example) and 2) when computed on a ratio of two quantities a and b, it is positive
-if a > b and negative if b > a.
+term and the total number of documents in the sample. We then invert this quantity (that
+is the reason why we talk about *inverse* document frequency) and we compute the natural logarithm of this inverted quantity. Why the logarithm? Applying the logarithmic function has two advantages: 1) it makes easy to
+"deal" with either very small or very big numbers (it makes these numbers easier to plot,
+for example) and 2) when computed on a ratio of two quantities a and b, the logarithm is positive if a > b and negative if b > a.
 
 ![idf](pictures/idf.jpeg) 
 
-In our specific case, if our selected term is present in *all* the documents of our sample, then the argument of the logarithm is 1 and idf will be 0. If our selected term is present in *less* documents than the total number of documents in our sample, then idf will be positive. The less present our term is, the larger idf will be and viceversa (remember we are dealing with *inverse* document frequency). Can idf be negative? It can't, because the number of documents containing our selected term can never be larger than the total number of documents in our sample. To summarise: idf is a positive quantity depending on a single term 
-and computed over a sample of documents. The smaller the idf, the more present is
+In our specific case, if our selected term is present in *all* the documents of our sample, then the argument of the logarithm is 1 and idf will be 0. If our selected term is present in *less* documents than the total number of documents in our sample, then idf will be positive. The less present our term is, the larger idf will be and viceversa (remember? We are dealing with *inverse* document frequency). Can idf be negative? It can't because the number of documents containing our selected term can never be larger than the total number of documents in our sample. To summarise: idf is a positive quantity depending on a single term 
+and it is computed over a sample of documents. The smaller the idf, the more present is
 our term in the sample of documents.
 
-Now that we defined and got familiar with idf, how do we use it in the context of text mining? Our goal is still to measure how important a word is in a document or in a collection (or corpus) of documents. In the previous sessions we saw how term frequency (tf) alone is a misleading indicator of the importance of a word as most frequent words are often meaningless (for this reason we filtered our stop words). This time we will combine tf and idf into a single quantity called (surprisingly!) *tf-idf*. When we combine these two quantities, idf will work as a *weight* for the term frequency, *adjusting* its magnitude according to the frequency of the term in the entire corpus. It is important to keep in mind that the definition of the tf-idf quantity, and all the statistics related to it, is a *heuristic* process, i.e. it is a methodology that has been proved to be useful in text mining simply "by trying" and that it has not any specific theoretical motivations behind it. For our
+Now that we defined and got familiar with idf, it's time to see how we use it in the context
+of text mining. Our goal is still to measure how important a word is in a document or in a collection (or corpus) of documents. We briefly mentioned that the term frequency (tf) alone is a misleading indicator of the importance of a word as most frequent words are often meaningless (for this reason we filtered out stop words). This time we will combine tf and idf into a single quantity called (surprisingly!) *tf-idf*. When we combine these two quantities, idf will work as a *weight* for the term frequency, *adjusting* its magnitude according to the frequency of the term in the entire corpus. It is important to keep in mind that the definition of the tf-idf quantity, and all the statistics related to it, is a *heuristic* process, i.e. it is a methodology that has been proved to be useful in text mining simply "by trying" and that it has not any specific theoretical motivations behind it. For our
 practical purpose, this simply means that any conclusion drawn from tf-idf analysis
 has to been taken with care.
 
@@ -534,6 +549,8 @@ library(tidytext)
 issue_words <- data_df %>%
   unnest_tokens(word, content) %>%
   count(issue, word, sort = TRUE)
+
+issue_words <- na.omit(issue_words)
 
 total_words <- issue_words %>% 
   group_by(issue) %>% 
@@ -552,28 +569,27 @@ issue_total_words <- left_join(issue_words, total_words) %>% arrange(desc(issue)
   <ul>
     <li>
       We first tokenise our raw data using <code>unnest_tokens()</code>. We tokenise
-      the column *content* of our DataFrame by *work*;
+      the column *content* of our DataFrame by *word*. We then use the function                     <code>count()</code> to count the number of words per issue, assigning the 
+      result to the DataFrame *issue_words*.
     </li>
     <li>
-      We use the function <code>count()</code> to count the number of words per issue,              assigning the result to the DataFrame *issue_words*.
+      We remove any possible NA from our DataFrame applying the function `na.omit()`;
     </li>
     <li>
-      In a second R statement, we apply the function <code>group_by()</code> to the
-      just created DataFrame *issue_words*. The function <code>group_by()</code>
-      splits the DataFrame into groups of identical values in a specified column
-      (in our case *issue*) so that, from now on, any other operation in the pipeline will be       performed on groups of (in this case) words belonging to the same issues;
+      In a second R statement, we apply the function `group_by()` to the just created               DataFrame *issue_words*. The function `group_by()` splits the DataFrame into 
+      groups of identical values in a specified column (in our case *issue*) so that, 
+      from now on, any other operation in the pipeline will be performed on groups 
+      of words belonging to the same issues. The function `summarise()` returns a new               DataFrame (*total_words*) with one row for each group (in our case, one row 
+      per issue). Specifying as an argument *total = sum(n)*, we tell R to add a 
+      new column on the output DataFrame. This column will be named *total* and it will             contain the sum of all the values of the column *n* in the *issue_words* DataFrame per        group;
     </li>
     <li>
-      The function <code>summarise()</code> returns a new DataFrame (*total_words*) with one        row for each group (in our case, one row per issue). Specifying as an argument *total =       sum(n)*, we tell R to add a new column on the output DataFrame. This column will be           named *total* and it will contain the sum of all the values of the column *n* 
-      in the *issue_words* DataFrame per group;
-    </li>
-    <li>
-      Finally we join (merge) the two previously created DataFrames using the function
-      <code>left_join()</code>. As the join is a *left* join, we mantain the structure
+      Finally, we join (merge) the two previously created DataFrames using the function
+      `left_join()`. As the join is a *left* join, we mantain the structure
       of the first argument of the function, the *left* DataFrame *issue_words*, so
       one row per word and columns specifying the issue where the word was found and
-      the number of times that word appear in that issue. After the joining, the
-      output DataFrame *issue_total_words* will have an additional column named *total*             containing the total number of words per issue. As same issues have same number of 
+      the number of times that word appears in that issue. After the joining operation, 
+      the output DataFrame *issue_total_words* will have an additional column named *total*         containing the total number of words per issue. As same issues have same number of 
       total words, there will be repeated values in the *total* columns, but we 
       will deal with those later.
     </li>
@@ -610,35 +626,34 @@ issue_total_words6 %>%
 <p>
   <ul>
     <li>
-      We select the *issue_total_words* DataFrame and using the function                            <code>filter()</code> we select only those rows (words) that have a value
+      We select the *issue_total_words* DataFrame and using the function                            `filter()` we select only those rows (words) that have a value
       larger than 10000 in the *total* column, i.e. whose belonging issues have
       a total number of words larger than 10000. We then apply the function
-      <code>distinct()</code> to obtaing an output DataFrame (*unique_issues*)
-      containing only distinct values of the column *issue*, i.e. one row per issue;
+      `distinct()` to obtaing an output DataFrame (*unique_issues*)
+      containing only distinct values of the column *issue*, i.e. one issue oer row;
     </li>
     <li>
-      Using the function <code>slice()</code>, we select the first 6 rows (1:6)
+      Using the function `slice()`, we select the first 6 rows (1:6)
       of the DataFrame *unique_issues* and we store them in the DataFrame
       *first_6_unique_issues*;
     </li>
     <li>
-      We use the function <code>semi_join()</code> to join the DataFrames *issue_total_words*
+      We use the function `semi_join()` to join the DataFrames *issue_total_words*
       and *first_6_unique_issues* according to the column *issue*. In this way the resulting        DataFrame will have the same structure of *issue_total_words* but will contain only           rows with issues corresponding to the ones listed in *first_6_unique_issues*. For
-      visualization purposes, we then apply the function <code>mutate</code> to replace
-      the *issue* column (containing a numeric) with a column having exactly
-      the same name, but containing a string variable. This will help the plot function
-      to label our plots properly;
+      visualization purposes, we then apply the function `mutate()` to replace
+      the *issue* column (containing numeric values) with a column having exactly
+      the same name and values, but in a string (character) format. This will help the plot         function to label our plots properly;
     </li>
     <li>
-      We feed the previous result to the function <code>ggplot()</code> for plotting.
-      <code>aes()</code> is a function that stands for "aesthetics" and is used to specify
+      We feed the previous result to the function `ggplot()` for plotting.
+      `aes()` is a function that stands for "aesthetics" and it is used to specify
       what to plot. In our case we want to plot the terms frequency, i.e. n/total.
-      The colors of the generated plot will vary according to the *issue* column,
+      The color of the generated plots will vary according to the *issue* column,
       this is specified with *fill=issue*. We also indicate that we want to plot
-      a histogram without legend (<code>geom_histogram(show.legend = FALSE) </code>).
-      We also specify the bounday of the x axis with <code>xlim()</code> and that
+      a histogram without legend (`geom_histogram(show.legend = FALSE)`).
+      We also specify the boundary of the x axis with `xlim()` and that
       we want plots to be distributed in a grid. To do that we use the function
-      <code>facet_wrap()</code> that will plot several plots according to the 
+      `facet_wrap()` that will plot several plots according to the 
       column *issue* in a grid of plots with 2 columns (ncols=2)
     </li>
   </ul>
@@ -650,8 +665,7 @@ because the most frequent terms in all the issues are meaningless stop words and
 the frequency of stop words does NOT depend on the topic or the particular issue.
 
 Now that we had a look at the term frequency per issue, let's compute the tf-idf and
-let's compare these two indicators. Once again, we do not have to do that manually as the package *tydytext* provides
-us a specific function for this purpose:
+let's compare these two indicators. Once again, we do not have to do that manually as the package *tydytext* provides us a specific function for this purpose:
 
 
 ```{r}
@@ -659,14 +673,7 @@ issue_tf_idf <- issue_words %>%
   bind_tf_idf(word, issue, n)
 
 issue_tf_idf %>%
-  arrange(tf_idf)
-```
-
-```{r}
-test <- issue_total_words %>%
-  mutate(idf=log(total/(n)))
-
-test2 <- issue_total_words %>% filter(n>total)
+  arrange(desc(tf))
 ```
 
 <div class="box type5">
@@ -678,34 +685,38 @@ test2 <- issue_total_words %>% filter(n>total)
 <p>
   <ul>
     <li>
-      Similarly to what done before, we select the *issue_total_words* before and
-      we change the values of the *issue* column from numeric to string. In the
-      previous case this was done for visualisation purposes, but in this case it
-      is because, for some reason, the function <code>bind_tf_idf</code> does not
-      "digest" well the *issue* column when this contain numeric values. The function
-      <code>bind_tf_idf</code> computes term frequency, idf, and multiples them
-      together to obtain tf-idf. Its argument are the column containing the token
-      (in this dase *word*), the column containing the odentified of the text in our
-      sample (*issue*) and the column with the number of times the token occurs in
-      the text (*n*). It then stores all these outputs in a DataFrame
-      (*issue_tf_idf*) per word. Note that <code>bind_tf_idf</code> computes automatically
-      the total number of words in a issue, so we could use the DataFrame *issue_words*
-      instead of *issue_total_words*;
+      The function `bind_tf_idf()` computes term frequency, idf, and multiples them
+      together to obtain tf-idf. Its arguments are the name of the column containing 
+      the token (in this dase *word*), the column containing the unique identifier of 
+      the document in our sample (*issue*) and the column with the number of times the token        occurs in the text (*n*). It then stores all these outputs in a DataFrame
+      (*issue_tf_idf*) per word;
     </li>
     <li>
-      We sort the output result, the DataFrame *issue_tf_idf*, by ascending values
-      of it-idf with the function <code>arrange()</code>
+      We sort the output result, the DataFrame *issue_tf_idf*, by descending values
+      of term frequency with the function `arrange()`.
     </li>
   </ul>
 </p>
-</div>
+</div> 
+
+Looking at the first rows of the output DataFrame, it is clear that the most frequent
+word is "the", a stop word. However, when we look at the corresponding tf-idf, its
+value is zero. This is because its idf is zero and it is an indicator that, indeed,
+"the" is a common word and I *may* be important, but it is *too much* common and that,
+perhaps, it should be excluded from our analysis.
 
 ```{r}
 issue_tf_idf %>%
   arrange(desc(tf_idf))
 ```
 
-```{r}
+Arranging the tf-idf in descending order, we see in the first rows of our DataFrame
+rare words, but still not so rare. Rare words may indicate particularly significant events
+related to "European Union" as these words do not often occure in the Times news corpora.
+As we did for the term frequency, let's visualise the tf-idf for the 6 longest issues
+in our data set:
+
+```{r} 
 library(forcats)
 
 issue_tf_idf %>%
@@ -718,50 +729,44 @@ issue_tf_idf %>%
   facet_wrap(~issue, scales="free",ncol = 2) +
   labs(x = "tf-idf", y = NULL) 
 ```
-
-```{r}
-issue_tf_idf <- issue_words %>%
-  mutate(issue=as.character(issue)) %>%
-  bind_tf_idf(word, issue, n) %>%
-  arrange(desc(tf-idf))
-
-issue_tf_idf
-```
+Looking at the plots, five of the issues have still a word in common, while one of 
+them (57791) stands out. This already tell us that issue 57791 could deserve
+particular attention.
 
 #### Relationships Between Words
 
 If we look at what we did so far to extract meaningful information from text, our
 methods look a quite over-simplification compared to the complexity of the human 
-language: we basically counted single words meausuring their frequency over different
+language: we basically counted single words computing their frequency over different
 samples (single text or entire corpus) and assigned them arbitrary tags to quantify
-which emotion they were more representative for. 
+which emotion they were more representative of. 
 
-Counting single words is a well proven text mining techniques, but even more interesting
+Counting single words is a well proven text mining technique, but even more interesting
 is studying the *relation* between two or more words, i.e. which words tend to follow others
-immediately or tend to co-occur withing the same documents.
+immediately or tend to co-occur withing the same document.
 
 In this session we will explore tidytext methods that focus on analysing and visualising
-the relationships between words.
+the relationships between two or more words.
 
 #### Tokenization by n-gram
 
 We learned that the first step in text mining is tokenization, where the token can
-be a single word, a sentence, a paragraph, etc. In studying the relation between 
+be a single character, word, a sentence, a paragraph, etc. In studying the relation between 
 words we will start with the easiest case: relation between two words. In this case,
 our tokens will be groups of two consecutive words. In order to extract such groups
-and to render them into DataFrame, we will use the same tidytext function that we
-used for tokenizing text in single words: ```unnest_tokens()```. The default token
+and to render them into a DataFrame, we will use the same tidytext function that we
+used for tokenizing text in single words: `unnest_tokens()`. The default token
 for ```unnest_tokens()``` is single words, so that this time we need to specify
 that we need groups of two words. To do that, we specify the parameters *token* and
 *n* equal to *ngrams* and 2 respectively. 
 
 An *ngram* is just a contiguous sequence of items. How many items? n, so that if 
-n=1 we have only one word, if n=2 we will have group of two words, and so on. 
-More in general, ngrams items can be any kind of token (a single character, a word, 
+n=1 we have only one word, if n=2 we will have groups of two words, n=3 three words, and so on. More in general, ngrams items can be any kind of token (a single character, a word, 
 a sentence, etc), but in this session, for simplicity, we will assume that the 
 n-grams items are just words. If, for example, we consider the sentence "I wish
 I could be at Bahamas sipping a Pinacolada", the first four word n-grams will be:
-- 1-gram (unigram): ("I","wish","I","could","be","at","Bahamas","sipping","a","Pinacolada");
+- 1-gram (unigram): ("I","wish","I","could","be","at","Bahamas","sipping","a","Pinacolada"), 
+the one we used in the previous paragraphs;
 - 2-gram (bigram): ("I wish","wish I","I could","could be","be at","at Bahamas","Bahamas sipping","sipping a","a Pinacolada");
 - 3-gram (trigram): ("I wish I","wish I could","I could be","could be at","be at Bahamas","Bahamas sipping a","sipping a Pinacolada");
 - 4-gram: ("I wish I could","wish I could be","I could be at","could be at Bahamas","be at Bahamas sipping","at Bahamas sipping a",
@@ -771,12 +776,26 @@ I could be at Bahamas sipping a Pinacolada", the first four word n-grams will be
 tidy_content_rel <- data_df %>% unnest_tokens(bigram, content, token="ngrams", n=2)
 ```
 
-The previous line of code takes our raw data, data_df, and it injects it in the 
-```unnest_tokens()``` function. The function will look at the *content* column
-of the DataFrame and will split the content into tokens of 2 consecutive words stored
-in the column *bigram* of a new created DataFrame called *tidy_content_rel*.
+<div class="box type5">
+  <div class="sub-box">
+  <img src="pictures/icons/code_expl.png" alt="Icon" class="picture"/> 
+  <p style="margin-left: 10px;"><h5><strong>How does it work?</strong></h5></p>
+  </div>
 
-Let's visualise how many times the couple of words in the bigram column occur in
+<p>
+  <ul>
+    <li>
+      The previous line of code takes our raw data, *data_df*, and it injects it in the 
+      `unnest_tokens()` function. The function will look at the *content* column
+      of the DataFrame and will split the content into tokens of 2 consecutive words stored
+    in the column *bigram* of a new created DataFrame called *tidy_content_rel*.;
+    </li>
+  </ul>
+</p>
+</div> 
+
+
+Let's visualise how many times the couple of words in the *bigram* column occur in
 the entire corpus:
 
 ```{r}
@@ -788,11 +807,11 @@ tidy_content_rel %>%
   geom_col() +
   labs(y = NULL)
 ```
-The previous plot is very similar to our very first plot showind the word count in
+The previous plot is very similar to our very first plot showing the word count in
 the entire corpus. The two plots are indeed identical, the only difference is that
-in that previous case the counted tokens were single words while here are biagrams,
+in that previous case the counted tokens were single words while now they are biagrams,
 i.e. groups of two words. Another thing we can notice is that, once again, the most
-frequent tokes are made of stop words. Let's get rid of them:
+frequent tokens are stop words. Let's get rid of them:
 
 ```{r}
 library(tidyr)
@@ -808,20 +827,33 @@ tidy_content_rel_clean <- bigrams_filtered %>%
   unite(bigram, word1, word2, sep = " ")
 ```
 
-In the first instruction of the previous block of code, we first split the column
-bigram into two different columns. To do that, we use the function ```separate()```
-specifying as arguments the column to split (*bigram*), the names of the two 
-new columns (*word1* and *word2*), and the character that separates values in the
-bigram column (in our case, an empty space). We store the result into the DataFrame
-bigrams_separated. Once we got this new DataFrame with these two new columns, we filter
-them so that none of their content is a stop word. We already have a list of stop
-words, this is stored in the *word* column of the *stop_words* DataFrame, so what
-we need to do is to tell R to keep only those words that are NOT in that column. 
-We do that with the instruction ```!word1/2 %in% stop_words$word```.
-We stated with our two words in a single column, so as a final step we use the
-function ```unite()``` to merge the content of the, now filtered, columns word1 and word2
-back into the column bigram, separated by a space. We save this result into the 
-DataFrame *tidy_content_rel_clean*. Let's see how it looks like:
+<div class="box type5">
+  <div class="sub-box">
+  <img src="pictures/icons/code_expl.png" alt="Icon" class="picture"/> 
+  <p style="margin-left: 10px;"><h5><strong>How does it work?</strong></h5></p>
+  </div>
+
+<p>
+  <ul>
+    <li>
+      Our biagram is stored in a single string (character) in the column *biagram*
+      of our DataFrame *tidy_content_rel*. In the first instruction of the previous block of        code, we first split the column *bigram* into two different columns. To do that, we use       the function `separate()` specifying as arguments the column to split (*bigram*), the         names of the two new columns (*word1* and *word2*), and the character that separates          values in the *bigram* column (in our case, an empty space). We store the result into         the DataFrame *bigrams_separated*;
+    </li>
+    <li>
+      Starting from *bigrams_separated*, we filter the content of the new two columns
+      so that none of their content is a stop word. We already have a list of stop
+      words, this is stored in the *word* column of the *stop_words* DataFrame, so what
+      we need to do is to tell R to keep only those words that are NOT in that column. 
+      We do that with the instruction `!word1/2 %in% stop_words$word`;
+    </li>
+    <li>
+      Right after tokenization we had our biagram stored in a single column, so as a final          step we use the function `unite()` to merge the content of the now filtered columns           *word1* and *word2* back into the column *bigram*, separated by a space. We save this         result into the DataFrame *tidy_content_rel_clean*.
+    </li>
+  </ul>
+</p>
+</div> 
+
+As we did several times before, let's visualise the counts of our biagram:
 
 ```{r}
 tidy_content_rel_clean %>%
@@ -833,27 +865,55 @@ tidy_content_rel_clean %>%
   labs(y = NULL)
 ```
 We immediately notice that the stop words are gone and that the most frequent
-combinations of two words together with "European Union" are "total vote" and "lab
-majority".
+biagrams in our corpus are "total vote" and "lab majority".
 
-Sometimes, it is useful to keep our bigrams in two distinct columns, one per word,
-instead in the same column. For example, we might be interested in the most common
-biagrams where the second word is "vote":
+Sometimes, it is useful to keep our bigrams in two distinct columns, one per word. This 
+format could be very handy when we need to apply filtering criteria to only one of the 
+words of the biagram. For example, we might be interested in the most common
+biagrams where the second word is "vote". We already obtained this format when
+computing the DataFrame *bigrams_separated*:
 
 ```{r}
 bigrams_filtered %>% 
   filter(word2 == "vote") %>%
   count(issue, word1, sort=TRUE)
 ```
-In this case we obtain the count of all the words *preceeding* the word *vote* by
+
+In this case we obtain the count of all the words *preceding* the word *vote* by
 issue. "total" is the most frequent.
+
+In the previous paragraph we mentioned that tf-idf is a function of the selected term.
+More in general, we can compute tf-idf for the seleced *token*, whatever it is a single
+character, word, biagram, n-gram, sentence, etc. To compute the tf-idf for our biagram
+we do not need to introduce any new tool, but we will simply use the function `bind_tf_idf()'
+in a similar way as we did for single words:
 
 ```{r}
 bigram_tf_idf <- tidy_content_rel_clean %>%
   count(issue, bigram) %>%
   bind_tf_idf(bigram, issue, n) %>%
-  arrange(idf)
+  arrange(tf_idf)
 
 bigram_tf_idf
 ```
 
+<div class="box type5">
+  <div class="sub-box">
+  <img src="pictures/icons/code_expl.png" alt="Icon" class="picture"/> 
+  <p style="margin-left: 10px;"><h5><strong>How does it work?</strong></h5></p>
+  </div>
+
+<p>
+  <ul>
+    <li>
+      In order to compute idf and tf-idf, the function `bind_tf_idf()` needs our 
+      DataFrame and the name of the columns specifying tokens, document identifiers                 (issues), and the number of times tokens occur in each issue. Our DataFrame
+      *tidy_content_rel_clean* does not contain this last quantity. To compute this,
+      we apply the function `count()` specifying to count the number of identical
+      biagrams by issue. This will return a DataFrame with three columns: *biagram*, 
+      *issue*, and *n* (the number of times that a biagram occurs in each issue). 
+      This result is used as input for `bind_tf_idf()` and the final result is arranged             according to descending td_idf using `arrange(tf_idf)`.
+    </li>
+  </ul>
+</p>
+</div> 
