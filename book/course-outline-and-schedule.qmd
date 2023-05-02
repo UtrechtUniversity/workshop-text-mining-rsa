@@ -1,6 +1,10 @@
 # Course Outline & Schedule {.unnumbered}
 
-The course consists of 5 meetings. Each meeting involves some preparation beforehand and homework afterwards. The preparation and homework will be necessary to ensure an efficient use of lesson time and you will be building up your final assignment as you go.  
+The course consists of 5 instructional meetings. Each meeting involves some **preparation** beforehand and **homework** afterwards. The preparation and homework will be necessary to ensure an efficient use of lesson time and you will be building up your final assignment as you go.
+
+As you progress through the course, you can reach out to the instructors during the [Walk-In Hours of Research Data Management Support](https://www.uu.nl/en/research/research-data-management/walk-in-hours-workshops/walk-in-hours-research-data-software) with any questions or issues. The Walk-In Hours take place every Monday from 15:00 to 17:00 at the University Library in the Science Park. However, one instructor will be available at the University Library in the city center (in the seating area near the Digital Humanities Lab) and you are welcome free to request a meeting online (via MS Teams) during these hours as well.
+
+You can also contact the course coordinator, Neha Moopen, by email at [n.moopen@uu.nl](n.moopen@uu.nl)
 
 ::: {.panel-tabset}
 

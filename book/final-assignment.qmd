@@ -1,0 +1,30 @@
+# Final Assignment
+
+The final assignment consists of three components.
+
+1. A reproducible report where you have applied text mining with iAnalyzer and R to your own research question.
+
+2. A reflection assignment
+
+3. A portfolio that contains your reproducible report and reflection assignment, as well as your homework over the course.
+
+## Folder Structure
+
+```
+LEG-SA-11_2023_surname/
+├── 01_i-analyzer/
+├── 02_base-r/
+├── 03_literature-review/
+├── 04_text-mining-in-r/
+├── 05_reproducible-report/
+└── 06_reflection_assignment/
+```
+
+## Homework Checklist
+
+- [] IAnalyzer export from the first meeting
+- [] Base R exercises
+- [] Slides of literature review
+- [] Text Mining in R exercises
+- [] Reproducible Report 
+- [] Reflection Assignment 

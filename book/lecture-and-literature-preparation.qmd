@@ -1,0 +1,41 @@
+# Preparation {.unnumbered}
+
+The next session will involve a guest lecture from a researcher based at the LEG Faculty, who uses computational techniques in her research. After the lecture, we will work in groups to discuss the literature recommended below.
+
+## Reflection Assignment
+
+Familiarize yourself with the **Reflection Assignment for REBO Skills Academy Modules**. This can be found towards the end of the [syllabus](https://utrechtuniversity.github.io/workshop-text-mining-rsa/syllabus.html). Consider the questions you will be asked to reflect on and keep them in mind as you review literature and listen to the guest lecture in the next session.
+
+## Literature Review
+
+1. Review the recommended literature relevant to text-mining in your discipline.
+
+2. Search for one additional article/chapter on text-mining in your discipline. Bonus points if you manage to find an article/chapter that involved text mining using R. 
+
+3. Summarize the literature in one PowerPoint slide per article. You should end up with 4 PowerPoint slides (at minimum).
+
+4. Bring your slides to the next meeting. Note that you will also be asked to submit the slides as part of your final assignment.
+ 
+### LAW:
+
+1. Dyevre, A. (2021) 'Text-mining for Lawyers: How Machine Learning Techniques Can Advance our Understanding of Legal Discourse', Erasmus Law Review, 14(1). [https://ssrn.com/abstract=3957098](https://ssrn.com/abstract=3957098) (Accessed: 2 May 2023).
+
+2. Wyner, A., Mochales-Palau, R., Moens, M.F., and Milward, D. (2010) 'Approaches to Text Mining Arguments from Legal Cases', in Francesconi, E., Montemagni, S., Peters, W., and Tiscornia, D. (eds) Semantic Processing of Legal Texts, Lecture Notes in Computer Science, vol 6036. Springer, Berlin, Heidelberg, pp. 42-56. [https://doi.org/10.1007/978-3-642-12837-0_4](https://doi.org/10.1007/978-3-642-12837-0_4) (Accessed: 2 May 2023).
+
+3. Feinerer, I. and Hornik, K. (2008) 'Text mining of supreme administrative court jurisdictions', in Data Analysis, Machine Learning and Applications: Proceedings of the 31st Annual Conference of the Gesellschaft für Klassifikation eV, Albert-Ludwigs-Universität Freiburg, March 7–9, 2007, Springer Berlin Heidelberg, pp. 569-576. [https://doi.org/10.1007/978-3-540-78246-9_67](https://doi.org/10.1007/978-3-540-78246-9_67)
+
+### ECONOMICS/FINANCE:
+
+1. Siegel, M. (2018) 'Text Mining in Economics', in Hoppe, T., Humm, B., and Reibold, A. (eds) Semantic Applications. Springer Vieweg, Berlin, Heidelberg, pp. 109-126. [https://doi.org/10.1007/978-3-662-55433-3_5](https://doi.org/10.1007/978-3-662-55433-3_5) (Accessed: 2 May 2023).
+
+2. Gentzkow, M., Kelly, B., and Taddy, M. (2019) 'Text as Data', Journal of Economic Literature, 57(3), pp. 535-574. [https://doi.org/10.1257/jel.20181020](https://doi.org/10.1257/jel.20181020) (Accessed: 2 May 2023).
+
+3. Gupta, A., Dengre, V., Kheruwala, H.A. et al. (2020) 'Comprehensive review of text-mining applications in finance', Financial Innovation, 6(1), 39. [https://doi.org/10.1186/s40854-020-00205-1](https://doi.org/10.1186/s40854-020-00205-1) (Accessed: 2 May 2023).
+
+### GOVERNANCE/POLICY:
+
+1. Gyódi, K., Nawaro, Ł., Paliński, M. et al. (2023) 'Informing policy with text mining: technological change and social challenges', Quality & Quantity, 57, pp. 933-954. [https://doi.org/10.1007/s11135-022-01378-w](https://doi.org/10.1007/s11135-022-01378-w) (Accessed: 2 May 2023).
+
+2. Abu-Shanab, E., and Harb, Y. (2019) 'E-government research insights: Text mining analysis', Electronic Commerce Research and Applications, 38, 100892. [https://doi.org/10.1016/j.elerap.2019.100892](https://doi.org/10.1016/j.elerap.2019.100892) (Accessed: 2 May 2023).
+
+3. Cogburn, D., 2020. Big data analytics and text mining in internet governance research: Computational analysis of transcripts from 12 years of the internet governance forum. Researching Internet Governance: Methods, Frameworks, Futures, p.214.

@@ -9,7 +9,7 @@ book:
   chapters:
     - index.qmd
     - syllabus.qmd
-    - outline-and-schedule.qmd
+    - course-outline-and-schedule.qmd
     - part: "1 I-Analyzer"
       chapters:
       - ianalyzer-preparation.qmd
@@ -21,10 +21,14 @@ book:
       - r-session.qmd
       - r-homework.qmd
     - part: "3 Guest Lecture & Literature Review"
-    - part: "4 TidyText"
+      chapters:
+      - lecture-and-literature-preparation.qmd
+      - lecture-and-literature-session.qmd
+      - lecture-and-literature-homework.qmd
+    - part: "4 Tidy Text Mining"
     - part: "5 Reproducible Reports"
+    - final-assignment.qmd
     - references.qmd
-
 
 bibliography: references.bib
 

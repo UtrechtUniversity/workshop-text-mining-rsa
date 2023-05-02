@@ -1,18 +1,29 @@
 # Base R {.unnumbered}
 
-Hi there! This is the basic introduction to R and RStudio. 
-This is a very first introduction and overview to understand the fundamental idea, structure and basic syntax of R to get you started. We will walk you through the slides and demonstrate most examples, but you can also revisit the slides or check out the videos in your own time. For each chapter, you will find a piece called "code chunk", which you can copy into your R environment and run so you get the same output as you see on the slides. This safes you a lot of copying and typing along, so make use of it :) f 
+This is a very first introduction and overview to understand the fundamental idea, structure and basic syntax of R to get you started. We will walk you through the slides and demonstrate most examples, but you can also revisit the slides or check out the videos in your own time. For each chapter, you will find a piece called "code chunk", which you can copy into your R environment and run so you get the same output as you see on the slides. This saves you a lot of copying and typing along, so make use of it.
+
 There are small exercises with answer slides so you can get a hands-on experience. Try to do the exercises as they come and of course, you can consult the answer slides or videos if you get stuck. 
 
 Some parts of the provided material go a bit further than what we want to cover here and exceed the goal of our basic introduction. We will skip these for now and indicate at which slide you can stop, but if you are motivated and curious you can just keep going. 
 
 If you're intrigued by the world of R and want to learn more, we offer an "Introduction to R" and many other courses - just check out [our website](https://www.uu.nl/en/research/research-data-management/walk-in-hours-workshops). Have fun and don't hesitate to ask for help!
 
+## Setup
 
-## Let's get started: what is R and RStudio 
+Before we get started, we need two R Markdown files to work with. Follow the instructions below:
+
+1. Create a folder called _base-r_ on your computer.
+
+2. Create an empty R Markdown file for coding along with the instructor's examples. Open RStudio and click through _File_ -> _New File_ -> _R Markdown_ -> give your file a title -> select HTML as output -> save the .Rmd file in the _base-r_ folder. 
+
+3. Download the R Markdown file that you will use for the exercises [baseR_exercises.Rmd](https://utrechtuniversity.github.io/workshop-introduction-to-R-and-data/baseR_exercises.Rmd) and save it in the _base-r_ folder.
+
+## Let's get started: What is R and RStudio? 
+
 This describes the basic idea of R and RStudio and how to work in the RStudio environment.
 
 ### Slides
+
 For this part, just consider the slides 12 - 16. 
 
 ```{r embed-xaringan-1, echo=FALSE}
@@ -24,9 +35,9 @@ xaringanExtra::embed_xaringan(url = "https://utrechtuniversity.github.io/worksho
 
 [Use this link to open slides in a new tab (refer to slide #12)](https://utrechtuniversity.github.io/workshop-introduction-to-R-and-data/slides/slides_introduction.html#12)
 
-
 ### Code Chunk
-This is an example of a so-called code chunk in which you write the actual code.
+
+This is an example of a so-called code chunk in which you write the actual code. 
 
 ```{r code chunk start, echo=TRUE, eval = FALSE}
 #let's define x 
@@ -37,6 +48,13 @@ y <- "apple"
 y
 ```
 
+You can insert chunks into your R Markdown file in the following ways:
+
+- using a keyboard shortcut **Ctrl + Alt + I** on Windows or **Cmd + Option + I** on MacOS
+- using the `Add Chunk` button in the editor toolbar
+- typing the chunk delimiters ```{r} and ``` directly into the file
+
+You can read more about [code chunks](https://rmarkdown.rstudio.com/lesson-3.html) on the R Markdown website.
 
 ### Video
 
@@ -45,17 +63,12 @@ y
 vembedr::embed_url("https://www.youtube.com/watch?v=FFYSAUJ305o")
 ```
 
-
-
-
-
 ## R Syntax & Data Types
 
 Now we go a step further in the "language" of R and we learn how to assign variables and math functions, and what kind of different data types there are. We create vectors and lists.
 Just start at slide 18 and do the exercises as they come. 
 
 ### Slides
-
 
 ```{r embed-xaringan-2, echo=FALSE}
 
@@ -79,7 +92,6 @@ y <- x + 2
 log2(y)
 ```
 
-
 ### Video
 
 ```{r video syntax, echo=FALSE}
@@ -87,7 +99,6 @@ log2(y)
 vembedr::embed_url("https://www.youtube.com/watch?v=S8zTmEvpYYk")
 ```
  
-
 ### Exercise 1
 
 1. Do the following calculation in R: one plus five, divided by nine.
@@ -116,15 +127,12 @@ xaringanExtra::embed_xaringan(url = "https://utrechtuniversity.github.io/worksho
 vembedr::embed_url("https://www.youtube.com/watch?v=V8za6GR7u8Q")
 ```
 
-
-
 ## Vectors
 
 Here, we create vectors and learn what a vector actually is! 
 Just start at slide 28 and do the exercises as they come. 
 
 ### Slides
-
 
 ```{r embed-xaringan-4, echo=FALSE}
 
@@ -169,12 +177,12 @@ vembedr::embed_url("https://www.youtube.com/watch?v=XMFjteCdHbQ")
 ### Exercise 2
 
 Meet Ann, Bob, Chloe, and Dan.
+
 1. Make a character vector with their names, using the function c(). Save the vector as "name".
 
 2. How old are Ann, Bob, Chloe, and Dan? You decide! Design a numeric vector with their respective ages. Save it as "age".
 
 3. What is their average age? Use a function in R to calculate this. Tip: use the Maths Functions section of the Base R cheat sheet!
-
 
 ### Solution 2
 
@@ -194,14 +202,12 @@ xaringanExtra::embed_xaringan(url = "https://utrechtuniversity.github.io/worksho
 vembedr::embed_url("https://www.youtube.com/watch?v=rIieuoYT4z0")
 ```
 
-
-## Data structures
+## Data Structures
 
 Here, we look at different data structures. Can we combine vectors, and lists? And how can we come up with a data frame? This will all be answered here.
 Just start at slide 41 and do the exercises as they come. 
 
 ### Slides
-
 
 ```{r embed-xaringan-6, echo=FALSE}
 
@@ -251,7 +257,6 @@ summary(df)
 vembedr::embed_url("https://www.youtube.com/watch?v=Ffk2Kxa_b_M")
 ```
 
-
 ### Exercise 3
 
 1. Create a vector country containing four countries (use at least one duplicate!).
@@ -263,7 +268,6 @@ vembedr::embed_url("https://www.youtube.com/watch?v=Ffk2Kxa_b_M")
 4. Make sure your column country is a factor, and confirm this with summary().
 
 5. Create a list with your vectors name and age, and save it as mylist.
-
 
 ### Solution 3
 
@@ -289,7 +293,6 @@ Just start at slide 53 and do the exercises as they come.
 
 ### Slides
 
-
 ```{r embed-xaringan-8, echo=FALSE}
 
 #https://utrechtuniversity.github.io/workshop-introduction-to-R-and-data/slides/slides_introduction.html#53
@@ -310,18 +313,14 @@ df$pet
 ```
 
 ### Video
-
 ```{r video missing data, echo=FALSE}
 
 vembedr::embed_url("https://www.youtube.com/watch?v=4gVvlg1Itzs")
 ```
-Start the video at 
 
 ### Exercise 4
 
-
 Predict the results before you run the code. Does the real answer make sense to you?
-
 
 ### Solution 4
 
@@ -334,14 +333,12 @@ xaringanExtra::embed_xaringan(url = "https://utrechtuniversity.github.io/worksho
 
 [Use this link to open slides in a new tab (refer to slide #57)](https://utrechtuniversity.github.io/workshop-introduction-to-R-and-data/slides/slides_introduction.html#57)
 
-
 ## Indexing vectors and lists
 
 Here we explain how you get to one specific value or column or data entry in your vector, or list.
 Just start at slide 66 and do the exercises as they come. 
 
 ### Slides
-
 
 ```{r embed-xaringan-10, echo=FALSE}
 
@@ -400,7 +397,6 @@ Start the video at
 
 4. Return the name "Chloe" from your list mylist (see exercise 3).
 
-
 ### Solution 5
 
 #### Slides {-}
@@ -418,14 +414,12 @@ xaringanExtra::embed_xaringan(url = "https://utrechtuniversity.github.io/worksho
 vembedr::embed_url("https://www.youtube.com/watch?v=4BZGGq-nBos")
 ```
 
-
 ## Indexing a data frame 
 
 Here we explain how you get to one specific value or column or data entry in your data frame.
 Just start at slide 80 and do the exercises as they come.  
 
 ### Slides
-
 
 ```{r embed-xaringan-12, echo=FALSE}
 
@@ -487,7 +481,6 @@ rm(name,age,country)
 	 
 3. Return the columns name and age together.
 	
-
 ### Solution 6
 
 #### Slides {-}
@@ -508,7 +501,6 @@ vembedr::embed_url("https://www.youtube.com/watch?v=DUk9bfcSwbA")
 
 ### Slides
 
-
 ```{r embed-xaringan-14, echo=FALSE}
 
 #https://utrechtuniversity.github.io/workshop-introduction-to-R-and-data/slides/slides_introduction.html#92
@@ -518,5 +510,4 @@ xaringanExtra::embed_xaringan(url = "https://utrechtuniversity.github.io/worksho
 
 [Use this link to open slides in a new tab (refer to slide #92)](https://utrechtuniversity.github.io/workshop-introduction-to-R-and-data/slides/slides_introduction.html#92)
 
-You made it - yeah! This was the basic introduction to R to get you started. If you want to continue with the slides, feel free to do so :) 
-
+You made it! This was the basic introduction to R to get you started. If you want to continue with the slides, feel free to do so :) 
