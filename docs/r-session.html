@@ -170,7 +170,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./outline-and-schedule.html" class="sidebar-item-text sidebar-link">Course Outline &amp; Schedule</a>
+  <a href="./course-outline-and-schedule.html" class="sidebar-item-text sidebar-link">Course Outline &amp; Schedule</a>
   </div>
 </li>
         <li class="sidebar-item sidebar-item-section">
@@ -224,14 +224,41 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
-      <span class="sidebar-item-text sidebar-link text-start">3 Guest Lecture &amp; Literature Review</span>
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true">3 Guest Lecture &amp; Literature Review</a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./lecture-and-literature-preparation.html" class="sidebar-item-text sidebar-link">Preparation</a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./lecture-and-literature-session.html" class="sidebar-item-text sidebar-link">Lecture &amp; Literature</a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./lecture-and-literature-homework.html" class="sidebar-item-text sidebar-link">Homework</a>
+  </div>
+</li>
+      </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
-      <span class="sidebar-item-text sidebar-link text-start">4 TidyText</span>
+      <span class="sidebar-item-text sidebar-link text-start">4 Tidy Text Mining</span>
   </li>
         <li class="sidebar-item sidebar-item-section">
       <span class="sidebar-item-text sidebar-link text-start">5 Reproducible Reports</span>
   </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./final-assignment.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Final Assignment</span></a>
+  </div>
+</li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./references.html" class="sidebar-item-text sidebar-link">References</a>
@@ -246,7 +273,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#lets-get-started-what-is-r-and-rstudio" id="toc-lets-get-started-what-is-r-and-rstudio" class="nav-link active" data-scroll-target="#lets-get-started-what-is-r-and-rstudio">Let’s get started: what is R and RStudio</a>
+  <li><a href="#setup" id="toc-setup" class="nav-link active" data-scroll-target="#setup">Setup</a></li>
+  <li><a href="#lets-get-started-what-is-r-and-rstudio" id="toc-lets-get-started-what-is-r-and-rstudio" class="nav-link" data-scroll-target="#lets-get-started-what-is-r-and-rstudio">Let’s get started: What is R and RStudio?</a>
   <ul class="collapse">
   <li><a href="#slides" id="toc-slides" class="nav-link" data-scroll-target="#slides">Slides</a></li>
   <li><a href="#code-chunk" id="toc-code-chunk" class="nav-link" data-scroll-target="#code-chunk">Code Chunk</a></li>
@@ -268,7 +296,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   <li><a href="#exercise-2" id="toc-exercise-2" class="nav-link" data-scroll-target="#exercise-2">Exercise 2</a></li>
   <li><a href="#solution-2" id="toc-solution-2" class="nav-link" data-scroll-target="#solution-2">Solution 2</a></li>
   </ul></li>
-  <li><a href="#data-structures" id="toc-data-structures" class="nav-link" data-scroll-target="#data-structures">Data structures</a>
+  <li><a href="#data-structures" id="toc-data-structures" class="nav-link" data-scroll-target="#data-structures">Data Structures</a>
   <ul class="collapse">
   <li><a href="#slides-5" id="toc-slides-5" class="nav-link" data-scroll-target="#slides-5">Slides</a></li>
   <li><a href="#code-chunk-3" id="toc-code-chunk-3" class="nav-link" data-scroll-target="#code-chunk-3">Code Chunk</a></li>
@@ -327,11 +355,21 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 </header>
 
-<p>Hi there! This is the basic introduction to R and RStudio. This is a very first introduction and overview to understand the fundamental idea, structure and basic syntax of R to get you started. We will walk you through the slides and demonstrate most examples, but you can also revisit the slides or check out the videos in your own time. For each chapter, you will find a piece called “code chunk”, which you can copy into your R environment and run so you get the same output as you see on the slides. This safes you a lot of copying and typing along, so make use of it :) f There are small exercises with answer slides so you can get a hands-on experience. Try to do the exercises as they come and of course, you can consult the answer slides or videos if you get stuck.</p>
+<p>This is a very first introduction and overview to understand the fundamental idea, structure and basic syntax of R to get you started. We will walk you through the slides and demonstrate most examples, but you can also revisit the slides or check out the videos in your own time. For each chapter, you will find a piece called “code chunk”, which you can copy into your R environment and run so you get the same output as you see on the slides. This saves you a lot of copying and typing along, so make use of it.</p>
+<p>There are small exercises with answer slides so you can get a hands-on experience. Try to do the exercises as they come and of course, you can consult the answer slides or videos if you get stuck.</p>
 <p>Some parts of the provided material go a bit further than what we want to cover here and exceed the goal of our basic introduction. We will skip these for now and indicate at which slide you can stop, but if you are motivated and curious you can just keep going.</p>
 <p>If you’re intrigued by the world of R and want to learn more, we offer an “Introduction to R” and many other courses - just check out <a href="https://www.uu.nl/en/research/research-data-management/walk-in-hours-workshops">our website</a>. Have fun and don’t hesitate to ask for help!</p>
+<section id="setup" class="level2">
+<h2 class="anchored" data-anchor-id="setup">Setup</h2>
+<p>Before we get started, we need two R Markdown files to work with. Follow the instructions below:</p>
+<ol type="1">
+<li><p>Create a folder called <em>base-r</em> on your computer.</p></li>
+<li><p>Create an empty R Markdown file for coding along with the instructor’s examples. Open RStudio and click through <em>File</em> -&gt; <em>New File</em> -&gt; <em>R Markdown</em> -&gt; give your file a title -&gt; select HTML as output -&gt; save the .Rmd file in the <em>base-r</em> folder.</p></li>
+<li><p>Download the R Markdown file that you will use for the exercises <a href="https://utrechtuniversity.github.io/workshop-introduction-to-R-and-data/baseR_exercises.Rmd">baseR_exercises.Rmd</a> and save it in the <em>base-r</em> folder.</p></li>
+</ol>
+</section>
 <section id="lets-get-started-what-is-r-and-rstudio" class="level2">
-<h2 class="anchored" data-anchor-id="lets-get-started-what-is-r-and-rstudio">Let’s get started: what is R and RStudio</h2>
+<h2 class="anchored" data-anchor-id="lets-get-started-what-is-r-and-rstudio">Let’s get started: What is R and RStudio?</h2>
 <p>This describes the basic idea of R and RStudio and how to work in the RStudio environment.</p>
 <section id="slides" class="level3">
 <h3 class="anchored" data-anchor-id="slides">Slides</h3>
@@ -357,6 +395,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="st">"apple"</span></span>
 <span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>y</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
+<p>You can insert chunks into your R Markdown file in the following ways:</p>
+<ul>
+<li>using a keyboard shortcut <strong>Ctrl + Alt + I</strong> on Windows or <strong>Cmd + Option + I</strong> on MacOS</li>
+<li>using the <code>Add Chunk</code> button in the editor toolbar</li>
+<li>typing the chunk delimiters <code>{r} and</code> directly into the file</li>
+</ul>
+<p>You can read more about <a href="https://rmarkdown.rstudio.com/lesson-3.html">code chunks</a> on the R Markdown website.</p>
 </section>
 <section id="video" class="level3">
 <h3 class="anchored" data-anchor-id="video">Video</h3>
@@ -499,8 +544,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </section>
 <section id="exercise-2" class="level3">
 <h3 class="anchored" data-anchor-id="exercise-2">Exercise 2</h3>
-<p>Meet Ann, Bob, Chloe, and Dan. 1. Make a character vector with their names, using the function c(). Save the vector as “name”.</p>
-<ol start="2" type="1">
+<p>Meet Ann, Bob, Chloe, and Dan.</p>
+<ol type="1">
+<li><p>Make a character vector with their names, using the function c(). Save the vector as “name”.</p></li>
 <li><p>How old are Ann, Bob, Chloe, and Dan? You decide! Design a numeric vector with their respective ages. Save it as “age”.</p></li>
 <li><p>What is their average age? Use a function in R to calculate this. Tip: use the Maths Functions section of the Base R cheat sheet!</p></li>
 </ol>
@@ -534,7 +580,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </section>
 </section>
 <section id="data-structures" class="level2">
-<h2 class="anchored" data-anchor-id="data-structures">Data structures</h2>
+<h2 class="anchored" data-anchor-id="data-structures">Data Structures</h2>
 <p>Here, we look at different data structures. Can we combine vectors, and lists? And how can we come up with a data frame? This will all be answered here. Just start at slide 41 and do the exercises as they come.</p>
 <section id="slides-5" class="level3">
 <h3 class="anchored" data-anchor-id="slides-5">Slides</h3>
@@ -662,7 +708,6 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 </div>
 </div>
-<p>Start the video at</p>
 </section>
 <section id="exercise-4" class="level3">
 <h3 class="anchored" data-anchor-id="exercise-4">Exercise 4</h3>
@@ -883,7 +928,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 </div>
 <p><a href="https://utrechtuniversity.github.io/workshop-introduction-to-R-and-data/slides/slides_introduction.html#92">Use this link to open slides in a new tab (refer to slide #92)</a></p>
-<p>You made it - yeah! This was the basic introduction to R to get you started. If you want to continue with the slides, feel free to do so :)</p>
+<p>You made it! This was the basic introduction to R to get you started. If you want to continue with the slides, feel free to do so :)</p>
 
 
 </section>
