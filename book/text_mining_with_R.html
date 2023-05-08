@@ -151,15 +151,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 }
 </style>
 </div>
-<section id="preliminaries" class="level3">
-<h3 class="anchored" data-anchor-id="preliminaries">Preliminaries</h3>
-<p>Few lines and scheme of tidyverse pipeline</p>
-</section>
 <section id="introduction" class="level3">
 <h3 class="anchored" data-anchor-id="introduction">Introduction</h3>
 <p>In this session we will see how to perform basic <strong>text mining</strong> with R. Text mining refers to the process of extracting (<em>mining</em>) information and insights from text. As text is written with human language, it is by nature subjective and ambigous. However, text mining can be extremely useful when looking for any sort of pattern, trend, or relantionships in large volumes of text data (articles, documents, emails, social media posts, etc).</p>
 <p>Text mining, or text analysis, can be a very challenging task as text data is often <em>unstructured</em>, i.e.&nbsp;it does not have a predefined format or structure. Furthermore, as we said, text is written in natural language and contains all the ambiguity of human subjects. In addition to these aspects, considering that everything ever written is text, the volume of data available for mining is huge and very “noisy”, i.e.&nbsp;it contains a lot of irrelevant information, typos, etc. For these and several other reasons, text mining requires quite sophisticated techniques to obtain meaningful results.</p>
-<p>Thankfully, most of these techniques have already been implemented into <em>packages</em> ( ready-to-use pieces of code) in different programming languanges (including R). In particular, the package <code>tidytext</code> is designed to work with text data in a “tidy” and efficient manner. The package is built on top of the tidyverse suite of packages (you can read more about <code>todytext</code> <a url="https://github.com/juliasilge/tidytext" href="">here</a>). <code>tidytext</code> provides a set of tools (functions) for manipulating and analyzing text data, these tools allow users to easily convert unstructured text data into a structured format that can be analyzed using statistics. In this session we will go through the basic steps of the general text mining process using <code>tidytext</code>, in particular we will use its functions to perform data collection, preprocessing, feature extraction, text classification, and visualization.</p>
+<p>Thankfully, most of these techniques have already been implemented into <em>packages</em> ( ready-to-use pieces of code) in different programming languanges (including R). In particular, the package <code>tidytext</code> is designed to work with text data in a “tidy” and efficient manner. The package is built on top of the tidyverse suite of packages (you can read more about <code>tidytext</code> <a url="https://github.com/juliasilge/tidytext" href="">here</a>). <code>tidytext</code> provides a set of tools (functions) for manipulating and analyzing text data, these tools allow users to easily convert unstructured text data into a structured format that can be analyzed using statistics. In this session we will go through the basic steps of the general text mining process using <code>tidytext</code>, in particular we will use its functions to perform data collection, preprocessing, feature extraction, text classification, and visualization.</p>
 <p>The paragraphs of this session are organised in descriptive text, code with its output (DataFrames, computations, plots, etc), and code description. The descriptive text is simply plain text as the one you are reading right now. Code will be into grey boxes and its output will immidiatly follows those like in this example:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="st">'Good luck guys!'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -170,7 +166,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>When necessary, code and outputs blocks are followed by a line-by-line explanation of the operations executed in the code box:</p>
 <div class="box type5">
 <div class="sub-box">
-<img src="pictures/icons/code_expl.png" alt="Icon" class="picture">
+<p><img src="pictures/icons/code_expl.png" alt="Icon" class="picture"></p>
 <p style="margin-left: 10px;">
 </p><h5 class="anchored">
 <strong>How does it work?</strong>
@@ -186,31 +182,119 @@ The function <code>print()</code> displayed the custom message “Good luck guys
 <p></p>
 </div>
 </section>
+<section id="setup" class="level3">
+<h3 class="anchored" data-anchor-id="setup">Setup</h3>
+<p>Let’s be sure you have all the needed packages installed and loaded into your R studio session. Remember that <em>installing</em> means downloading and installing all the files related to a package in your computer and this is usually a one-time operation. On the other hand, <em>loading</em> a package means making the package’s functions and other features ready to be used in your R session. This is something you need to do every time you start (or re-start) your R session. To install and load packages we use the R functions <code>install.packages()</code> and <code>library()</code>, respectively. Remember that <code>install.packages()</code> requires its arguments to be specified between double quotes, while <code>library()</code> accepts both double quotes or the plain name of the package.</p>
+<p>Let’s install packages</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"tidyverse"</span>)</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"tidytext"</span>)</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"wordcloud"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>and load them:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
+✔ dplyr     1.1.2     ✔ readr     2.1.4
+✔ forcats   1.0.0     ✔ stringr   1.5.0
+✔ ggplot2   3.4.2     ✔ tibble    3.2.1
+✔ lubridate 1.9.2     ✔ tidyr     1.3.0
+✔ purrr     1.0.1     
+── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
+✖ dplyr::filter() masks stats::filter()
+✖ dplyr::lag()    masks stats::lag()
+ℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidytext)</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(wordcloud)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Loading required package: RColorBrewer</code></pre>
+</div>
+</div>
+Few words about the packages we are going to use:
+<ul>
+<li>
+<strong>tidyverse</strong>: <quote>the tidyverse is an opinionated collection of R packages designed for data science. All packages share an underlying design philosophy, grammar, and data structures</quote>. Among the many tidyverse packages, we are going to use in particular:
+<ul>
+<li>
+<strong>readr</strong>: allowing to read data from files;
+</li>
+<li>
+<strong>dplyr</strong>: providing tools for data manipulation;
+</li>
+<li>
+<strong>tidyr</strong>: providing tools to make your data “tidy”;
+</li>
+<li>
+<strong>forcats</strong>: providing tools to solve problems with factors, and advanced R topic we would not spend much time talking about;
+</li>
+<li>
+<strong>ggplot2</strong>: a system for creating graphics.
+</li>
+</ul>
+</li><li>
+<strong>tidytext</strong>: an R package for text mining based on the tidy data principles;
+</li>
+<li>
+<strong>wordcloud</strong>: a package to generate word cloud plots.
+</li>
+</ul>
+</section>
+<section id="just-before-starting-tidyverse-pipelines" class="level3">
+<h3 class="anchored" data-anchor-id="just-before-starting-tidyverse-pipelines">Just before starting: tidyverse pipelines</h3>
+<p>Generally speaking, in programming a function takes an input and some more information specifying the function parameters, it runs some operation on the input according to the specified parameters, and it return an output.</p>
+<p><img src="pictures/pipeline.jpeg" class="img-fluid" alt="pipeline"> In data analysis, most of the times, you will find yourself in the situation where, in order to plot meaningful information or to extract meaningful statistical quantities from data, you need to apply several different functions to the data, collect their outputs, and use again that output as input for other functions. Assuming we want to apply 4 different functions to data, one after another, our R code will look like something like this:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>output1 <span class="ot">&lt;-</span> <span class="fu">func1</span>(data, pars1)</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>output2 <span class="ot">&lt;-</span> <span class="fu">func2</span>(output1, pars2)</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>output3 <span class="ot">&lt;-</span> <span class="fu">func3</span>(output2, pars3)</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>output4 <span class="ot">&lt;-</span> <span class="fu">func4</span>(output3, pars4)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>In most of the cases we will be interested only in the final output (output4) and saving each output into a variable (as we did in the previous block of code) would only waste memory space. To avoid that, we can use directly the output of a function as input for the next one in a <em>nested</em> structure:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>output4 <span class="ot">&lt;-</span> <span class="fu">func4</span>(<span class="fu">func3</span>(<span class="fu">func2</span>(<span class="fu">func1</span>(data,pars1),pars2),pars3),pars4)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>At this point you probably noticed that, the nested structure can be quite confusing, making us loosing track of what is the input and the additional parameters for each function, especially when we need to apply several functions to data one after another.</p>
+<p>To simplify this situation, the package <code>tidyverse</code> (once loaded) allows to use a syntax called <em>pipeline</em>. In a pipeline, the input parameter of a function is NOT specified between the parenthesis of the function, like in normal R, but it appears OUTSIDE the function and it is followed by the “pipe” operator “%&gt;%”. The pipe operator takes whatever is on its left-hand side and it passes it as an input for the code on the right-hand side. Confused? Look how the previous line of code becomes using the tidyverse pipeline:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>output4 <span class="ot">&lt;-</span> data <span class="sc">%&gt;%</span> </span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">func1</span>(pars1) <span class="sc">%&gt;%</span></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">func2</span>(pars2) <span class="sc">%&gt;%</span></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">func3</span>(pars3) <span class="sc">%&gt;%</span></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">func4</span>(pars4) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="box type5">
+<div class="sub-box">
+<p><img src="pictures/icons/code_expl.png" alt="Icon" class="picture"></p>
+<p style="margin-left: 10px;">
+</p><h5 class="anchored">
+<strong>How does it work?</strong>
+</h5>
+<p></p>
+</div>
+<p>
+</p><ul>
+<li>
+data is out input. The pipe operator “<span class="math inline">\(&gt;\)</span>” takes it and uses it as an input for <code>func1(pars1)</code>, where pars1 are additional parameters specified by the user. func1 will produce an output, but instead of storing this output into a variable, we immediatly “inject” it into another function using again the pipe operator. We repeat this operation four times until we finish to perform all our operation. The result will be stored in the variable output4 specified at the beginning of the line.
+</li>
+</ul>
+<p></p>
+</div>
+<p>The workflow and the result of the previous two blocks of code is absolutely identical, but tidyverse pipeline allows to write nested functions in a more concise, readable, easy to understand, and easy to modify way.</p>
+</section>
 <section id="reading-data" class="level3">
 <h3 class="anchored" data-anchor-id="reading-data">Reading data</h3>
 <p>In this session we will work with data that we already collected using the web application <a url="https://ianalyzer.hum.uu.nl/home" href="">I-Analyzer</a>. We obtained our data querying for “european union” over the news of the Times Digital Archive between 1945 and 2012. The data are stored in a coma-separated-values (csv) file and we are going to convert them into an R dataframe:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>── Attaching packages ─────────────────────────────────────── tidyverse 1.3.2 ──
-✔ ggplot2 3.4.0     ✔ purrr   1.0.1
-✔ tibble  3.1.8     ✔ dplyr   1.1.0
-✔ tidyr   1.3.0     ✔ stringr 1.5.0
-✔ readr   2.1.3     ✔ forcats 1.0.0
-── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
-✖ dplyr::filter() masks stats::filter()
-✖ dplyr::lag()    masks stats::lag()</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(readr)</span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>data_file_name <span class="ot">&lt;-</span> <span class="st">'../data/times_ocr=80_100&amp;date=1945-01-01_2010-12-31&amp;query=_european_union_&amp;category=News.csv'</span></span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>data_df <span class="ot">&lt;-</span> <span class="fu">read_delim</span>(data_file_name, <span class="at">delim =</span> <span class="st">";"</span>, <span class="at">escape_double =</span> <span class="cn">FALSE</span>, <span class="at">col_types =</span> <span class="fu">cols</span>(<span class="st">`</span><span class="at">date-pub</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">col_date</span>(<span class="at">format =</span> <span class="st">"%B %d, %Y"</span>)), <span class="at">trim_ws =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">nrow</span>(data_df))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>data_file_name <span class="ot">&lt;-</span> <span class="st">'../data/times_ocr=80_100&amp;date=1945-01-01_2010-12-31&amp;query=_european_union_&amp;category=News.csv'</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>data_df <span class="ot">&lt;-</span> <span class="fu">read_delim</span>(data_file_name, <span class="at">delim =</span> <span class="st">";"</span>, <span class="at">escape_double =</span> <span class="cn">FALSE</span>, <span class="at">col_types =</span> <span class="fu">cols</span>(<span class="st">`</span><span class="at">date-pub</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">col_date</span>(<span class="at">format =</span> <span class="st">"%B %d, %Y"</span>)), <span class="at">trim_ws =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">nrow</span>(data_df))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 1532</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">colnames</span>(data_df))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">colnames</span>(data_df))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "author"   "category" "content"  "date-pub" "edition"  "issue"    "query"   
 [8] "title"    "volume"  </code></pre>
@@ -218,7 +302,7 @@ The function <code>print()</code> displayed the custom message “Good luck guys
 </div>
 <div class="box type5">
 <div class="sub-box">
-<img src="pictures/icons/code_expl.png" alt="Icon" class="picture">
+<p><img src="pictures/icons/code_expl.png" alt="Icon" class="picture"></p>
 <p style="margin-left: 10px;">
 </p><h5 class="anchored">
 <strong>How does it work?</strong>
@@ -252,31 +336,29 @@ We finally printed the names of the columns in our DataFrame using <code>colname
 <p>The process of dividing a string of text into meaningful units is called <strong>Tokenization</strong> and these meaningful units are called <strong>tokens</strong>. A token can be a word, a phrase, a paragraphs, or a single character depending on the nature of our analysis. If, for example, we want just to explore how many times the name of a certain politician is mentioned in a speach, our tokens would probably be all the words of the speech and our analysis would consist on counting how many tokens are equal to the name of the politician.</p>
 <p>To perform “good” text mining, not only we want to optimally “tokenize” our text, but also organize our tokens in a <em>tidy</em> way, quite literally! For the R community, “tidy” has a very specific meaning, i.e.&nbsp;structuring data sets to make them consistent, easy to work, and easy to analyse. In our context it means having a single token per data frame row. R allows us to perform all these operations in few lines thanks to the library <code>tidytext</code>:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidytext)</span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>tidy_content <span class="ot">&lt;-</span> data_df <span class="sc">%&gt;%</span> <span class="fu">unnest_tokens</span>(word, content, <span class="at">token=</span><span class="st">"words"</span>)</span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>tidy_content</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>tidy_content <span class="ot">&lt;-</span> data_df <span class="sc">%&gt;%</span> <span class="fu">unnest_tokens</span>(word, content, <span class="at">token=</span><span class="st">"words"</span>)</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>tidy_content</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 1,549,578 × 9
-   author              categ…¹ `date-pub` edition issue query title volume word 
-   &lt;chr&gt;               &lt;chr&gt;   &lt;date&gt;     &lt;lgl&gt;   &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt; &lt;lgl&gt;  &lt;chr&gt;
- 1 ['FROM A SPECIAL C… ['News… 1962-11-05 NA      55540 time… Euro… NA     from 
- 2 ['FROM A SPECIAL C… ['News… 1962-11-05 NA      55540 time… Euro… NA     a    
- 3 ['FROM A SPECIAL C… ['News… 1962-11-05 NA      55540 time… Euro… NA     spec…
- 4 ['FROM A SPECIAL C… ['News… 1962-11-05 NA      55540 time… Euro… NA     corr…
- 5 ['FROM A SPECIAL C… ['News… 1962-11-05 NA      55540 time… Euro… NA     at   
- 6 ['FROM A SPECIAL C… ['News… 1962-11-05 NA      55540 time… Euro… NA     this 
- 7 ['FROM A SPECIAL C… ['News… 1962-11-05 NA      55540 time… Euro… NA     junc…
- 8 ['FROM A SPECIAL C… ['News… 1962-11-05 NA      55540 time… Euro… NA     of   
- 9 ['FROM A SPECIAL C… ['News… 1962-11-05 NA      55540 time… Euro… NA     focus
-10 ['FROM A SPECIAL C… ['News… 1962-11-05 NA      55540 time… Euro… NA     on   
-# … with 1,549,568 more rows, and abbreviated variable name ¹​category</code></pre>
+   author             category `date-pub` edition issue query title volume word 
+   &lt;chr&gt;              &lt;chr&gt;    &lt;date&gt;     &lt;lgl&gt;   &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt; &lt;lgl&gt;  &lt;chr&gt;
+ 1 ['FROM A SPECIAL … ['News'] 1962-11-05 NA      55540 time… Euro… NA     from 
+ 2 ['FROM A SPECIAL … ['News'] 1962-11-05 NA      55540 time… Euro… NA     a    
+ 3 ['FROM A SPECIAL … ['News'] 1962-11-05 NA      55540 time… Euro… NA     spec…
+ 4 ['FROM A SPECIAL … ['News'] 1962-11-05 NA      55540 time… Euro… NA     corr…
+ 5 ['FROM A SPECIAL … ['News'] 1962-11-05 NA      55540 time… Euro… NA     at   
+ 6 ['FROM A SPECIAL … ['News'] 1962-11-05 NA      55540 time… Euro… NA     this 
+ 7 ['FROM A SPECIAL … ['News'] 1962-11-05 NA      55540 time… Euro… NA     junc…
+ 8 ['FROM A SPECIAL … ['News'] 1962-11-05 NA      55540 time… Euro… NA     of   
+ 9 ['FROM A SPECIAL … ['News'] 1962-11-05 NA      55540 time… Euro… NA     focus
+10 ['FROM A SPECIAL … ['News'] 1962-11-05 NA      55540 time… Euro… NA     on   
+# ℹ 1,549,568 more rows</code></pre>
 </div>
 </div>
 <div class="box type5">
 <div class="sub-box">
-<img src="pictures/icons/code_expl.png" alt="Icon" class="picture">
+<p><img src="pictures/icons/code_expl.png" alt="Icon" class="picture"></p>
 <p style="margin-left: 10px;">
 </p><h5 class="anchored">
 <strong>How does it work?</strong>
@@ -300,19 +382,19 @@ We use the <code>tidytext</code> function <code>unnest_tokens()</code> to split 
 <h4 class="anchored" data-anchor-id="cleaning-data">Cleaning data</h4>
 <p>Cleaning data is an essential step in any data analysis process. Before you can analyse a dataset, you need to ensure that the data is accurate (data values are correct and free from errors), complete, and consistent (uniform and following a standard format or structure). Data cleaning is the process of identifying and correcting or removing errors, inconsistencies, and inaccuracies from a dataset. The output of I-Analyzer data (the csv file we are using for our analysis) is already a consistent data set, however, every time one of our programs performs some sort of operation on the data set, errors may be introduced. The absolute nightmare of every data scientist are missing or undefined values, these usually appear in our data sets as “NA” (Not Available) or “NaN” (Not a Number). NA is used in R (and some other programming languages) to represent missing or undefined values in data. You will find NaN more often in Python or Javascript programming. In general NA is used for non-numeric data types like characters and NaN for numeric data types, but the most important thing to remember is that you want to find our if your data set contains any of these values as they may severely affect your data analysis results. Does our DataFrame contain any NA values in the issue column? Let’s find out!</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>are_there_na <span class="ot">&lt;-</span> <span class="fu">any</span>(<span class="fu">is.na</span>(tidy_content<span class="sc">$</span>issue))</span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (are_there_na) {</span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(<span class="st">'WARNING! There are NA in your data!'</span>)</span>
-<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>} <span class="cf">else</span> {</span>
-<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(<span class="st">'Lucky you! I could not find any NA in your data (yet...)!'</span>)</span>
-<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>are_there_na <span class="ot">&lt;-</span> <span class="fu">any</span>(<span class="fu">is.na</span>(tidy_content<span class="sc">$</span>issue))</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (are_there_na) {</span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(<span class="st">'WARNING! There are NA in your data!'</span>)</span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>} <span class="cf">else</span> {</span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(<span class="st">'Lucky you! I could not find any NA in your data (yet...)!'</span>)</span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "WARNING! There are NA in your data!"</code></pre>
 </div>
 </div>
 <div class="box type5">
 <div class="sub-box">
-<img src="pictures/icons/code_expl.png" alt="Icon" class="picture">
+<p><img src="pictures/icons/code_expl.png" alt="Icon" class="picture"></p>
 <p style="margin-left: 10px;">
 </p><h5 class="anchored">
 <strong>How does it work?</strong>
@@ -332,16 +414,16 @@ We use a conditional statement IF … ELSE … to print two messages depending o
 </div>
 <p>We found NA in our DataSet. Nothing to worry about, this is the common case, so common that there are plenty of functions to clean up our data. How shall we procede in this case? usually we would like to inspect the data to check what is missing and how to better replace those values. In our case, you can relatively easily find out that one of the issues identifier is missing. For simplicity, we will just exclude the issue from our data set using the function <code>na.omit()</code> that, indeed, removes all the rows containing NA returning a “clean” DataFrame:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>tidy_content <span class="ot">&lt;-</span> tidy_content[<span class="sc">!</span><span class="fu">is.na</span>(tidy_content<span class="sc">$</span>issue), ]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>tidy_content <span class="ot">&lt;-</span> tidy_content[<span class="sc">!</span><span class="fu">is.na</span>(tidy_content<span class="sc">$</span>issue), ]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Let’s check if there are still NA in our data set:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>are_there_na <span class="ot">&lt;-</span> <span class="fu">any</span>(<span class="fu">is.na</span>(tidy_content<span class="sc">$</span>issue))</span>
-<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (are_there_na) {</span>
-<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(<span class="st">'WARNING! There are NA in your data!'</span>)</span>
-<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>} <span class="cf">else</span> {</span>
-<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(<span class="st">'Lucky you! I could not find any NA in your data (yet...)!'</span>)</span>
-<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>are_there_na <span class="ot">&lt;-</span> <span class="fu">any</span>(<span class="fu">is.na</span>(tidy_content<span class="sc">$</span>issue))</span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (are_there_na) {</span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(<span class="st">'WARNING! There are NA in your data!'</span>)</span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>} <span class="cf">else</span> {</span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(<span class="st">'Lucky you! I could not find any NA in your data (yet...)!'</span>)</span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "Lucky you! I could not find any NA in your data (yet...)!"</code></pre>
 </div>
@@ -349,31 +431,31 @@ We use a conditional statement IF … ELSE … to print two messages depending o
 <hr>
 <p>As we mentioned before, text is unstructured data that can be very “noisy”, i.e.&nbsp;containing a lot of not relevant information. Actually, the most common words in a text are words that have very little meaning, such as “the”, “and”, “a”, etc. These words are referred as <em>stop words</em> and cleaning data from text mining includes removing stop words from our tokenised data:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(stop_words)</span>
-<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>tidy_clean_content <span class="ot">&lt;-</span> tidy_content <span class="sc">%&gt;%</span> <span class="fu">anti_join</span>(stop_words)</span>
-<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>tidy_clean_content</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(stop_words)</span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>tidy_clean_content <span class="ot">&lt;-</span> tidy_content <span class="sc">%&gt;%</span> <span class="fu">anti_join</span>(stop_words)</span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>tidy_clean_content</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 801,754 × 9
-   author              categ…¹ `date-pub` edition issue query title volume word 
-   &lt;chr&gt;               &lt;chr&gt;   &lt;date&gt;     &lt;lgl&gt;   &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt; &lt;lgl&gt;  &lt;chr&gt;
- 1 ['FROM A SPECIAL C… ['News… 1962-11-05 NA      55540 time… Euro… NA     spec…
- 2 ['FROM A SPECIAL C… ['News… 1962-11-05 NA      55540 time… Euro… NA     corr…
- 3 ['FROM A SPECIAL C… ['News… 1962-11-05 NA      55540 time… Euro… NA     junc…
- 4 ['FROM A SPECIAL C… ['News… 1962-11-05 NA      55540 time… Euro… NA     focus
- 5 ['FROM A SPECIAL C… ['News… 1962-11-05 NA      55540 time… Euro… NA     euro…
- 6 ['FROM A SPECIAL C… ['News… 1962-11-05 NA      55540 time… Euro… NA     37   
- 7 ['FROM A SPECIAL C… ['News… 1962-11-05 NA      55540 time… Euro… NA     women
- 8 ['FROM A SPECIAL C… ['News… 1962-11-05 NA      55540 time… Euro… NA     sat  
- 9 ['FROM A SPECIAL C… ['News… 1962-11-05 NA      55540 time… Euro… NA     round
-10 ['FROM A SPECIAL C… ['News… 1962-11-05 NA      55540 time… Euro… NA     conf…
-# … with 801,744 more rows, and abbreviated variable name ¹​category</code></pre>
+   author             category `date-pub` edition issue query title volume word 
+   &lt;chr&gt;              &lt;chr&gt;    &lt;date&gt;     &lt;lgl&gt;   &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt; &lt;lgl&gt;  &lt;chr&gt;
+ 1 ['FROM A SPECIAL … ['News'] 1962-11-05 NA      55540 time… Euro… NA     spec…
+ 2 ['FROM A SPECIAL … ['News'] 1962-11-05 NA      55540 time… Euro… NA     corr…
+ 3 ['FROM A SPECIAL … ['News'] 1962-11-05 NA      55540 time… Euro… NA     junc…
+ 4 ['FROM A SPECIAL … ['News'] 1962-11-05 NA      55540 time… Euro… NA     focus
+ 5 ['FROM A SPECIAL … ['News'] 1962-11-05 NA      55540 time… Euro… NA     euro…
+ 6 ['FROM A SPECIAL … ['News'] 1962-11-05 NA      55540 time… Euro… NA     37   
+ 7 ['FROM A SPECIAL … ['News'] 1962-11-05 NA      55540 time… Euro… NA     women
+ 8 ['FROM A SPECIAL … ['News'] 1962-11-05 NA      55540 time… Euro… NA     sat  
+ 9 ['FROM A SPECIAL … ['News'] 1962-11-05 NA      55540 time… Euro… NA     round
+10 ['FROM A SPECIAL … ['News'] 1962-11-05 NA      55540 time… Euro… NA     conf…
+# ℹ 801,744 more rows</code></pre>
 </div>
 </div>
 <div class="box type5">
 <div class="sub-box">
-<img src="pictures/icons/code_expl.png" alt="Icon" class="picture">
+<p><img src="pictures/icons/code_expl.png" alt="Icon" class="picture"></p>
 <p style="margin-left: 10px;">
 </p><h5 class="anchored">
 <strong>How does it work?</strong>
@@ -400,24 +482,22 @@ Using the function <code>anti_join()</code> we select those rows (so words) in t
 <h4 class="anchored" data-anchor-id="counting-words">Counting words</h4>
 <p>After having tokenised and cleaned our data, it’s time to perform the most basic text mining operation: count the number of times a certain word appears in our text. Even if conceptually it seems a quite trivial operation, by counting the frequency of each word in a text we can gain important insights about the general characteristics of the text. Furthermore, counting the frequency of specific words (i.e.&nbsp;how many times they occur per sentence/text/paragraph/document/etc) we can classify a text or define a model to identify the underlying topic or theme.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
-<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>word_count <span class="ot">&lt;-</span> tidy_clean_content <span class="sc">%&gt;%</span></span>
-<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(word) <span class="sc">%&gt;%</span></span>
-<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(n <span class="sc">&gt;</span> <span class="dv">2000</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">word =</span> <span class="fu">reorder</span>(word, n)) </span>
-<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a>word_count <span class="sc">%&gt;%</span></span>
-<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(n, word)) <span class="sc">+</span></span>
-<span id="cb18-10"><a href="#cb18-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>() <span class="sc">+</span></span>
-<span id="cb18-11"><a href="#cb18-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">y =</span> <span class="cn">NULL</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>word_count <span class="ot">&lt;-</span> tidy_clean_content <span class="sc">%&gt;%</span></span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(word) <span class="sc">%&gt;%</span></span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(n <span class="sc">&gt;</span> <span class="dv">2000</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">word =</span> <span class="fu">reorder</span>(word, n)) </span>
+<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a>word_count <span class="sc">%&gt;%</span></span>
+<span id="cb24-7"><a href="#cb24-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(n, word)) <span class="sc">+</span></span>
+<span id="cb24-8"><a href="#cb24-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>() <span class="sc">+</span></span>
+<span id="cb24-9"><a href="#cb24-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">y =</span> <span class="cn">NULL</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="text_mining_with_R_files/figure-html/unnamed-chunk-9-1.png" class="img-fluid" width="672"></p>
+<p><img src="text_mining_with_R_files/figure-html/unnamed-chunk-14-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <div class="box type5">
 <div class="sub-box">
-<img src="pictures/icons/code_expl.png" alt="Icon" class="picture">
+<p><img src="pictures/icons/code_expl.png" alt="Icon" class="picture"></p>
 <p style="margin-left: 10px;">
 </p><h5 class="anchored">
 <strong>How does it work?</strong>
@@ -438,14 +518,10 @@ Time to plot! We “feed” our data to the function <code>ggplot()</code>, in i
 <p>Looking at the data, we are not surprised to see that the second most frequent word is “european” as we are analysing data extracted from querying “European Union”. It is interesting to note that the third word is “vote”. This may mean that all the times “European Union” was mentioned in the news, it wa,s most of the times, related to the topic of elections.</p>
 <p>A very popular way to visualise the most common words in a sample of texts is a <strong>word cloud</strong>. A word cloud is a graphical representation of words where the size of each word indicates its frequency within a given data set. Visualising our data using a word cloud is not particularly useful for quantitative analysis, but it can be very effective when communicating text mining results. Obtaining a word cloud plot in R is as easy as all the tasks we performed so far, we just need to download the package <code>workcloud</code> and use the function <code>wordcloud()</code> as follows:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(wordcloud)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Loading required package: RColorBrewer</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>word_count <span class="sc">%&gt;%</span></span>
-<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">with</span>(<span class="fu">wordcloud</span>(word, n, <span class="at">max.words =</span> <span class="dv">1000</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>word_count <span class="sc">%&gt;%</span></span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">with</span>(<span class="fu">wordcloud</span>(word, n, <span class="at">max.words =</span> <span class="dv">1000</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="text_mining_with_R_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid" width="672"></p>
+<p><img src="text_mining_with_R_files/figure-html/unnamed-chunk-15-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 </section>
@@ -455,14 +531,14 @@ Time to plot! We “feed” our data to the function <code>ggplot()</code>, in i
 <p>Sentiment analysis is based on the assumption that we can view a text as a combination of individual words and that, having assigned a sentiment to each individual word, the resulting sentiment of the text will be the sum of the sentiment of its individual words. For example, if most of the words in a text are positive, then the text can be classified as positive. Given this assumption, to perform sentiment analysis, we need a reference database of words where a sentiment has been assigned to each word following specific conventions. Such a database is called <strong>lexicon</strong>. For our practical purposes a lexicon is just a DataFrame where a score is assigned to words or phrases, the score indicating whether the corresponding word is associated with positive or negative sentiment. For example, the word “happy” will probably have a positive score, while the word “sad” may have a negative score.</p>
 <p>For our simple analysis, we already downloaded a lexicon, the <strong>NRC emotion lexicon</strong>. The NRC Emotion Lexicon is a list of English words and their associations with eight basic emotions (anger, fear, anticipation, trust, surprise, sadness, joy, and disgust) and two sentiments (negative and positive). If an emotion is associated with a word, its score will be 1, 0 otherwise.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>nrc_lexicon_df <span class="ot">&lt;-</span> <span class="fu">read.table</span>(<span class="st">"../data/NRC-Emotion-Lexicon-Wordlevel-v0.92.txt"</span>, <span class="at">header =</span> <span class="cn">FALSE</span>, <span class="at">sep =</span> <span class="st">"</span><span class="sc">\t</span><span class="st">"</span>, <span class="at">stringsAsFactors =</span> <span class="cn">FALSE</span>, <span class="at">col.names =</span> <span class="fu">c</span>(<span class="st">"word"</span>, <span class="st">"emotion"</span>, <span class="st">"score"</span>))</span>
-<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>joy_words <span class="ot">&lt;-</span> nrc_lexicon_df  <span class="sc">%&gt;%</span> </span>
-<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(emotion <span class="sc">==</span> <span class="st">"joy"</span> <span class="sc">&amp;</span> score <span class="sc">==</span> <span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>nrc_lexicon_df <span class="ot">&lt;-</span> <span class="fu">read.table</span>(<span class="st">"../data/NRC-Emotion-Lexicon-Wordlevel-v0.92.txt"</span>, <span class="at">header =</span> <span class="cn">FALSE</span>, <span class="at">sep =</span> <span class="st">"</span><span class="sc">\t</span><span class="st">"</span>, <span class="at">stringsAsFactors =</span> <span class="cn">FALSE</span>, <span class="at">col.names =</span> <span class="fu">c</span>(<span class="st">"word"</span>, <span class="st">"emotion"</span>, <span class="st">"score"</span>))</span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>joy_words <span class="ot">&lt;-</span> nrc_lexicon_df  <span class="sc">%&gt;%</span> </span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(emotion <span class="sc">==</span> <span class="st">"joy"</span> <span class="sc">&amp;</span> score <span class="sc">==</span> <span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="box type5">
 <div class="sub-box">
-<img src="pictures/icons/code_expl.png" alt="Icon" class="picture">
+<p><img src="pictures/icons/code_expl.png" alt="Icon" class="picture"></p>
 <p style="margin-left: 10px;">
 </p><h5 class="anchored">
 <strong>How does it work?</strong>
@@ -482,25 +558,25 @@ Once we have stored the lexicon into the DataFrame <em>nrc_lexicon_df</em> we ca
 </div>
 <p>In the previous lines we read the lexicon into an R DataFrame and we extracted from it only the words associated with joy. Once we know which are the words associated with joy, we can count how many “joy words” there are in our text and see if the news associated with “European Union” can be classified as “joyful” or not.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>issue_df <span class="ot">&lt;-</span> tidy_clean_content <span class="sc">%&gt;%</span></span>
-<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="st">`</span><span class="at">date-pub</span><span class="st">`</span><span class="sc">&gt;=</span><span class="st">'2000-01-01'</span> <span class="sc">&amp;</span> <span class="st">`</span><span class="at">date-pub</span><span class="st">`</span> <span class="sc">&lt;</span> <span class="st">'2010-01-01'</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(issue) <span class="sc">%&gt;%</span></span>
-<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">reframe</span>(<span class="at">words_per_issue =</span> <span class="fu">n</span>(), <span class="at">date=</span> <span class="st">`</span><span class="at">date-pub</span><span class="st">`</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">unique</span>()</span>
-<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a>issue_joy_df <span class="ot">&lt;-</span> tidy_clean_content <span class="sc">%&gt;%</span></span>
-<span id="cb23-8"><a href="#cb23-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="st">`</span><span class="at">date-pub</span><span class="st">`</span><span class="sc">&gt;=</span><span class="st">'2000-01-01'</span> <span class="sc">&amp;</span> <span class="st">`</span><span class="at">date-pub</span><span class="st">`</span> <span class="sc">&lt;</span> <span class="st">'2010-01-01'</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb23-9"><a href="#cb23-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">inner_join</span>(joy_words) <span class="sc">%&gt;%</span></span>
-<span id="cb23-10"><a href="#cb23-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(issue) <span class="sc">%&gt;%</span></span>
-<span id="cb23-11"><a href="#cb23-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">reframe</span>(<span class="at">joy_words_per_issue =</span> <span class="fu">n</span>()) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>issue_df <span class="ot">&lt;-</span> tidy_clean_content <span class="sc">%&gt;%</span></span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="st">`</span><span class="at">date-pub</span><span class="st">`</span><span class="sc">&gt;=</span><span class="st">'2000-01-01'</span> <span class="sc">&amp;</span> <span class="st">`</span><span class="at">date-pub</span><span class="st">`</span> <span class="sc">&lt;</span> <span class="st">'2010-01-01'</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(issue) <span class="sc">%&gt;%</span></span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">reframe</span>(<span class="at">words_per_issue =</span> <span class="fu">n</span>(), <span class="at">date=</span> <span class="st">`</span><span class="at">date-pub</span><span class="st">`</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">unique</span>()</span>
+<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-7"><a href="#cb27-7" aria-hidden="true" tabindex="-1"></a>issue_joy_df <span class="ot">&lt;-</span> tidy_clean_content <span class="sc">%&gt;%</span></span>
+<span id="cb27-8"><a href="#cb27-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="st">`</span><span class="at">date-pub</span><span class="st">`</span><span class="sc">&gt;=</span><span class="st">'2000-01-01'</span> <span class="sc">&amp;</span> <span class="st">`</span><span class="at">date-pub</span><span class="st">`</span> <span class="sc">&lt;</span> <span class="st">'2010-01-01'</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb27-9"><a href="#cb27-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">inner_join</span>(joy_words) <span class="sc">%&gt;%</span></span>
+<span id="cb27-10"><a href="#cb27-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(issue) <span class="sc">%&gt;%</span></span>
+<span id="cb27-11"><a href="#cb27-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">reframe</span>(<span class="at">joy_words_per_issue =</span> <span class="fu">n</span>()) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Joining with `by = join_by(word)`</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>issue_tot_df <span class="ot">&lt;-</span> <span class="fu">merge</span>(issue_df, issue_joy_df, <span class="at">by=</span><span class="st">'issue'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>issue_tot_df <span class="ot">&lt;-</span> <span class="fu">merge</span>(issue_df, issue_joy_df, <span class="at">by=</span><span class="st">'issue'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="box type5">
 <div class="sub-box">
-<img src="pictures/icons/code_expl.png" alt="Icon" class="picture">
+<p><img src="pictures/icons/code_expl.png" alt="Icon" class="picture"></p>
 <p style="margin-left: 10px;">
 </p><h5 class="anchored">
 <strong>How does it work?</strong>
@@ -523,18 +599,19 @@ We finally merge the two previously created DataFrames so to have total number o
 </div>
 <p>The starting point is always our cleaned data <code>tidy_clean_content</code>. We first apply a filter to select news in the decade 2000-2010, then we group our data according to the issue (remember, our data has been tokenized, so at the moment each row corresponds to a single word, not to a single news or issue) and we count the number of words per issue and the number of joy words per issue. The reason for this double computation is that we would like to compare the total number of joy words with the total number of words in each issue, to obtain in this way the percentage of joy words per issue.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>issue_tot_df <span class="sc">%&gt;%</span></span>
-<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">per_cent_joy=</span>joy_words_per_issue<span class="sc">/</span>words_per_issue<span class="sc">*</span><span class="dv">100</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> date, <span class="at">y =</span> per_cent_joy) )<span class="sc">+</span></span>
-<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>() <span class="sc">+</span></span>
-<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Date"</span>, <span class="at">y =</span> <span class="st">"Joy words [%]"</span>, <span class="at">title =</span> <span class="st">"Joyfulness about EU in 2000-2010"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>issue_tot_df <span class="sc">%&gt;%</span></span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">per_cent_joy=</span>joy_words_per_issue<span class="sc">/</span>words_per_issue<span class="sc">*</span><span class="dv">100</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> date, <span class="at">y =</span> per_cent_joy) )<span class="sc">+</span></span>
+<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>() <span class="sc">+</span></span>
+<span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Date"</span>, <span class="at">y =</span> <span class="st">"Joy words [%]"</span>, <span class="at">title =</span> <span class="st">"Joyfulness about EU in 2000-2010"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="text_mining_with_R_files/figure-html/unnamed-chunk-13-1.png" class="img-fluid" width="672"></p>
+<p><img src="text_mining_with_R_files/figure-html/unnamed-chunk-18-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <div class="box type5">
+
 <div class="sub-box">
-<img src="pictures/icons/code_expl.png" alt="Icon" class="picture">
+<p><img src="pictures/icons/code_expl.png" alt="Icon" class="picture"></p>
 <p style="margin-left: 10px;">
 </p><h5 class="anchored">
 <strong>How does it work?</strong>
@@ -578,7 +655,7 @@ We use <code>ggplot(aes())</code>, <code>geom_col()</code>, and <code>labs()</co
 </div>
 <div class="box type5">
 <div class="sub-box">
-<img src="pictures/icons/code_expl.png" alt="Icon" class="picture">
+<p><img src="pictures/icons/code_expl.png" alt="Icon" class="picture"></p>
 <p style="margin-left: 10px;">
 </p><h5 class="anchored">
 <strong>How does it work?</strong>
@@ -608,12 +685,12 @@ Finally, we join (merge) the two previously created DataFrames using the functio
 <pre><code>`stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
 </div>
 <div class="cell-output-display">
-<p><img src="text_mining_with_R_files/figure-html/unnamed-chunk-15-1.png" class="img-fluid" width="672"></p>
+<p><img src="text_mining_with_R_files/figure-html/unnamed-chunk-20-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <div class="box type5">
 <div class="sub-box">
-<img src="pictures/icons/code_expl.png" alt="Icon" class="picture">
+<p><img src="pictures/icons/code_expl.png" alt="Icon" class="picture"></p>
 <p style="margin-left: 10px;">
 </p><h5 class="anchored">
 <strong>How does it work?</strong>
@@ -640,11 +717,11 @@ We feed the previous result to the function <code>ggplot()</code> for plotting. 
 <p>Looking at the histograms of the six longest issues in our sample, it is quite evident that the term frequency follows a very similar distribution in almost all the issues. This is because the most frequent terms in all the issues are meaningless stop words and the frequency of stop words does NOT depend on the topic or the particular issue.</p>
 <p>Now that we had a look at the term frequency per issue, let’s compute the tf-idf and let’s compare these two indicators. Once again, we do not have to do that manually as the package <em>tydytext</em> provides us a specific function for this purpose:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>issue_tf_idf <span class="ot">&lt;-</span> issue_words <span class="sc">%&gt;%</span></span>
-<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">bind_tf_idf</span>(word, issue, n)</span>
-<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a>issue_tf_idf <span class="sc">%&gt;%</span></span>
-<span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(tf))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>issue_tf_idf <span class="ot">&lt;-</span> issue_words <span class="sc">%&gt;%</span></span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">bind_tf_idf</span>(word, issue, n)</span>
+<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a>issue_tf_idf <span class="sc">%&gt;%</span></span>
+<span id="cb34-5"><a href="#cb34-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(tf))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 574,385 × 6
    issue word      n    tf   idf tf_idf
@@ -659,12 +736,12 @@ We feed the previous result to the function <code>ggplot()</code> for plotting. 
  8 53077 the      26 0.13      0      0
  9 61094 the      49 0.130     0      0
 10 53175 the      76 0.130     0      0
-# … with 574,375 more rows</code></pre>
+# ℹ 574,375 more rows</code></pre>
 </div>
 </div>
 <div class="box type5">
 <div class="sub-box">
-<img src="pictures/icons/code_expl.png" alt="Icon" class="picture">
+<p><img src="pictures/icons/code_expl.png" alt="Icon" class="picture"></p>
 <p style="margin-left: 10px;">
 </p><h5 class="anchored">
 <strong>How does it work?</strong>
@@ -684,8 +761,8 @@ We sort the output result, the DataFrame <em>issue_tf_idf</em>, by descending va
 </div>
 <p>Looking at the first rows of the output DataFrame, it is clear that the most frequent word is “the”, a stop word. However, when we look at the corresponding tf-idf, its value is zero. This is because its idf is zero and it is an indicator that, indeed, “the” is a common word and I <em>may</em> be important, but it is <em>too much</em> common and that, perhaps, it should be excluded from our analysis.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>issue_tf_idf <span class="sc">%&gt;%</span></span>
-<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(tf_idf))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>issue_tf_idf <span class="sc">%&gt;%</span></span>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(tf_idf))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 574,385 × 6
    issue word          n     tf   idf tf_idf
@@ -700,24 +777,22 @@ We sort the output result, the DataFrame <em>issue_tf_idf</em>, by descending va
  8 68890 ceausescu     2 0.0278  7.17  0.199
  9 68277 agents        2 0.0435  4.53  0.197
 10 68302 wording       2 0.0426  4.61  0.196
-# … with 574,375 more rows</code></pre>
+# ℹ 574,375 more rows</code></pre>
 </div>
 </div>
 <p>Arranging the tf-idf in descending order, we see in the first rows of our DataFrame rare words, but still not so rare. Rare words may indicate particularly significant events related to “European Union” as these words do not often occure in the Times news corpora. As we did for the term frequency, let’s visualise the tf-idf for the 6 longest issues in our data set:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(forcats)</span>
-<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a>issue_tf_idf <span class="sc">%&gt;%</span></span>
-<span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">semi_join</span>(first_6_unique_issues, <span class="at">by=</span><span class="st">"issue"</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb34-5"><a href="#cb34-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(issue) <span class="sc">%&gt;%</span></span>
-<span id="cb34-6"><a href="#cb34-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">slice_max</span>(tf_idf, <span class="at">n =</span> <span class="dv">10</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb34-7"><a href="#cb34-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>() <span class="sc">%&gt;%</span></span>
-<span id="cb34-8"><a href="#cb34-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(tf_idf, <span class="fu">fct_reorder</span>(word, tf_idf), <span class="at">fill =</span> issue)) <span class="sc">+</span></span>
-<span id="cb34-9"><a href="#cb34-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>(<span class="at">show.legend =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
-<span id="cb34-10"><a href="#cb34-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>issue, <span class="at">scales=</span><span class="st">"free"</span>,<span class="at">ncol =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
-<span id="cb34-11"><a href="#cb34-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"tf-idf"</span>, <span class="at">y =</span> <span class="cn">NULL</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a>issue_tf_idf <span class="sc">%&gt;%</span></span>
+<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">semi_join</span>(first_6_unique_issues, <span class="at">by=</span><span class="st">"issue"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(issue) <span class="sc">%&gt;%</span></span>
+<span id="cb38-4"><a href="#cb38-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">slice_max</span>(tf_idf, <span class="at">n =</span> <span class="dv">10</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb38-5"><a href="#cb38-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb38-6"><a href="#cb38-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(tf_idf, <span class="fu">fct_reorder</span>(word, tf_idf), <span class="at">fill =</span> issue)) <span class="sc">+</span></span>
+<span id="cb38-7"><a href="#cb38-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>(<span class="at">show.legend =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
+<span id="cb38-8"><a href="#cb38-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>issue, <span class="at">scales=</span><span class="st">"free"</span>,<span class="at">ncol =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
+<span id="cb38-9"><a href="#cb38-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"tf-idf"</span>, <span class="at">y =</span> <span class="cn">NULL</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="text_mining_with_R_files/figure-html/unnamed-chunk-18-1.png" class="img-fluid" width="672"></p>
+<p><img src="text_mining_with_R_files/figure-html/unnamed-chunk-23-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <p>Looking at the plots, five of the issues have still a word in common, while one of them (57791) stands out. This already tell us that issue 57791 could deserve particular attention.</p>
@@ -733,11 +808,11 @@ We sort the output result, the DataFrame <em>issue_tf_idf</em>, by descending va
 <p>We learned that the first step in text mining is tokenization, where the token can be a single character, word, a sentence, a paragraph, etc. In studying the relation between words we will start with the easiest case: relation between two words. In this case, our tokens will be groups of two consecutive words. In order to extract such groups and to render them into a DataFrame, we will use the same tidytext function that we used for tokenizing text in single words: <code>unnest_tokens()</code>. The default token for <code>unnest_tokens()</code> is single words, so that this time we need to specify that we need groups of two words. To do that, we specify the parameters <em>token</em> and <em>n</em> equal to <em>ngrams</em> and 2 respectively.</p>
 <p>An <em>ngram</em> is just a contiguous sequence of items. How many items? n, so that if n=1 we have only one word, if n=2 we will have groups of two words, n=3 three words, and so on. More in general, ngrams items can be any kind of token (a single character, a word, a sentence, etc), but in this session, for simplicity, we will assume that the n-grams items are just words. If, for example, we consider the sentence “I wish I could be at Bahamas sipping a Pinacolada”, the first four word n-grams will be: - 1-gram (unigram): (“I”,“wish”,“I”,“could”,“be”,“at”,“Bahamas”,“sipping”,“a”,“Pinacolada”), the one we used in the previous paragraphs; - 2-gram (bigram): (“I wish”,“wish I”,“I could”,“could be”,“be at”,“at Bahamas”,“Bahamas sipping”,“sipping a”,“a Pinacolada”); - 3-gram (trigram): (“I wish I”,“wish I could”,“I could be”,“could be at”,“be at Bahamas”,“Bahamas sipping a”,“sipping a Pinacolada”); - 4-gram: (“I wish I could”,“wish I could be”,“I could be at”,“could be at Bahamas”,“be at Bahamas sipping”,“at Bahamas sipping a”, “Bahamas sipping a Pinacolada”).</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>tidy_content_rel <span class="ot">&lt;-</span> data_df <span class="sc">%&gt;%</span> <span class="fu">unnest_tokens</span>(bigram, content, <span class="at">token=</span><span class="st">"ngrams"</span>, <span class="at">n=</span><span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a>tidy_content_rel <span class="ot">&lt;-</span> data_df <span class="sc">%&gt;%</span> <span class="fu">unnest_tokens</span>(bigram, content, <span class="at">token=</span><span class="st">"ngrams"</span>, <span class="at">n=</span><span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="box type5">
 <div class="sub-box">
-<img src="pictures/icons/code_expl.png" alt="Icon" class="picture">
+<p><img src="pictures/icons/code_expl.png" alt="Icon" class="picture"></p>
 <p style="margin-left: 10px;">
 </p><h5 class="anchored">
 <strong>How does it work?</strong>
@@ -754,34 +829,32 @@ The previous line of code takes our raw data, <em>data_df</em>, and it injects i
 </div>
 <p>Let’s visualise how many times the couple of words in the <em>bigram</em> column occur in the entire corpus:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>tidy_content_rel <span class="sc">%&gt;%</span></span>
-<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(bigram, <span class="at">sort =</span> <span class="cn">TRUE</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(n <span class="sc">&gt;</span> <span class="dv">2000</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb36-4"><a href="#cb36-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">bigram =</span> <span class="fu">reorder</span>(bigram, n)) <span class="sc">%&gt;%</span></span>
-<span id="cb36-5"><a href="#cb36-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(n, bigram)) <span class="sc">+</span></span>
-<span id="cb36-6"><a href="#cb36-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>() <span class="sc">+</span></span>
-<span id="cb36-7"><a href="#cb36-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">y =</span> <span class="cn">NULL</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a>tidy_content_rel <span class="sc">%&gt;%</span></span>
+<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(bigram, <span class="at">sort =</span> <span class="cn">TRUE</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(n <span class="sc">&gt;</span> <span class="dv">2000</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb40-4"><a href="#cb40-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">bigram =</span> <span class="fu">reorder</span>(bigram, n)) <span class="sc">%&gt;%</span></span>
+<span id="cb40-5"><a href="#cb40-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(n, bigram)) <span class="sc">+</span></span>
+<span id="cb40-6"><a href="#cb40-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>() <span class="sc">+</span></span>
+<span id="cb40-7"><a href="#cb40-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">y =</span> <span class="cn">NULL</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="text_mining_with_R_files/figure-html/unnamed-chunk-20-1.png" class="img-fluid" width="672"></p>
+<p><img src="text_mining_with_R_files/figure-html/unnamed-chunk-25-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <p>The previous plot is very similar to our very first plot showing the word count in the entire corpus. The two plots are indeed identical, the only difference is that in that previous case the counted tokens were single words while now they are biagrams, i.e.&nbsp;groups of two words. Another thing we can notice is that, once again, the most frequent tokens are stop words. Let’s get rid of them:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyr)</span>
-<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a>bigrams_separated <span class="ot">&lt;-</span> tidy_content_rel <span class="sc">%&gt;%</span></span>
-<span id="cb37-4"><a href="#cb37-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">separate</span>(bigram, <span class="fu">c</span>(<span class="st">"word1"</span>, <span class="st">"word2"</span>), <span class="at">sep =</span> <span class="st">" "</span>)</span>
-<span id="cb37-5"><a href="#cb37-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb37-6"><a href="#cb37-6" aria-hidden="true" tabindex="-1"></a>bigrams_filtered <span class="ot">&lt;-</span> bigrams_separated <span class="sc">%&gt;%</span></span>
-<span id="cb37-7"><a href="#cb37-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span>word1 <span class="sc">%in%</span> stop_words<span class="sc">$</span>word) <span class="sc">%&gt;%</span></span>
-<span id="cb37-8"><a href="#cb37-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span>word2 <span class="sc">%in%</span> stop_words<span class="sc">$</span>word)</span>
-<span id="cb37-9"><a href="#cb37-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb37-10"><a href="#cb37-10" aria-hidden="true" tabindex="-1"></a>tidy_content_rel_clean <span class="ot">&lt;-</span> bigrams_filtered <span class="sc">%&gt;%</span></span>
-<span id="cb37-11"><a href="#cb37-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">unite</span>(bigram, word1, word2, <span class="at">sep =</span> <span class="st">" "</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a>bigrams_separated <span class="ot">&lt;-</span> tidy_content_rel <span class="sc">%&gt;%</span></span>
+<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">separate</span>(bigram, <span class="fu">c</span>(<span class="st">"word1"</span>, <span class="st">"word2"</span>), <span class="at">sep =</span> <span class="st">" "</span>)</span>
+<span id="cb41-3"><a href="#cb41-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-4"><a href="#cb41-4" aria-hidden="true" tabindex="-1"></a>bigrams_filtered <span class="ot">&lt;-</span> bigrams_separated <span class="sc">%&gt;%</span></span>
+<span id="cb41-5"><a href="#cb41-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span>word1 <span class="sc">%in%</span> stop_words<span class="sc">$</span>word) <span class="sc">%&gt;%</span></span>
+<span id="cb41-6"><a href="#cb41-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span>word2 <span class="sc">%in%</span> stop_words<span class="sc">$</span>word)</span>
+<span id="cb41-7"><a href="#cb41-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-8"><a href="#cb41-8" aria-hidden="true" tabindex="-1"></a>tidy_content_rel_clean <span class="ot">&lt;-</span> bigrams_filtered <span class="sc">%&gt;%</span></span>
+<span id="cb41-9"><a href="#cb41-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">unite</span>(bigram, word1, word2, <span class="at">sep =</span> <span class="st">" "</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="box type5">
 <div class="sub-box">
-<img src="pictures/icons/code_expl.png" alt="Icon" class="picture">
+<p><img src="pictures/icons/code_expl.png" alt="Icon" class="picture"></p>
 <p style="margin-left: 10px;">
 </p><h5 class="anchored">
 <strong>How does it work?</strong>
@@ -804,23 +877,23 @@ Right after tokenization we had our biagram stored in a single column, so as a f
 </div>
 <p>As we did several times before, let’s visualise the counts of our biagram:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a>tidy_content_rel_clean <span class="sc">%&gt;%</span></span>
-<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(bigram, <span class="at">sort =</span> <span class="cn">TRUE</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(n <span class="sc">&gt;</span> <span class="dv">500</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb38-4"><a href="#cb38-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">bigram =</span> <span class="fu">reorder</span>(bigram, n)) <span class="sc">%&gt;%</span></span>
-<span id="cb38-5"><a href="#cb38-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(n, bigram)) <span class="sc">+</span></span>
-<span id="cb38-6"><a href="#cb38-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>() <span class="sc">+</span></span>
-<span id="cb38-7"><a href="#cb38-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">y =</span> <span class="cn">NULL</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a>tidy_content_rel_clean <span class="sc">%&gt;%</span></span>
+<span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(bigram, <span class="at">sort =</span> <span class="cn">TRUE</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb42-3"><a href="#cb42-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(n <span class="sc">&gt;</span> <span class="dv">500</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb42-4"><a href="#cb42-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">bigram =</span> <span class="fu">reorder</span>(bigram, n)) <span class="sc">%&gt;%</span></span>
+<span id="cb42-5"><a href="#cb42-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(n, bigram)) <span class="sc">+</span></span>
+<span id="cb42-6"><a href="#cb42-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>() <span class="sc">+</span></span>
+<span id="cb42-7"><a href="#cb42-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">y =</span> <span class="cn">NULL</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="text_mining_with_R_files/figure-html/unnamed-chunk-22-1.png" class="img-fluid" width="672"></p>
+<p><img src="text_mining_with_R_files/figure-html/unnamed-chunk-27-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <p>We immediately notice that the stop words are gone and that the most frequent biagrams in our corpus are “total vote” and “lab majority”.</p>
 <p>Sometimes, it is useful to keep our bigrams in two distinct columns, one per word. This format could be very handy when we need to apply filtering criteria to only one of the words of the biagram. For example, we might be interested in the most common biagrams where the second word is “vote”. We already obtained this format when computing the DataFrame <em>bigrams_separated</em>:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a>bigrams_filtered <span class="sc">%&gt;%</span> </span>
-<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(word2 <span class="sc">==</span> <span class="st">"vote"</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(issue, word1, <span class="at">sort=</span><span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a>bigrams_filtered <span class="sc">%&gt;%</span> </span>
+<span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(word2 <span class="sc">==</span> <span class="st">"vote"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb43-3"><a href="#cb43-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(issue, word1, <span class="at">sort=</span><span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 709 × 3
    issue word1      n
@@ -835,18 +908,18 @@ Right after tokenization we had our biagram stored in a single column, so as a f
  8 61556 rotal      5
  9 53127 french     4
 10 61556 96         4
-# … with 699 more rows</code></pre>
+# ℹ 699 more rows</code></pre>
 </div>
 </div>
 <p>In this case we obtain the count of all the words <em>preceding</em> the word <em>vote</em> by issue. “total” is the most frequent.</p>
 <p>In the previous paragraph we mentioned that tf-idf is a function of the selected term. More in general, we can compute tf-idf for the seleced <em>token</em>, whatever it is a single character, word, biagram, n-gram, sentence, etc. To compute the tf-idf for our biagram we do not need to introduce any new tool, but we will simply use the function `bind_tf_idf()’ in a similar way as we did for single words:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a>bigram_tf_idf <span class="ot">&lt;-</span> tidy_content_rel_clean <span class="sc">%&gt;%</span></span>
-<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(issue, bigram) <span class="sc">%&gt;%</span></span>
-<span id="cb41-3"><a href="#cb41-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">bind_tf_idf</span>(bigram, issue, n) <span class="sc">%&gt;%</span></span>
-<span id="cb41-4"><a href="#cb41-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(tf_idf)</span>
-<span id="cb41-5"><a href="#cb41-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb41-6"><a href="#cb41-6" aria-hidden="true" tabindex="-1"></a>bigram_tf_idf</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a>bigram_tf_idf <span class="ot">&lt;-</span> tidy_content_rel_clean <span class="sc">%&gt;%</span></span>
+<span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(issue, bigram) <span class="sc">%&gt;%</span></span>
+<span id="cb45-3"><a href="#cb45-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">bind_tf_idf</span>(bigram, issue, n) <span class="sc">%&gt;%</span></span>
+<span id="cb45-4"><a href="#cb45-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(tf_idf)</span>
+<span id="cb45-5"><a href="#cb45-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-6"><a href="#cb45-6" aria-hidden="true" tabindex="-1"></a>bigram_tf_idf</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 328,843 × 6
    issue bigram             n        tf    idf      tf_idf
@@ -861,12 +934,12 @@ Right after tokenization we had our biagram stored in a single column, so as a f
  8 54346 european union     1 0.000654  0.0147 0.00000959 
  9 57791 european union     2 0.000893  0.0147 0.0000131  
 10 55250 european union     1 0.000972  0.0147 0.0000143  
-# … with 328,833 more rows</code></pre>
+# ℹ 328,833 more rows</code></pre>
 </div>
 </div>
 <div class="box type5">
 <div class="sub-box">
-<img src="pictures/icons/code_expl.png" alt="Icon" class="picture">
+<p><img src="pictures/icons/code_expl.png" alt="Icon" class="picture"></p>
 <p style="margin-left: 10px;">
 </p><h5 class="anchored">
 <strong>How does it work?</strong>
