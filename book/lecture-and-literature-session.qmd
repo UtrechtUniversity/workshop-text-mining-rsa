@@ -10,3 +10,10 @@
 
 Consider the following questions when reflecting on the literature (across disciplines):
 
+- What stood out to you in the literature? What did you notice that was really interesting or worthwhile to mention?
+
+- What were the concepts or techniques that you did not fully understand?
+
+- How can text-mining help you understand important quetions in LEG disciplines? What does it add to the method and techniques that are currently in use?
+
+- If you were able to analyze all text eveywhere in your discipline, what would you be interested in learning?

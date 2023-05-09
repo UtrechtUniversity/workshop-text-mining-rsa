@@ -140,11 +140,18 @@
     "text": "Literature Review\n\nReview the recommended literature relevant to text-mining in your discipline.\nSearch for one additional article/chapter on text-mining in your discipline. Bonus points if you manage to find an article/chapter that involved text mining using R.\nSummarize the literature in one PowerPoint slide per article. You should end up with 4 PowerPoint slides (at minimum).\nBring your slides to the next meeting. Note that you will also be asked to submit the slides as part of your final assignment.\n\n\nLAW:\n\nDyevre, A. (2021) ‘Text-mining for Lawyers: How Machine Learning Techniques Can Advance our Understanding of Legal Discourse’, Erasmus Law Review, 14(1). https://ssrn.com/abstract=3957098 (Accessed: 2 May 2023).\nWyner, A., Mochales-Palau, R., Moens, M.F., and Milward, D. (2010) ‘Approaches to Text Mining Arguments from Legal Cases’, in Francesconi, E., Montemagni, S., Peters, W., and Tiscornia, D. (eds) Semantic Processing of Legal Texts, Lecture Notes in Computer Science, vol 6036. Springer, Berlin, Heidelberg, pp. 42-56. https://doi.org/10.1007/978-3-642-12837-0_4 (Accessed: 2 May 2023).\nFeinerer, I. and Hornik, K. (2008) ‘Text mining of supreme administrative court jurisdictions’, in Data Analysis, Machine Learning and Applications: Proceedings of the 31st Annual Conference of the Gesellschaft für Klassifikation eV, Albert-Ludwigs-Universität Freiburg, March 7–9, 2007, Springer Berlin Heidelberg, pp. 569-576. https://doi.org/10.1007/978-3-540-78246-9_67\n\n\n\nECONOMICS/FINANCE:\n\nSiegel, M. (2018) ‘Text Mining in Economics’, in Hoppe, T., Humm, B., and Reibold, A. (eds) Semantic Applications. Springer Vieweg, Berlin, Heidelberg, pp. 109-126. https://doi.org/10.1007/978-3-662-55433-3_5 (Accessed: 2 May 2023).\nGentzkow, M., Kelly, B., and Taddy, M. (2019) ‘Text as Data’, Journal of Economic Literature, 57(3), pp. 535-574. https://doi.org/10.1257/jel.20181020 (Accessed: 2 May 2023).\nGupta, A., Dengre, V., Kheruwala, H.A. et al. (2020) ‘Comprehensive review of text-mining applications in finance’, Financial Innovation, 6(1), 39. https://doi.org/10.1186/s40854-020-00205-1 (Accessed: 2 May 2023).\n\n\n\nGOVERNANCE/POLICY:\n\nGyódi, K., Nawaro, Ł., Paliński, M. et al. (2023) ‘Informing policy with text mining: technological change and social challenges’, Quality & Quantity, 57, pp. 933-954. https://doi.org/10.1007/s11135-022-01378-w (Accessed: 2 May 2023).\nAbu-Shanab, E., and Harb, Y. (2019) ‘E-government research insights: Text mining analysis’, Electronic Commerce Research and Applications, 38, 100892. https://doi.org/10.1016/j.elerap.2019.100892 (Accessed: 2 May 2023).\nCogburn, D., 2020. Big data analytics and text mining in internet governance research: Computational analysis of transcripts from 12 years of the internet governance forum. Researching Internet Governance: Methods, Frameworks, Futures, p.214."
   },
   {
-    "objectID": "lecture-and-literature-session.html",
-    "href": "lecture-and-literature-session.html",
+    "objectID": "lecture-and-literature-session.html#literature-discussion",
+    "href": "lecture-and-literature-session.html#literature-discussion",
     "title": "Lecture & Literature",
-    "section": "",
-    "text": "Coming soon!"
+    "section": "Literature Discussion",
+    "text": "Literature Discussion\n\nGet into subgroups where all the LEG disciplines are represented.\nPresent your slides summarizing literature from your discipline to others in your groups."
+  },
+  {
+    "objectID": "lecture-and-literature-session.html#reflection",
+    "href": "lecture-and-literature-session.html#reflection",
+    "title": "Lecture & Literature",
+    "section": "Reflection",
+    "text": "Reflection\nConsider the following questions when reflecting on the literature (across disciplines):\n\nWhat stood out to you in the literature? What did you notice that was really interesting or worthwhile to mention?\nWhat were the concepts or techniques that you did not fully understand?\nHow can text-mining help you understand important quetions in LEG disciplines? What does it add to the method and techniques that are currently in use?\nIf you were able to analyze all text eveywhere in your discipline, what would you be interested in learning?"
   },
   {
     "objectID": "lecture-and-literature-homework.html",
