@@ -601,12 +601,6 @@ percent_of_joy_plot
 
 <li>We use `ggplot(aes())`, `geom_col()`, and `labs()` to specify x and y axis in out plot, the type of plot, and the labels for our axes, respectively.</li>
 
-<li>
-
-```         
-</li>
-```
-
 </ul>
 
 </p>
@@ -634,23 +628,23 @@ Not very high... it seems after all that Europen Union related news are not joyf
 
 #### Analyzing word and document frequency: tf-idf
 
-In the previous sessions we have seen how to compute and display the number of times a term appears in a text. When we divide that number by the total number of words in that text we obtain a quantity called *term frequency* (tf). The term frequency quantifies how often a word occurs in a text and at first glance it may be considered as an indicator of the importance of that term in a text. One of the goals of text mining is trying to find a way (or several ways) to extract the topic (or the sentiment or any other information) from a text, but is the most frequent term in that text a good indicator of what the text is about? Is the most frequent term the most important word in the text? Well, in most of the cases it is not and this because of for two main reasons: 1) as we already found, the most frequent terms are usually meaningless (e.g. stop words) and 2) the fact that a term is not used very often it does not necessarily imply that it is not important or representative for the entire text.
+In the previous sessions we have seen how to compute and display the number of times a term appears in a text. When we divide that number by the total number of words in that text we obtain a quantity called *term frequency* (tf). In text mining, a **term** is a unit of meaning that is used to represent a concept or an idea in a text and it may consist of more than one word. A term can be a word but the vice versa is not always true. "Big Data", "Sentiment Analysis", "Neural Network", "Science Fiction" are all terms but, as you can see, they are made of two distinct words that considered singularly and depending on the context can have a total different meaning. In our case, for simplicity and unless specifically stated, we will use "term" and "word" to refer to single words (but be aware of the difference!). The term frequency quantifies how often a word occurs in a text and at first glance it may be considered as an indicator of the importance of that term in a text. One of the goals of text mining is trying to find a way (or several ways) to extract the topic (or the sentiment or any other information) from a text, but is the most frequent term in that text a good indicator of what the text is about? Is the most frequent term the most important word in the text? Well, in most of the cases it is not and this is because of two main reasons: 1) the most frequent terms are usually meaningless (e.g. stop words) and 2) the fact that a term is not used very often it does not necessarily imply that it is not important or representative for the entire text.
 
-In the previous sessions we tried to deal with the first reason filtering out stop words from our text. In this session we will see how to take into account those terms that are not that frequent in a text but that can still be important to deduce its general meaning/topic/sentiment. At the same time we will define a new statistical quantity that will allow us to filter out the most frequent meaningless words without "manually" removing them from our data.
+In the previous sessions we tried to deal with the first reason by filtering out stop words from our text. In this session we will see how to take into account those terms that are not that frequent in a text but that can still be important to deduce its general meaning/topic/sentiment. At the same time we will define a new statistical quantity that will allow us to filter out the most frequent meaningless words without "manually" removing them from our data.
 
-Let's introduce a quantity called **inverse document frequency (idf)**:
+The following equation defines the **inverse document frequency (idf)**:
 
 $$ idf(term) = log \Bigg( {n_{documents} \over n_{documents \space containing \space term}} \Bigg) $$
 
-As you can see from the equation, idf is a function of the term we want to focus on, this means that we can assign a unique idf to every single term in our text. Assuming that we have a sample (a set) of different documents, we start computing the document frequency in the sample, i.e. the ratio between the number of documents containing our selected term and the total number of documents in the sample. We then invert this quantity (that is the reason why we talk about *inverse* document frequency) and we compute the natural logarithm of this inverted quantity. Why the logarithm? Applying the logarithmic function has two advantages: 1) it makes easy to "deal" with either very small or very big numbers (it makes these numbers easier to plot, for example) and 2) when computed on a ratio of two quantities a and b, the logarithm is positive if a \> b and negative if b \> a.
+The idf is a function of the term we want to focus on, this means that we can assign a unique idf to every single term in our text. Assuming that we have a sample (a set) of different documents, we start computing the document frequency in the sample, i.e. the ratio between the number of documents containing our selected term and the total number of documents in the sample. We then invert this quantity (that is the reason why we talk about *inverse* document frequency) and we compute the natural logarithm of this inverted quantity. Why the logarithm? Applying the logarithmic function has two advantages: 1) it makes easy to "deal" with either very small or very big numbers (it makes these numbers easier to plot, for example) and 2) when computed on a ratio of two quantities a and b, the logarithm is positive if a \> b and negative if b \> a.
 
 ![idf](pictures/idf.jpeg)
 
-In our specific case, if our selected term is present in *all* the documents of our sample, then the argument of the logarithm is 1 and idf will be 0. If our selected term is present in *less* documents than the total number of documents in our sample, then idf will be positive. The less present our term is, the larger idf will be and viceversa (remember? We are dealing with *inverse* document frequency). Can idf be negative? It can't because the number of documents containing our selected term can never be larger than the total number of documents in our sample. To summarise: idf is a positive quantity depending on a single term and it is computed over a sample of documents. The smaller the idf, the more present is our term in the sample of documents.
+In our specific case, if our selected term is present in *all* the documents of our sample, then the argument of the logarithm is 1 and idf will be 0. If our selected term is present in *less* documents than the total number of documents in our sample, then idf will be positive. The less present our term is, the larger idf will be and vice versa (remember? We are dealing with *inverse* document frequency). Can idf be negative? It cannot because the number of documents containing our selected term can never be larger than the total number of documents in our sample. To summarize: idf is a positive quantity depending on a single term and it is computed over a sample of documents. The smaller the idf, the more present is our term in the sample of documents.
 
-Now that we defined and got familiar with idf, it's time to see how we use it in the context of text mining. Our goal is still to measure how important a word is in a document or in a collection (or corpus) of documents. We briefly mentioned that the term frequency (tf) alone is a misleading indicator of the importance of a word as most frequent words are often meaningless (for this reason we filtered out stop words). This time we will combine tf and idf into a single quantity called (surprisingly!) *tf-idf*. When we combine these two quantities, idf will work as a *weight* for the term frequency, *adjusting* its magnitude according to the frequency of the term in the entire corpus. It is important to keep in mind that the definition of the tf-idf quantity, and all the statistics related to it, is a *heuristic* process, i.e. it is a methodology that has been proved to be useful in text mining simply "by trying" and that it has not any specific theoretical motivations behind it. For our practical purpose, this simply means that any conclusion drawn from tf-idf analysis has to been taken with care.
+Now that we defined and got familiar with idf, it's time to see how we use it in the context of text mining. Our goal is still to measure how important a word is in a document or in a collection (or corpus) of documents. We briefly mentioned that the term frequency (tf) alone is a misleading indicator of the importance of a word as most frequent words are often meaningless (for this reason we filtered out stop words). This time we will combine tf and idf into a single quantity called (surprisingly!) *tf-idf*. When we combine these two quantities, idf will work as a *weight* for the term frequency, *adjusting* its magnitude according to the frequency of the term in the entire corpus. It is important to keep in mind that the definition of the tf-idf, and all the statistics related to it, is a *heuristic* process, i.e. it is a methodology that has been proved to be useful in text mining simply "by trying" and that it has not any specific theoretical motivations behind it. For our practical purpose, this simply means that any conclusion drawn from tf-idf analysis has to been taken with care.
 
-```{r, echo=FALSE, warning=FALSE}
+```{r, warning=FALSE}
 issue_words <- data_df %>%
   unnest_tokens(word, content) %>%
   count(issue, word, sort = TRUE)
@@ -661,7 +655,8 @@ total_words <- issue_words %>%
   group_by(issue) %>% 
   summarize(total = sum(n))
 
-issue_total_words <- left_join(issue_words, total_words) %>% arrange(desc(issue))
+issue_total_words <- left_join(issue_words, total_words) %>% 
+  arrange(desc(issue))
 ```
 
 ::: {.box .type5}
@@ -679,7 +674,9 @@ issue_total_words <- left_join(issue_words, total_words) %>% arrange(desc(issue)
 
 <ul>
 
-<li>We first tokenise our raw data using <code>unnest_tokens()</code>. We tokenise the column *content* of our DataFrame by *word*. We then use the function <code>count()</code> to count the number of words per issue, assigning the result to the DataFrame *issue_words*.</li>
+<li>We first tokenise our raw data using <code>unnest_tokens()</code>. Note that our
+starting data is not anymore the cleaned up data of the previous sessions, but the
+"original" raw data stored in the DataFrame *data_df*. We tokenize the column *content* of our DataFrame by *word*. We then use the function <code>count()</code> to count the number of words per issue, assigning the result to the DataFrame *issue_words*.</li>
 
 <li>We remove any possible NA from our DataFrame applying the function `na.omit()`;</li>
 

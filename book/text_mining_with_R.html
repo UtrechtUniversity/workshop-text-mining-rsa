@@ -616,7 +616,7 @@ Once we have stored the lexicon into the DataFrame <em>nrc_lexicon_df</em> we ca
 <p>
 </p><ul>
 <li>
-We first apply the <code>filter()</code> function to our <em>tidy_clean_content</em> data set to select data between two specific dates in order to reduce the size of our data set. We then apply the function <code>group_by()</code>. On the surface, the function does not perform any action, but from now own any further operation in the pipeline will be perfomed on groups or rows. The way rows are grouped is determined by the argument of the function, in this case <em>issue</em>. The <code>n()</code> function counts the number of rows in the DataFrame and when applied after <code>group_by(issue)</code> it counts the number of rows (words) for groups of rows sharing the same value in the <em>issue</em> column, i.e.&nbsp;the number of words in each issue. The function <code>reframe()</code> changes the format of the output DataFrame creating two columns: <em>words_per_issue</em> containing the total number of words in each issue (result of <code>n()</code>) and <em>date</em> storing the date of publication. Finally, the function <code>unique()</code> will keep only unique values of the issue;
+We first apply the <code>filter()</code> function to our <em>tidy_clean_content</em> data set to select data between two specific dates in order to reduce the size of our data set. We then apply the function <code>group_by()</code>. On the surface, this function does not perform any action, but from now own any further operation in the pipeline will be performed on groups or rows. The way rows are grouped is determined by the argument of the function, in this case <em>issue</em>. The <code>n()</code> function counts the number of rows in the DataFrame and when applied after <code>group_by(issue)</code> it counts the number of rows (words) for groups of rows sharing the same value in the <em>issue</em> column, i.e.&nbsp;the number of words in each issue. The function <code>reframe()</code> changes the format of the output DataFrame creating two columns: <em>words_per_issue</em> containing the total number of words in each issue (result of <code>n()</code>) and <em>date</em> storing the date of publication. Finally, the function <code>unique()</code> will keep only unique values of the issue;
 </li>
 <li>
 We repeat the same operation of the previous code, but this time we join our DataFrame with <em>joy_words</em> using the function `inner_join()’. In this way, only “happy words” will be selected from <em>tidy_clean_content</em>;
@@ -629,17 +629,19 @@ We finally merge the two previously created DataFrames so to have total number o
 </div>
 <p>The starting point is always our cleaned data <code>tidy_clean_content</code>. We first apply a filter to select news in the decade 2000-2010, then we group our data according to the issue (remember, our data has been tokenized, so at the moment each row corresponds to a single word, not to a single news or issue) and we count the number of words per issue and the number of joy words per issue. The reason for this double computation is that we would like to compare the total number of joy words with the total number of words in each issue, to obtain in this way the percentage of joy words per issue.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>issue_tot_df <span class="sc">%&gt;%</span></span>
-<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">per_cent_joy=</span>joy_words_per_issue<span class="sc">/</span>words_per_issue<span class="sc">*</span><span class="dv">100</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> date, <span class="at">y =</span> per_cent_joy) )<span class="sc">+</span></span>
-<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>() <span class="sc">+</span></span>
-<span id="cb32-5"><a href="#cb32-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Date"</span>, <span class="at">y =</span> <span class="st">"Joy words [%]"</span>, <span class="at">title =</span> <span class="st">"Joyfulness about EU in 2000-2010"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>percent_of_joy_plot <span class="ot">&lt;-</span></span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>  issue_tot_df <span class="sc">%&gt;%</span></span>
+<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">per_cent_joy=</span>joy_words_per_issue<span class="sc">/</span>words_per_issue<span class="sc">*</span><span class="dv">100</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> date, <span class="at">y =</span> per_cent_joy) )<span class="sc">+</span></span>
+<span id="cb32-5"><a href="#cb32-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>() <span class="sc">+</span></span>
+<span id="cb32-6"><a href="#cb32-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Date"</span>, <span class="at">y =</span> <span class="st">"Joy words [%]"</span>, <span class="at">title =</span> <span class="st">"Joyfulness about EU in 2000-2010"</span>)</span>
+<span id="cb32-7"><a href="#cb32-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-8"><a href="#cb32-8" aria-hidden="true" tabindex="-1"></a>percent_of_joy_plot</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="text_mining_with_R_files/figure-html/unnamed-chunk-18-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <div class="box type5">
-
 <div class="sub-box">
 <p><img src="pictures/icons/code_expl.png" alt="Icon" class="picture"></p>
 <p style="margin-left: 10px;">
@@ -656,29 +658,54 @@ Time to plot! We first add a column to our DataFrame for plotting convenience. W
 <li>
 We use <code>ggplot(aes())</code>, <code>geom_col()</code>, and <code>labs()</code> to specify x and y axis in out plot, the type of plot, and the labels for our axes, respectively.
 </li>
-<li>
-<pre><code>&lt;/li&gt;</code></pre>
-</li></ul>
+</ul>
 <p></p>
 </div>
-<p>Inspecting the plot we can see that the percent of joy words never exceed the 8% and that there is a decreasing joy trend up to 2006 while values go back to a more average 4% level in 2007. 8% is a quite small value, what can we deduce from that? Text mining is a powerful technique, but like any other kind of statistics needs to be properly read according to the context. First of all, we would like to know if 8% is a particularly low value (as it seems like) or it is just the average level of joy associated with European Union news. We may even find out that the Times, by default, reports EU related news with a certain level of “coldness” so that 8% would represent a totally normal value in our sample. One of the main challenges in this case (and in general statistics) is establishing the proper level of “background joy level” or even the presence of a “joy bias” (a factor that can influence the results of an experiment in a particular direction, in our case low joy). Only determining these factors would allow us to obtain meaningfull conclusion from our “joy” levels. A deep sentimental analysis of the sample is out of the scope of this course, but you may try yourself to figure out yourself ways to make our sentiment analysis conclusions more consistent.</p>
+<p>Inspecting the plot we can see that the percent of joy words never exceed the 8% and that there is a decreasing joy trend up to 2006 while values go back to a more average 4% level in 2007. 8% is a quite small value, what can we deduce from that? Text mining is a powerful technique, but like any other kind of statistics needs to be properly read according to the context. First of all, we would like to know if 8% is a particularly low value (as it seems like) or whether it is just the average level of joy associated with European Union news. We may even find out that the Times, by default, reports EU related news with a certain level of “coldness” so that 8% would represent a totally normal value in our sample. One of the main challenges in this case (and in general statistics) is establishing the proper level of “background joy level” or even the presence of a “joy bias” (a factor that can influence the results of an experiment in a particular direction, in our case low joy). Only determining these factors would allow us to obtain meaningful conclusions from our “joy” levels. A deep sentimental analysis of the sample is out of the scope of this course, but you may try yourself to figure out yourself ways to make our sentiment analysis conclusions more consistent.</p>
+<p>Checking the evolution of joy words over time is particularly interesting, but what about if we want just to quantify the percent of joy words in the entire corpus? Let’s just apply operations we already met before:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>distinct_words <span class="ot">&lt;-</span> tidy_clean_content <span class="sc">%&gt;%</span></span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">distinct</span>(word)</span>
+<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a>total_dis_words <span class="ot">&lt;-</span> <span class="fu">nrow</span>(distinct_words)</span>
+<span id="cb33-5"><a href="#cb33-5" aria-hidden="true" tabindex="-1"></a>total_dis_joy_words <span class="ot">&lt;-</span> <span class="fu">nrow</span>(<span class="fu">inner_join</span>(distinct_words,joy_words,<span class="at">by=</span><span class="st">'word'</span>))</span>
+<span id="cb33-6"><a href="#cb33-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-7"><a href="#cb33-7" aria-hidden="true" tabindex="-1"></a>total_joy <span class="ot">&lt;-</span> (total_dis_joy_words<span class="sc">/</span>total_dis_words)<span class="sc">*</span><span class="dv">100</span></span>
+<span id="cb33-8"><a href="#cb33-8" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(total_joy)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.5347957</code></pre>
+</div>
+</div>
+<p>Not very high… it seems after all that Europen Union related news are not joyful at all!</p>
 </section>
 <section id="analyzing-word-and-document-frequency-tf-idf" class="level4">
 <h4 class="anchored" data-anchor-id="analyzing-word-and-document-frequency-tf-idf">Analyzing word and document frequency: tf-idf</h4>
-<p>In the previous sessions we have seen how to compute and display the number of times a term appears in a text. When we divide that number by the total number of words in that text we obtain a quantity called <em>term frequency</em> (tf). The term frequency quantifies how often a word occurs in a text and at first glance it may be considered as an indicator of the importance of that term in a text. One of the goals of text mining is trying to find a way (or several ways) to extract the topic (or the sentiment or any other information) from a text, but is the most frequent term in that text a good indicator of what the text is about? Is the most frequent term the most important word in the text? Well, in most of the cases it is not and this because of for two main reasons: 1) as we already found, the most frequent terms are usually meaningless (e.g.&nbsp;stop words) and 2) the fact that a term is not used very often it does not necessarily imply that it is not important or representative for the entire text.</p>
-<p>In the previous sessions we tried to deal with the first reason filtering out stop words from our text. In this session we will see how to take into account those terms that are not that frequent in a text but that can still be important to deduce its general meaning/topic/sentiment. At the same time we will define a new statistical quantity that will allow us to filter out the most frequent meaningless words without “manually” removing them from our data.</p>
-<p>Let’s introduce a quantity called <strong>inverse document frequency (idf)</strong>:</p>
+<p>In the previous sessions we have seen how to compute and display the number of times a term appears in a text. When we divide that number by the total number of words in that text we obtain a quantity called <em>term frequency</em> (tf). In text mining, a <strong>term</strong> is a unit of meaning that is used to represent a concept or an idea in a text and it may consist of more than one word. A term can be a word but the vice versa is not always true. “Big Data”, “Sentiment Analysis”, “Neural Network”, “Science Fiction” are all terms but, as you can see, they are made of two distinct words that considered singularly and depending on the context can have a total different meaning. In our case, for simplicity and unless specifically stated, we will use “term” and “word” to refer to single words (but be aware of the difference!). The term frequency quantifies how often a word occurs in a text and at first glance it may be considered as an indicator of the importance of that term in a text. One of the goals of text mining is trying to find a way (or several ways) to extract the topic (or the sentiment or any other information) from a text, but is the most frequent term in that text a good indicator of what the text is about? Is the most frequent term the most important word in the text? Well, in most of the cases it is not and this is because of two main reasons: 1) the most frequent terms are usually meaningless (e.g.&nbsp;stop words) and 2) the fact that a term is not used very often it does not necessarily imply that it is not important or representative for the entire text.</p>
+<p>In the previous sessions we tried to deal with the first reason by filtering out stop words from our text. In this session we will see how to take into account those terms that are not that frequent in a text but that can still be important to deduce its general meaning/topic/sentiment. At the same time we will define a new statistical quantity that will allow us to filter out the most frequent meaningless words without “manually” removing them from our data.</p>
+<p>The following equation defines the <strong>inverse document frequency (idf)</strong>:</p>
 <p><span class="math display">\[ idf(term) = log \Bigg( {n_{documents} \over n_{documents \space containing \space term}} \Bigg) \]</span></p>
-<p>As you can see from the equation, idf is a function of the term we want to focus on, this means that we can assign a unique idf to every single term in our text. Assuming that we have a sample (a set) of different documents, we start computing the document frequency in the sample, i.e.&nbsp;the ratio between the number of documents containing our selected term and the total number of documents in the sample. We then invert this quantity (that is the reason why we talk about <em>inverse</em> document frequency) and we compute the natural logarithm of this inverted quantity. Why the logarithm? Applying the logarithmic function has two advantages: 1) it makes easy to “deal” with either very small or very big numbers (it makes these numbers easier to plot, for example) and 2) when computed on a ratio of two quantities a and b, the logarithm is positive if a &gt; b and negative if b &gt; a.</p>
+<p>The idf is a function of the term we want to focus on, this means that we can assign a unique idf to every single term in our text. Assuming that we have a sample (a set) of different documents, we start computing the document frequency in the sample, i.e.&nbsp;the ratio between the number of documents containing our selected term and the total number of documents in the sample. We then invert this quantity (that is the reason why we talk about <em>inverse</em> document frequency) and we compute the natural logarithm of this inverted quantity. Why the logarithm? Applying the logarithmic function has two advantages: 1) it makes easy to “deal” with either very small or very big numbers (it makes these numbers easier to plot, for example) and 2) when computed on a ratio of two quantities a and b, the logarithm is positive if a &gt; b and negative if b &gt; a.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="pictures/idf.jpeg" class="img-fluid figure-img"></p>
 <p></p><figcaption class="figure-caption">idf</figcaption><p></p>
 </figure>
 </div>
-<p>In our specific case, if our selected term is present in <em>all</em> the documents of our sample, then the argument of the logarithm is 1 and idf will be 0. If our selected term is present in <em>less</em> documents than the total number of documents in our sample, then idf will be positive. The less present our term is, the larger idf will be and viceversa (remember? We are dealing with <em>inverse</em> document frequency). Can idf be negative? It can’t because the number of documents containing our selected term can never be larger than the total number of documents in our sample. To summarise: idf is a positive quantity depending on a single term and it is computed over a sample of documents. The smaller the idf, the more present is our term in the sample of documents.</p>
-<p>Now that we defined and got familiar with idf, it’s time to see how we use it in the context of text mining. Our goal is still to measure how important a word is in a document or in a collection (or corpus) of documents. We briefly mentioned that the term frequency (tf) alone is a misleading indicator of the importance of a word as most frequent words are often meaningless (for this reason we filtered out stop words). This time we will combine tf and idf into a single quantity called (surprisingly!) <em>tf-idf</em>. When we combine these two quantities, idf will work as a <em>weight</em> for the term frequency, <em>adjusting</em> its magnitude according to the frequency of the term in the entire corpus. It is important to keep in mind that the definition of the tf-idf quantity, and all the statistics related to it, is a <em>heuristic</em> process, i.e.&nbsp;it is a methodology that has been proved to be useful in text mining simply “by trying” and that it has not any specific theoretical motivations behind it. For our practical purpose, this simply means that any conclusion drawn from tf-idf analysis has to been taken with care.</p>
+<p>In our specific case, if our selected term is present in <em>all</em> the documents of our sample, then the argument of the logarithm is 1 and idf will be 0. If our selected term is present in <em>less</em> documents than the total number of documents in our sample, then idf will be positive. The less present our term is, the larger idf will be and vice versa (remember? We are dealing with <em>inverse</em> document frequency). Can idf be negative? It cannot because the number of documents containing our selected term can never be larger than the total number of documents in our sample. To summarize: idf is a positive quantity depending on a single term and it is computed over a sample of documents. The smaller the idf, the more present is our term in the sample of documents.</p>
+<p>Now that we defined and got familiar with idf, it’s time to see how we use it in the context of text mining. Our goal is still to measure how important a word is in a document or in a collection (or corpus) of documents. We briefly mentioned that the term frequency (tf) alone is a misleading indicator of the importance of a word as most frequent words are often meaningless (for this reason we filtered out stop words). This time we will combine tf and idf into a single quantity called (surprisingly!) <em>tf-idf</em>. When we combine these two quantities, idf will work as a <em>weight</em> for the term frequency, <em>adjusting</em> its magnitude according to the frequency of the term in the entire corpus. It is important to keep in mind that the definition of the tf-idf, and all the statistics related to it, is a <em>heuristic</em> process, i.e.&nbsp;it is a methodology that has been proved to be useful in text mining simply “by trying” and that it has not any specific theoretical motivations behind it. For our practical purpose, this simply means that any conclusion drawn from tf-idf analysis has to been taken with care.</p>
 <div class="cell">
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>issue_words <span class="ot">&lt;-</span> data_df <span class="sc">%&gt;%</span></span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">unnest_tokens</span>(word, content) <span class="sc">%&gt;%</span></span>
+<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(issue, word, <span class="at">sort =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-5"><a href="#cb35-5" aria-hidden="true" tabindex="-1"></a>issue_words <span class="ot">&lt;-</span> <span class="fu">na.omit</span>(issue_words)</span>
+<span id="cb35-6"><a href="#cb35-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-7"><a href="#cb35-7" aria-hidden="true" tabindex="-1"></a>total_words <span class="ot">&lt;-</span> issue_words <span class="sc">%&gt;%</span> </span>
+<span id="cb35-8"><a href="#cb35-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(issue) <span class="sc">%&gt;%</span> </span>
+<span id="cb35-9"><a href="#cb35-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">total =</span> <span class="fu">sum</span>(n))</span>
+<span id="cb35-10"><a href="#cb35-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-11"><a href="#cb35-11" aria-hidden="true" tabindex="-1"></a>issue_total_words <span class="ot">&lt;-</span> <span class="fu">left_join</span>(issue_words, total_words) <span class="sc">%&gt;%</span> </span>
+<span id="cb35-12"><a href="#cb35-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(issue))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Joining with `by = join_by(issue)`</code></pre>
 </div>
@@ -695,7 +722,7 @@ We use <code>ggplot(aes())</code>, <code>geom_col()</code>, and <code>labs()</co
 <p>
 </p><ul>
 <li>
-We first tokenise our raw data using <code>unnest_tokens()</code>. We tokenise the column <em>content</em> of our DataFrame by <em>word</em>. We then use the function <code>count()</code> to count the number of words per issue, assigning the result to the DataFrame <em>issue_words</em>.
+We first tokenise our raw data using <code>unnest_tokens()</code>. Note that our starting data is not anymore the cleaned up data of the previous sessions, but the “original” raw data stored in the DataFrame <em>data_df</em>. We tokenize the column <em>content</em> of our DataFrame by <em>word</em>. We then use the function <code>count()</code> to count the number of words per issue, assigning the result to the DataFrame <em>issue_words</em>.
 </li>
 <li>
 We remove any possible NA from our DataFrame applying the function <code>na.omit()</code>;
@@ -715,7 +742,7 @@ Finally, we join (merge) the two previously created DataFrames using the functio
 <pre><code>`stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
 </div>
 <div class="cell-output-display">
-<p><img src="text_mining_with_R_files/figure-html/unnamed-chunk-20-1.png" class="img-fluid" width="672"></p>
+<p><img src="text_mining_with_R_files/figure-html/unnamed-chunk-21-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <div class="box type5">
@@ -747,11 +774,11 @@ We feed the previous result to the function <code>ggplot()</code> for plotting. 
 <p>Looking at the histograms of the six longest issues in our sample, it is quite evident that the term frequency follows a very similar distribution in almost all the issues. This is because the most frequent terms in all the issues are meaningless stop words and the frequency of stop words does NOT depend on the topic or the particular issue.</p>
 <p>Now that we had a look at the term frequency per issue, let’s compute the tf-idf and let’s compare these two indicators. Once again, we do not have to do that manually as the package <em>tydytext</em> provides us a specific function for this purpose:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>issue_tf_idf <span class="ot">&lt;-</span> issue_words <span class="sc">%&gt;%</span></span>
-<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">bind_tf_idf</span>(word, issue, n)</span>
-<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb36-4"><a href="#cb36-4" aria-hidden="true" tabindex="-1"></a>issue_tf_idf <span class="sc">%&gt;%</span></span>
-<span id="cb36-5"><a href="#cb36-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(tf))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a>issue_tf_idf <span class="ot">&lt;-</span> issue_words <span class="sc">%&gt;%</span></span>
+<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">bind_tf_idf</span>(word, issue, n)</span>
+<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-4"><a href="#cb38-4" aria-hidden="true" tabindex="-1"></a>issue_tf_idf <span class="sc">%&gt;%</span></span>
+<span id="cb38-5"><a href="#cb38-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(tf))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 574,385 × 6
    issue word      n    tf   idf tf_idf
@@ -791,8 +818,8 @@ We sort the output result, the DataFrame <em>issue_tf_idf</em>, by descending va
 </div>
 <p>Looking at the first rows of the output DataFrame, it is clear that the most frequent word is “the”, a stop word. However, when we look at the corresponding tf-idf, its value is zero. This is because its idf is zero and it is an indicator that, indeed, “the” is a common word and I <em>may</em> be important, but it is <em>too much</em> common and that, perhaps, it should be excluded from our analysis.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a>issue_tf_idf <span class="sc">%&gt;%</span></span>
-<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(tf_idf))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a>issue_tf_idf <span class="sc">%&gt;%</span></span>
+<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(tf_idf))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 574,385 × 6
    issue word          n     tf   idf tf_idf
@@ -812,17 +839,17 @@ We sort the output result, the DataFrame <em>issue_tf_idf</em>, by descending va
 </div>
 <p>Arranging the tf-idf in descending order, we see in the first rows of our DataFrame rare words, but still not so rare. Rare words may indicate particularly significant events related to “European Union” as these words do not often occure in the Times news corpora. As we did for the term frequency, let’s visualise the tf-idf for the 6 longest issues in our data set:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a>issue_tf_idf <span class="sc">%&gt;%</span></span>
-<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">semi_join</span>(first_6_unique_issues, <span class="at">by=</span><span class="st">"issue"</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(issue) <span class="sc">%&gt;%</span></span>
-<span id="cb40-4"><a href="#cb40-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">slice_max</span>(tf_idf, <span class="at">n =</span> <span class="dv">10</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb40-5"><a href="#cb40-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>() <span class="sc">%&gt;%</span></span>
-<span id="cb40-6"><a href="#cb40-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(tf_idf, <span class="fu">fct_reorder</span>(word, tf_idf), <span class="at">fill =</span> issue)) <span class="sc">+</span></span>
-<span id="cb40-7"><a href="#cb40-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>(<span class="at">show.legend =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
-<span id="cb40-8"><a href="#cb40-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>issue, <span class="at">scales=</span><span class="st">"free"</span>,<span class="at">ncol =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
-<span id="cb40-9"><a href="#cb40-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"tf-idf"</span>, <span class="at">y =</span> <span class="cn">NULL</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a>issue_tf_idf <span class="sc">%&gt;%</span></span>
+<span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">semi_join</span>(first_6_unique_issues, <span class="at">by=</span><span class="st">"issue"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb42-3"><a href="#cb42-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(issue) <span class="sc">%&gt;%</span></span>
+<span id="cb42-4"><a href="#cb42-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">slice_max</span>(tf_idf, <span class="at">n =</span> <span class="dv">10</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb42-5"><a href="#cb42-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb42-6"><a href="#cb42-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(tf_idf, <span class="fu">fct_reorder</span>(word, tf_idf), <span class="at">fill =</span> issue)) <span class="sc">+</span></span>
+<span id="cb42-7"><a href="#cb42-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>(<span class="at">show.legend =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
+<span id="cb42-8"><a href="#cb42-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>issue, <span class="at">scales=</span><span class="st">"free"</span>,<span class="at">ncol =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
+<span id="cb42-9"><a href="#cb42-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"tf-idf"</span>, <span class="at">y =</span> <span class="cn">NULL</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="text_mining_with_R_files/figure-html/unnamed-chunk-23-1.png" class="img-fluid" width="672"></p>
+<p><img src="text_mining_with_R_files/figure-html/unnamed-chunk-24-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <p>Looking at the plots, five of the issues have still a word in common, while one of them (57791) stands out. This already tell us that issue 57791 could deserve particular attention.</p>
@@ -838,7 +865,7 @@ We sort the output result, the DataFrame <em>issue_tf_idf</em>, by descending va
 <p>We learned that the first step in text mining is tokenization, where the token can be a single character, word, a sentence, a paragraph, etc. In studying the relation between words we will start with the easiest case: relation between two words. In this case, our tokens will be groups of two consecutive words. In order to extract such groups and to render them into a DataFrame, we will use the same tidytext function that we used for tokenizing text in single words: <code>unnest_tokens()</code>. The default token for <code>unnest_tokens()</code> is single words, so that this time we need to specify that we need groups of two words. To do that, we specify the parameters <em>token</em> and <em>n</em> equal to <em>ngrams</em> and 2 respectively.</p>
 <p>An <em>ngram</em> is just a contiguous sequence of items. How many items? n, so that if n=1 we have only one word, if n=2 we will have groups of two words, n=3 three words, and so on. More in general, ngrams items can be any kind of token (a single character, a word, a sentence, etc), but in this session, for simplicity, we will assume that the n-grams items are just words. If, for example, we consider the sentence “I wish I could be at Bahamas sipping a Pinacolada”, the first four word n-grams will be: - 1-gram (unigram): (“I”,“wish”,“I”,“could”,“be”,“at”,“Bahamas”,“sipping”,“a”,“Pinacolada”), the one we used in the previous paragraphs; - 2-gram (bigram): (“I wish”,“wish I”,“I could”,“could be”,“be at”,“at Bahamas”,“Bahamas sipping”,“sipping a”,“a Pinacolada”); - 3-gram (trigram): (“I wish I”,“wish I could”,“I could be”,“could be at”,“be at Bahamas”,“Bahamas sipping a”,“sipping a Pinacolada”); - 4-gram: (“I wish I could”,“wish I could be”,“I could be at”,“could be at Bahamas”,“be at Bahamas sipping”,“at Bahamas sipping a”, “Bahamas sipping a Pinacolada”).</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a>tidy_content_rel <span class="ot">&lt;-</span> data_df <span class="sc">%&gt;%</span> <span class="fu">unnest_tokens</span>(bigram, content, <span class="at">token=</span><span class="st">"ngrams"</span>, <span class="at">n=</span><span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a>tidy_content_rel <span class="ot">&lt;-</span> data_df <span class="sc">%&gt;%</span> <span class="fu">unnest_tokens</span>(bigram, content, <span class="at">token=</span><span class="st">"ngrams"</span>, <span class="at">n=</span><span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="box type5">
 <div class="sub-box">
@@ -859,28 +886,28 @@ The previous line of code takes our raw data, <em>data_df</em>, and it injects i
 </div>
 <p>Let’s visualise how many times the couple of words in the <em>bigram</em> column occur in the entire corpus:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a>tidy_content_rel <span class="sc">%&gt;%</span></span>
-<span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(bigram, <span class="at">sort =</span> <span class="cn">TRUE</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb42-3"><a href="#cb42-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(n <span class="sc">&gt;</span> <span class="dv">2000</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb42-4"><a href="#cb42-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">bigram =</span> <span class="fu">reorder</span>(bigram, n)) <span class="sc">%&gt;%</span></span>
-<span id="cb42-5"><a href="#cb42-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(n, bigram)) <span class="sc">+</span></span>
-<span id="cb42-6"><a href="#cb42-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>() <span class="sc">+</span></span>
-<span id="cb42-7"><a href="#cb42-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">y =</span> <span class="cn">NULL</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a>tidy_content_rel <span class="sc">%&gt;%</span></span>
+<span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(bigram, <span class="at">sort =</span> <span class="cn">TRUE</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb44-3"><a href="#cb44-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(n <span class="sc">&gt;</span> <span class="dv">2000</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb44-4"><a href="#cb44-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">bigram =</span> <span class="fu">reorder</span>(bigram, n)) <span class="sc">%&gt;%</span></span>
+<span id="cb44-5"><a href="#cb44-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(n, bigram)) <span class="sc">+</span></span>
+<span id="cb44-6"><a href="#cb44-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>() <span class="sc">+</span></span>
+<span id="cb44-7"><a href="#cb44-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">y =</span> <span class="cn">NULL</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="text_mining_with_R_files/figure-html/unnamed-chunk-25-1.png" class="img-fluid" width="672"></p>
+<p><img src="text_mining_with_R_files/figure-html/unnamed-chunk-26-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <p>The previous plot is very similar to our very first plot showing the word count in the entire corpus. The two plots are indeed identical, the only difference is that in that previous case the counted tokens were single words while now they are biagrams, i.e.&nbsp;groups of two words. Another thing we can notice is that, once again, the most frequent tokens are stop words. Let’s get rid of them:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a>bigrams_separated <span class="ot">&lt;-</span> tidy_content_rel <span class="sc">%&gt;%</span></span>
-<span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">separate</span>(bigram, <span class="fu">c</span>(<span class="st">"word1"</span>, <span class="st">"word2"</span>), <span class="at">sep =</span> <span class="st">" "</span>)</span>
-<span id="cb43-3"><a href="#cb43-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb43-4"><a href="#cb43-4" aria-hidden="true" tabindex="-1"></a>bigrams_filtered <span class="ot">&lt;-</span> bigrams_separated <span class="sc">%&gt;%</span></span>
-<span id="cb43-5"><a href="#cb43-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span>word1 <span class="sc">%in%</span> stop_words<span class="sc">$</span>word) <span class="sc">%&gt;%</span></span>
-<span id="cb43-6"><a href="#cb43-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span>word2 <span class="sc">%in%</span> stop_words<span class="sc">$</span>word)</span>
-<span id="cb43-7"><a href="#cb43-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb43-8"><a href="#cb43-8" aria-hidden="true" tabindex="-1"></a>tidy_content_rel_clean <span class="ot">&lt;-</span> bigrams_filtered <span class="sc">%&gt;%</span></span>
-<span id="cb43-9"><a href="#cb43-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">unite</span>(bigram, word1, word2, <span class="at">sep =</span> <span class="st">" "</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a>bigrams_separated <span class="ot">&lt;-</span> tidy_content_rel <span class="sc">%&gt;%</span></span>
+<span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">separate</span>(bigram, <span class="fu">c</span>(<span class="st">"word1"</span>, <span class="st">"word2"</span>), <span class="at">sep =</span> <span class="st">" "</span>)</span>
+<span id="cb45-3"><a href="#cb45-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-4"><a href="#cb45-4" aria-hidden="true" tabindex="-1"></a>bigrams_filtered <span class="ot">&lt;-</span> bigrams_separated <span class="sc">%&gt;%</span></span>
+<span id="cb45-5"><a href="#cb45-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span>word1 <span class="sc">%in%</span> stop_words<span class="sc">$</span>word) <span class="sc">%&gt;%</span></span>
+<span id="cb45-6"><a href="#cb45-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span>word2 <span class="sc">%in%</span> stop_words<span class="sc">$</span>word)</span>
+<span id="cb45-7"><a href="#cb45-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-8"><a href="#cb45-8" aria-hidden="true" tabindex="-1"></a>tidy_content_rel_clean <span class="ot">&lt;-</span> bigrams_filtered <span class="sc">%&gt;%</span></span>
+<span id="cb45-9"><a href="#cb45-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">unite</span>(bigram, word1, word2, <span class="at">sep =</span> <span class="st">" "</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="box type5">
 <div class="sub-box">
@@ -907,23 +934,23 @@ Right after tokenization we had our biagram stored in a single column, so as a f
 </div>
 <p>As we did several times before, let’s visualise the counts of our biagram:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a>tidy_content_rel_clean <span class="sc">%&gt;%</span></span>
-<span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(bigram, <span class="at">sort =</span> <span class="cn">TRUE</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb44-3"><a href="#cb44-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(n <span class="sc">&gt;</span> <span class="dv">500</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb44-4"><a href="#cb44-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">bigram =</span> <span class="fu">reorder</span>(bigram, n)) <span class="sc">%&gt;%</span></span>
-<span id="cb44-5"><a href="#cb44-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(n, bigram)) <span class="sc">+</span></span>
-<span id="cb44-6"><a href="#cb44-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>() <span class="sc">+</span></span>
-<span id="cb44-7"><a href="#cb44-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">y =</span> <span class="cn">NULL</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a>tidy_content_rel_clean <span class="sc">%&gt;%</span></span>
+<span id="cb46-2"><a href="#cb46-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(bigram, <span class="at">sort =</span> <span class="cn">TRUE</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb46-3"><a href="#cb46-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(n <span class="sc">&gt;</span> <span class="dv">500</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb46-4"><a href="#cb46-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">bigram =</span> <span class="fu">reorder</span>(bigram, n)) <span class="sc">%&gt;%</span></span>
+<span id="cb46-5"><a href="#cb46-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(n, bigram)) <span class="sc">+</span></span>
+<span id="cb46-6"><a href="#cb46-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>() <span class="sc">+</span></span>
+<span id="cb46-7"><a href="#cb46-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">y =</span> <span class="cn">NULL</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="text_mining_with_R_files/figure-html/unnamed-chunk-27-1.png" class="img-fluid" width="672"></p>
+<p><img src="text_mining_with_R_files/figure-html/unnamed-chunk-28-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <p>We immediately notice that the stop words are gone and that the most frequent biagrams in our corpus are “total vote” and “lab majority”.</p>
 <p>Sometimes, it is useful to keep our bigrams in two distinct columns, one per word. This format could be very handy when we need to apply filtering criteria to only one of the words of the biagram. For example, we might be interested in the most common biagrams where the second word is “vote”. We already obtained this format when computing the DataFrame <em>bigrams_separated</em>:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a>bigrams_filtered <span class="sc">%&gt;%</span> </span>
-<span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(word2 <span class="sc">==</span> <span class="st">"vote"</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb45-3"><a href="#cb45-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(issue, word1, <span class="at">sort=</span><span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a>bigrams_filtered <span class="sc">%&gt;%</span> </span>
+<span id="cb47-2"><a href="#cb47-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(word2 <span class="sc">==</span> <span class="st">"vote"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb47-3"><a href="#cb47-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(issue, word1, <span class="at">sort=</span><span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 709 × 3
    issue word1      n
@@ -944,12 +971,12 @@ Right after tokenization we had our biagram stored in a single column, so as a f
 <p>In this case we obtain the count of all the words <em>preceding</em> the word <em>vote</em> by issue. “total” is the most frequent.</p>
 <p>In the previous paragraph we mentioned that tf-idf is a function of the selected term. More in general, we can compute tf-idf for the seleced <em>token</em>, whatever it is a single character, word, biagram, n-gram, sentence, etc. To compute the tf-idf for our biagram we do not need to introduce any new tool, but we will simply use the function `bind_tf_idf()’ in a similar way as we did for single words:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a>bigram_tf_idf <span class="ot">&lt;-</span> tidy_content_rel_clean <span class="sc">%&gt;%</span></span>
-<span id="cb47-2"><a href="#cb47-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(issue, bigram) <span class="sc">%&gt;%</span></span>
-<span id="cb47-3"><a href="#cb47-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">bind_tf_idf</span>(bigram, issue, n) <span class="sc">%&gt;%</span></span>
-<span id="cb47-4"><a href="#cb47-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(tf_idf)</span>
-<span id="cb47-5"><a href="#cb47-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb47-6"><a href="#cb47-6" aria-hidden="true" tabindex="-1"></a>bigram_tf_idf</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb49"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a>bigram_tf_idf <span class="ot">&lt;-</span> tidy_content_rel_clean <span class="sc">%&gt;%</span></span>
+<span id="cb49-2"><a href="#cb49-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(issue, bigram) <span class="sc">%&gt;%</span></span>
+<span id="cb49-3"><a href="#cb49-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">bind_tf_idf</span>(bigram, issue, n) <span class="sc">%&gt;%</span></span>
+<span id="cb49-4"><a href="#cb49-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(tf_idf)</span>
+<span id="cb49-5"><a href="#cb49-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb49-6"><a href="#cb49-6" aria-hidden="true" tabindex="-1"></a>bigram_tf_idf</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 328,843 × 6
    issue bigram             n        tf    idf      tf_idf
