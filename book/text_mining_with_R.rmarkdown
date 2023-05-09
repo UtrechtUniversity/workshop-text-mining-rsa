@@ -58,6 +58,7 @@ editor: visual
 }
 ```
 
+
 ### Introduction
 
 In this session we will see how to perform basic **text mining** with R. Text mining refers to the process of extracting (*mining*) information and insights from text. Any text is by nature subjective and ambiguous. However, text mining can be extremely useful when looking for any sort of pattern, trend, or relationships in large volumes of text data (articles, documents, emails, social media posts, etc).
@@ -71,9 +72,11 @@ developed for the programming language R. This package follows the same "philoso
 
 Each paragraph of this session is organized in the following structure: 1) description of main concepts and expected results; 2) R code with its output (DataFrames, computations, plots, etc); 3) a detailed description of what the code is doing. The descriptive text is simply plain text as the one you are reading right now. Code will be in the grey boxes that you can directly copy (click on the copy icon on the upper right corner of each box) and paste into your R script or Markdown file. Code output (the result of our operations) will immediately follow the blocks of code like in this example:
 
+
 ```{r}
 print('Good luck guys!')
 ```
+
 
 When necessary, code and outputs blocks are followed by a line-by-line explanation of the operations executed in the code box:
 
@@ -105,6 +108,7 @@ Let's be sure you have all the needed packages installed and loaded into your R 
 
 Let's install packages
 
+
 ```{r}
 #| eval: false
 install.packages("tidyverse")
@@ -112,13 +116,16 @@ install.packages("tidytext")
 install.packages("wordcloud")
 ```
 
+
 and load them:
+
 
 ```{r}
 library(tidyverse)
 library(tidytext)
 library(wordcloud)
 ```
+
 
 Few words about the packages we are going to use: 
 <ul>
@@ -152,6 +159,7 @@ these operation will in practice performed by a single function.
 Assuming we want to apply 4 different functions to data, one after another (like
 in the previous example), our R code will look like something like this:
 
+
 ```{r}
 #| eval: false
 output1 <- func1(data, pars1)
@@ -160,15 +168,18 @@ output3 <- func3(output2, pars3)
 output4 <- func4(output3, pars4)
 ```
 
+
 In most of the cases we will be interested only in the final output (output4) and
 saving each output into a variable (as it happens in the previous block of code) would
 only waste memory space. To avoid that, we can use directly the output of a function
 as input for the next one in a *nested* structure:
 
+
 ```{r}
 #| eval: false
 output4 <- func4(func3(func2(func1(data,pars1),pars2),pars3),pars4)
 ```
+
 
 At this point you probably noticed that the nested structure can be quite confusing,
 making us loosing track of what is the input and the additional parameters for each
@@ -182,6 +193,7 @@ whatever is on its left-hand side and it passes it as an input for the code on
 the right-hand side. Confused? Look how the previous line of code becomes using
 the tidyverse pipeline:
 
+
 ```{r}
 #| eval: false
 output4 <- data %>% 
@@ -190,6 +202,7 @@ output4 <- data %>%
   func3(pars3) %>%
   func4(pars4) 
 ```
+
  
 ::: {.box .type5}
 ::: sub-box
@@ -229,6 +242,7 @@ less prone to errors, but it is ultimately up to you to choose your preferred sy
 
 In this session we will work with data that we already collected using the web application <a url="https://ianalyzer.hum.uu.nl/home">I-Analyzer</a>. We obtained our data querying for "European Union" over the news of the Times Digital Archive between 1945 and 2010. The data are stored in a coma-separated-values (csv) file and we are going to convert them into an R DataFrame:
 
+
 ```{r}
 data_file_name <- '../data/times_ocr=80_100&date=1945-01-01_2010-12-31&query=_european_union_&category=News.csv'
 data_df <- read_delim(data_file_name, delim = ";", escape_double = FALSE, col_types = cols(`date-pub` = col_date(format = "%B %d, %Y")), trim_ws = TRUE)
@@ -236,6 +250,7 @@ data_df <- read_delim(data_file_name, delim = ";", escape_double = FALSE, col_ty
 print(nrow(data_df))
 print(colnames(data_df))
 ```
+
 
 ::: {.box .type5}
 ::: sub-box
@@ -277,11 +292,13 @@ The process of dividing a string of text into meaningful units is called **Token
 
 To perform "good" text mining, not only we want to optimally "tokenize" our text as well as organize our tokens in a *tidy* way, quite literally! For the R community, "tidy" has a very specific meaning, i.e. structuring data sets to make them consistent, easy to work with, and easy to analyze. In our context it means having a single token per data frame row. R allows us to perform all these operations in few lines thanks to the library `tidytext`:
 
+
 ```{r}
 tidy_content <- data_df %>% unnest_tokens(word, content, token="words")
 
 tidy_content
 ```
+
 
 ::: {.box .type5}
 ::: sub-box
@@ -313,6 +330,7 @@ In the code block above we use the function `unnest_tokens()` to tokenize the co
 
 Cleaning up data is an essential step in any data analysis process. Before you can analyze a dataset, you need to ensure that the data is accurate (data values are correct and free from errors), complete, and consistent (uniform and following a standard format or structure). Data cleaning is the process of identifying and correcting or removing errors, inconsistencies, and inaccuracies from a dataset. The output of the I-Analyzer data (the csv file we are using for our analysis) is already a consistent data set, however, every time one of our programs performs some sort of operation on the data set, errors may occur. The absolute nightmares of every data scientist are missing or undefined values, these usually appear in our datasets as "NA" (Not Available) or "NaN" (Not a Number). NA is used in R (and some other programming languages) to represent missing or undefined values in data. You will find NaN more often in Python or Javascript programming. In general NA is used for non-numeric data types like characters and NaN for numeric data types, but the most important thing to remember is that you want to find out if your data set contains any of these values as they may severely affect your data analysis results. Does our DataFrame contain any NA values in the *issue* column? Let's find out!
 
+
 ```{r}
 are_there_na <- any(is.na(tidy_content$issue))
 if (are_there_na) {
@@ -321,6 +339,7 @@ if (are_there_na) {
   print('Lucky you! I could not find any NA in your data (yet...)!')
 }
 ```
+
 
 ::: {.box .type5}
 ::: sub-box
@@ -348,9 +367,11 @@ if (are_there_na) {
 
 We found NA in our dataset. Nothing to worry about, this is the common case, so common that there are plenty of functions to clean up our data. How shall we proceed in this case? Usually, we would like to inspect the data to check what is missing and how to better replace those values. In our case, you can relatively easily find out that one of the issues' identifier is missing. For simplicity, we will just exclude the issue from our data set using the function `na.omit()` that, indeed, removes all the rows containing NA returning a "clean" DataFrame:
 
+
 ```{r}
 tidy_content <- tidy_content[!is.na(tidy_content$issue), ]
 ```
+
 
 ::: {.box .type5}
 ::: sub-box
@@ -381,6 +402,7 @@ any condition on columns, this means we will select ALL the DataFrame columns;</
 
 Let's check if there are still NA in our data set:
 
+
 ```{r}
 are_there_na <- any(is.na(tidy_content$issue))
 if (are_there_na) {
@@ -390,9 +412,11 @@ if (are_there_na) {
 }
 ```
 
+
 ------------------------------------------------------------------------
 
 A second problem of unstructured data is that it can be very "noisy", i.e. it can contain a lot of irrelevant information. Actually, the most common words in a text are words that have very little meaning, such as "the", "and", "a", etc. These words are referred to as *stop words* and removing stop words from text (in a way or another) is a fundamental step of text mining:
+
 
 ```{r, warning=FALSE, message=FALSE}
 data(stop_words)
@@ -401,6 +425,7 @@ tidy_clean_content <- tidy_content %>% anti_join(stop_words)
 
 tidy_clean_content
 ```
+
 
 ::: {.box .type5}
 ::: sub-box
@@ -434,6 +459,7 @@ With the few lines of code above, we cleaned up the `tidy_content` DataFrame fro
 
 After having tokenized and cleaned up our data, it's time to perform the most basic text mining operation: count the number of times a certain word appears in our text. Even if conceptually it seems a quite trivial operation, by counting the frequency of each word in a text we can gain important insights about the general characteristics of the text. Furthermore, counting the frequency of specific words (i.e. how many times they occur per sentence/text/paragraph/document/etc) we can classify a text or define a model to identify the underlying topic or theme.
 
+
 ```{r}
 word_count <- tidy_clean_content %>%
   count(word) %>%
@@ -448,6 +474,7 @@ word_count_plot <-
 
 word_count_plot
 ```
+
 
 ::: {.box .type5}
 ::: sub-box
@@ -477,6 +504,7 @@ Looking at the data, we are not surprised to see that the second most frequent w
 
 A very popular way to visualize the most common words in a sample of texts is a **word cloud**. A word cloud is a graphical representation of words where the size of each word indicates its frequency within a given data set. Visualizing our data using a word cloud is not particularly useful for quantitative analysis, but it can be very effective when communicating text mining results. Obtaining a word cloud plot in R is as easy as all the tasks we performed so far, we just need to download the package `workcloud` and use the function `wordcloud()` as follows:
 
+
 ```{r}
 word_cloud_plot <-
   word_count %>%
@@ -484,6 +512,7 @@ word_cloud_plot <-
 
 word_cloud_plot
 ```
+
 
 #### Word classification and Sentiment Analysis
 
@@ -493,12 +522,14 @@ Sentiment analysis is based on the assumption that we can view a text as a combi
 
 For our simple analysis, we already downloaded a lexicon, the **NRC emotion lexicon**. The NRC Emotion Lexicon is a list of English words and their associations with eight basic emotions (anger, fear, anticipation, trust, surprise, sadness, joy, and disgust) and two sentiments (negative and positive). If an emotion is associated with a word, its score will be 1, and if not it will be 0.
 
+
 ```{r}
 nrc_lexicon_df <- read.table("../data/NRC-Emotion-Lexicon-Wordlevel-v0.92.txt", header = FALSE, sep = "\t", stringsAsFactors = FALSE, col.names = c("word", "emotion", "score"))
 
 joy_words <- nrc_lexicon_df  %>% 
   filter(emotion == "joy" & score == 1)
 ```
+
 
 ::: {.box .type5}
 ::: sub-box
@@ -526,6 +557,7 @@ joy_words <- nrc_lexicon_df  %>%
 
 In the previous lines we read the lexicon into an R DataFrame and we extracted from it only the words associated with joy. Once we know which are the words associated with joy, we can count how many "joy words" there are in our text and see if the news associated with "European Union" can be classified as "joyful" or not.
 
+
 ```{r}
 issue_df <- tidy_clean_content %>%
   filter(`date-pub`>='2000-01-01' & `date-pub` < '2010-01-01') %>%
@@ -541,6 +573,7 @@ issue_joy_df <- tidy_clean_content %>%
 
 issue_tot_df <- merge(issue_df, issue_joy_df, by='issue')
 ```
+
 
 ::: {.box .type5}
 ::: sub-box
@@ -570,6 +603,7 @@ issue_tot_df <- merge(issue_df, issue_joy_df, by='issue')
 
 The starting point is always our cleaned data `tidy_clean_content`. We first apply a filter to select news in the decade 2000-2010, then we group our data according to the issue (remember, our data has been tokenized, so at the moment each row corresponds to a single word, not to a single news or issue) and we count the number of words per issue and the number of joy words per issue. The reason for this double computation is that we would like to compare the total number of joy words with the total number of words in each issue, to obtain in this way the percentage of joy words per issue.
 
+
 ```{r}
 percent_of_joy_plot <-
   issue_tot_df %>%
@@ -580,6 +614,7 @@ percent_of_joy_plot <-
 
 percent_of_joy_plot
 ```
+
 
 <div class="box type5">
 
@@ -619,6 +654,7 @@ Checking the evolution of joy words over time is particularly interesting, but w
 about if we want just to quantify the percent of joy words in the entire corpus? Let's
 just apply operations we already met before:
 
+
 ```{r}
 distinct_words <- tidy_clean_content %>%
   distinct(word)
@@ -629,6 +665,7 @@ total_dis_joy_words <- nrow(inner_join(distinct_words,joy_words,by='word'))
 total_joy <- (total_dis_joy_words/total_dis_words)*100
 print(total_joy)
 ```
+
 Not very high... it seems after all that Europen Union related news are not joyful at all!
 
 
@@ -650,6 +687,7 @@ In our specific case, if our selected term is present in *all* the documents of 
 
 Now that we defined and got familiar with idf, it's time to see how we use it in the context of text mining. Our goal is still to measure how important a word is in a document or in a collection (or corpus) of documents. We briefly mentioned that the term frequency (tf) alone is a misleading indicator of the importance of a word as most frequent words are often meaningless (for this reason we filtered out stop words). This time we will combine tf and idf into a single quantity called (surprisingly!) *tf-idf*. When we combine these two quantities, idf will work as a *weight* for the term frequency, *adjusting* its magnitude according to the frequency of the term in the entire corpus. It is important to keep in mind that the definition of the tf-idf quantity, and all the statistics related to it, is a *heuristic* process, i.e. it is a methodology that has been proved to be useful in text mining simply "by trying" and that it has not any specific theoretical motivations behind it. For our practical purpose, this simply means that any conclusion drawn from tf-idf analysis has to been taken with care.
 
+
 ```{r, echo=FALSE, warning=FALSE}
 issue_words <- data_df %>%
   unnest_tokens(word, content) %>%
@@ -663,6 +701,7 @@ total_words <- issue_words %>%
 
 issue_total_words <- left_join(issue_words, total_words) %>% arrange(desc(issue))
 ```
+
 
 ::: {.box .type5}
 ::: sub-box
@@ -694,6 +733,7 @@ issue_total_words <- left_join(issue_words, total_words) %>% arrange(desc(issue)
 
 In the previous block of code we computed and stored in two DataFrames the frequency of occurrence of each word and the total number of words per issue. For computation and visualisation convenience, we then stored the word count per issue and total number of words per issue in a single DataFrame. Now it's time to plot the term frequency per issue.
 
+
 ```{r, echo=FALSE, warning=FALSE}
 unique_issues <- issue_total_words %>% filter(total>10000) %>% distinct(issue)
 first_6_unique_issues <- unique_issues %>% slice(1:6)
@@ -708,6 +748,7 @@ issue_total_words6 %>%
   xlim(NA, 0.0005) +
   facet_wrap(~issue, ncol = 2, scales = "free_y")
 ```
+
 
 ::: {.box .type5}
 ::: sub-box
@@ -741,6 +782,7 @@ Looking at the histograms of the six longest issues in our sample, it is quite e
 
 Now that we had a look at the term frequency per issue, let's compute the tf-idf and let's compare these two indicators. Once again, we do not have to do that manually as the package *tydytext* provides us a specific function for this purpose:
 
+
 ```{r}
 issue_tf_idf <- issue_words %>%
   bind_tf_idf(word, issue, n)
@@ -748,6 +790,7 @@ issue_tf_idf <- issue_words %>%
 issue_tf_idf %>%
   arrange(desc(tf))
 ```
+
 
 ::: {.box .type5}
 ::: sub-box
@@ -775,12 +818,15 @@ issue_tf_idf %>%
 
 Looking at the first rows of the output DataFrame, it is clear that the most frequent word is "the", a stop word. However, when we look at the corresponding tf-idf, its value is zero. This is because its idf is zero and it is an indicator that, indeed, "the" is a common word and I *may* be important, but it is *too much* common and that, perhaps, it should be excluded from our analysis.
 
+
 ```{r}
 issue_tf_idf %>%
   arrange(desc(tf_idf))
 ```
 
+
 Arranging the tf-idf in descending order, we see in the first rows of our DataFrame rare words, but still not so rare. Rare words may indicate particularly significant events related to "European Union" as these words do not often occure in the Times news corpora. As we did for the term frequency, let's visualise the tf-idf for the 6 longest issues in our data set:
+
 
 ```{r}
 issue_tf_idf %>%
@@ -793,6 +839,7 @@ issue_tf_idf %>%
   facet_wrap(~issue, scales="free",ncol = 2) +
   labs(x = "tf-idf", y = NULL) 
 ```
+
 
 Looking at the plots, five of the issues have still a word in common, while one of them (57791) stands out. This already tell us that issue 57791 could deserve particular attention.
 
@@ -810,9 +857,11 @@ We learned that the first step in text mining is tokenization, where the token c
 
 An *ngram* is just a contiguous sequence of items. How many items? n, so that if n=1 we have only one word, if n=2 we will have groups of two words, n=3 three words, and so on. More in general, ngrams items can be any kind of token (a single character, a word, a sentence, etc), but in this session, for simplicity, we will assume that the n-grams items are just words. If, for example, we consider the sentence "I wish I could be at Bahamas sipping a Pinacolada", the first four word n-grams will be: - 1-gram (unigram): ("I","wish","I","could","be","at","Bahamas","sipping","a","Pinacolada"), the one we used in the previous paragraphs; - 2-gram (bigram): ("I wish","wish I","I could","could be","be at","at Bahamas","Bahamas sipping","sipping a","a Pinacolada"); - 3-gram (trigram): ("I wish I","wish I could","I could be","could be at","be at Bahamas","Bahamas sipping a","sipping a Pinacolada"); - 4-gram: ("I wish I could","wish I could be","I could be at","could be at Bahamas","be at Bahamas sipping","at Bahamas sipping a", "Bahamas sipping a Pinacolada").
 
+
 ```{r}
 tidy_content_rel <- data_df %>% unnest_tokens(bigram, content, token="ngrams", n=2)
 ```
+
 
 ::: {.box .type5}
 ::: sub-box
@@ -838,6 +887,7 @@ tidy_content_rel <- data_df %>% unnest_tokens(bigram, content, token="ngrams", n
 
 Let's visualise how many times the couple of words in the *bigram* column occur in the entire corpus:
 
+
 ```{r}
 tidy_content_rel %>%
   count(bigram, sort = TRUE) %>%
@@ -848,7 +898,9 @@ tidy_content_rel %>%
   labs(y = NULL)
 ```
 
+
 The previous plot is very similar to our very first plot showing the word count in the entire corpus. The two plots are indeed identical, the only difference is that in that previous case the counted tokens were single words while now they are biagrams, i.e. groups of two words. Another thing we can notice is that, once again, the most frequent tokens are stop words. Let's get rid of them:
+
 
 ```{r}
 bigrams_separated <- tidy_content_rel %>%
@@ -861,6 +913,7 @@ bigrams_filtered <- bigrams_separated %>%
 tidy_content_rel_clean <- bigrams_filtered %>%
   unite(bigram, word1, word2, sep = " ")
 ```
+
 
 ::: {.box .type5}
 ::: sub-box
@@ -890,6 +943,7 @@ tidy_content_rel_clean <- bigrams_filtered %>%
 
 As we did several times before, let's visualise the counts of our biagram:
 
+
 ```{r}
 tidy_content_rel_clean %>%
   count(bigram, sort = TRUE) %>%
@@ -900,9 +954,11 @@ tidy_content_rel_clean %>%
   labs(y = NULL)
 ```
 
+
 We immediately notice that the stop words are gone and that the most frequent biagrams in our corpus are "total vote" and "lab majority".
 
 Sometimes, it is useful to keep our bigrams in two distinct columns, one per word. This format could be very handy when we need to apply filtering criteria to only one of the words of the biagram. For example, we might be interested in the most common biagrams where the second word is "vote". We already obtained this format when computing the DataFrame *bigrams_separated*:
+
 
 ```{r}
 bigrams_filtered %>% 
@@ -910,9 +966,11 @@ bigrams_filtered %>%
   count(issue, word1, sort=TRUE)
 ```
 
+
 In this case we obtain the count of all the words *preceding* the word *vote* by issue. "total" is the most frequent.
 
 In the previous paragraph we mentioned that tf-idf is a function of the selected term. More in general, we can compute tf-idf for the seleced *token*, whatever it is a single character, word, biagram, n-gram, sentence, etc. To compute the tf-idf for our biagram we do not need to introduce any new tool, but we will simply use the function \`bind_tf_idf()' in a similar way as we did for single words:
+
 
 ```{r}
 bigram_tf_idf <- tidy_content_rel_clean %>%
@@ -922,6 +980,7 @@ bigram_tf_idf <- tidy_content_rel_clean %>%
 
 bigram_tf_idf
 ```
+
 
 ::: {.box .type5}
 ::: sub-box
@@ -944,3 +1003,4 @@ bigram_tf_idf
 
 </p>
 :::
+
