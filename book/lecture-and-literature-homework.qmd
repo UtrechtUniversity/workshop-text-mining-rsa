@@ -1,3 +1,5 @@
 # Homework {.unnumbered}
 
-Coming soon!
+As homework, you can start working on a draft of your reflection assignment, which can be found towards the end of the [syllabus](https://utrechtuniversity.github.io/workshop-text-mining-rsa/syllabus.html). Focus on writing up some notes on the literature you've summarized so for. Again, this is only a draft version which you will finalize at the end of the course - but you can already make some progress in this week. 
+
+_**Don't forget the preparation for the next session!**_

@@ -26,6 +26,9 @@ book:
       - lecture-and-literature-session.qmd
       - lecture-and-literature-homework.qmd
     - part: "4 Tidy Text Mining"
+      chapters:
+      - text-mining-preparation.qmd
+      - text-mining-homework.qmd
     - part: "5 Reproducible Reports"
     - final-assignment.qmd
     - references.qmd

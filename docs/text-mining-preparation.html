@@ -20,6 +20,69 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1.6em;
   vertical-align: middle;
 }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
 
@@ -30,8 +93,8 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./r-session.html" rel="next">
-<link href="./ianalyzer-homework.html" rel="prev">
+<link href="./text-mining-homework.html" rel="next">
+<link href="./lecture-and-literature-homework.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -60,8 +123,6 @@ ul.task-list li input[type="checkbox"] {
     "search-submit-button-title": "Submit"
   }
 }</script>
-<link href="site_libs/vembedr-0.1.5/css/vembedr.css" rel="stylesheet">
-<script src="site_libs/fitvids-2.1.1/fitvids.min.js"></script>
 
 
 </head>
@@ -145,7 +206,7 @@ ul.task-list li input[type="checkbox"] {
       <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./r-preparation.html" class="sidebar-item-text sidebar-link active">Preparation</a>
+  <a href="./r-preparation.html" class="sidebar-item-text sidebar-link">Preparation</a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -195,7 +256,7 @@ ul.task-list li input[type="checkbox"] {
       <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./text-mining-preparation.html" class="sidebar-item-text sidebar-link">Preparation</a>
+  <a href="./text-mining-preparation.html" class="sidebar-item-text sidebar-link active">Preparation</a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -227,12 +288,12 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#install-r-rstudio" id="toc-install-r-rstudio" class="nav-link active" data-scroll-target="#install-r-rstudio">Install R &amp; RStudio</a></li>
-  <li><a href="#explore-r-rstudio" id="toc-explore-r-rstudio" class="nav-link" data-scroll-target="#explore-r-rstudio">Explore R &amp; RStudio</a>
-  <ul class="collapse">
-  <li><a href="#video" id="toc-video" class="nav-link" data-scroll-target="#video">Video</a></li>
-  <li><a href="#slides" id="toc-slides" class="nav-link" data-scroll-target="#slides">Slides</a></li>
-  </ul></li>
+  <li><a href="#install-load-packages" id="toc-install-load-packages" class="nav-link active" data-scroll-target="#install-load-packages">Install &amp; Load Packages</a></li>
+  <li><a href="#project-organization" id="toc-project-organization" class="nav-link" data-scroll-target="#project-organization">Project Organization</a></li>
+  <li><a href="#download-data" id="toc-download-data" class="nav-link" data-scroll-target="#download-data">Download Data</a></li>
+  <li><a href="#download-lexicon" id="toc-download-lexicon" class="nav-link" data-scroll-target="#download-lexicon">Download Lexicon</a></li>
+  <li><a href="#some-reading" id="toc-some-reading" class="nav-link" data-scroll-target="#some-reading">Some Reading</a></li>
+  <li><a href="#bonus-reading" id="toc-bonus-reading" class="nav-link" data-scroll-target="#bonus-reading">Bonus Reading</a></li>
   </ul>
 </nav>
     </div>
@@ -256,76 +317,120 @@ ul.task-list li input[type="checkbox"] {
 
 </header>
 
-<p>In the next session, we will get started with R &amp; RStudio. You are required to complete the installation and preparation described on this page prior to attending the session. We will not have time to run through these steps during the meeting.</p>
-<section id="install-r-rstudio" class="level2">
-<h2 class="anchored" data-anchor-id="install-r-rstudio">Install R &amp; RStudio</h2>
-<div class="panel-tabset">
-<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-1-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-1" role="tab" aria-controls="tabset-1-1" aria-selected="true" aria-current="page">Personal Laptop</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-2" role="tab" aria-controls="tabset-1-2" aria-selected="false">Utrecht University laptop</a></li></ul>
-<div class="tab-content">
-<div id="tabset-1-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-1-1-tab">
-<p>By personal laptop, we mean a laptop where you have administrator rights.</p>
-<ol type="1">
-<li>Install R from <a href="https://cran.rstudio.com/">https://cran.rstudio.com/</a></li>
-<li>Install RStudio from <a href="https://www.rstudio.com/products/rstudio/download/#download">https://www.rstudio.com/products/rstudio/download/#download</a> (if you are unsure about which link to click, you should probably use the top list with “installers”. From that, choose the installer for your operating system.)</li>
-</ol>
+<p>In the next session, we will finally dive into text mining with R! You are required to complete the installation and preparation described on this page prior to attending the session. We will not have time to run through these steps during the meeting.</p>
+<p>If you get with any of the steps below, don’t hesitate to reach out to the instructors during the <a href="https://www.uu.nl/en/research/research-data-management/walk-in-hours-workshops/walk-in-hours-research-data-software">Walk-In Hours of Research Data Management Support</a>. The Walk-In Hours take place every Monday from 15:00 to 17:00 at the University Library in the Science Park. However, one instructor will be available at the University Library in the city center (in the seating area near the Digital Humanities Lab) and you are welcome free to request a meeting online (via MS Teams) during these hours as well.</p>
+<p>You can also contact the course coordinator, Neha Moopen, by email at <a href="n.moopen@uu.nl">n.moopen@uu.nl</a></p>
+<section id="install-load-packages" class="level2">
+<h2 class="anchored" data-anchor-id="install-load-packages">Install &amp; Load Packages</h2>
+<p>Let’s be sure you have all the needed packages installed and that loading them into RStudio works fine.</p>
+<p>These are two distinct operations: <em>installing</em> means downloading and installing all the files related to a package in your computer and this is usually a one-time operation, while <em>loading</em> a package means making the package’s functions and other features ready to be used in your R session.</p>
+<p>The latter is something you need to do every time you start (or re-start) your R session. To install and load packages we use the R functions <code>install.packages()</code> and <code>library()</code>, respectively. Remember that <code>install.packages()</code> requires its arguments to be specified between double quotes, while <code>library()</code> accepts both double quotes or the plain name of the package.</p>
+<p>Let’s install the packages:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"tidyverse"</span>)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"tidytext"</span>)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"wordcloud"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div id="tabset-1-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-2-tab">
-<ol type="1">
-<li>Open Software Center</li>
-<li>Install “R for Windows”</li>
-</ol>
-<p>Installing R packages on a Utrecht University laptop can be hard. This is because R packages are installed on a so-called ‘mounted’ drive. This causes problems with the performance. Check the installation:</p>
-<ol start="3" type="1">
-<li>Open RStudio</li>
-<li>Look for a window that says “Console” (probably bottom left of your screen).</li>
-<li>Write the following line of code in your console: .libPaths()</li>
-<li>Hit ‘enter’.</li>
-</ol>
-<p>If the resulting path is a local address (e.g.&nbsp;starting with C:/), you are fine and can skip the next few steps. If it starts with // you are installing packages on a mounted drive. This will affect the performance, so you will want to correct that:</p>
-<ol start="7" type="1">
-<li>Create a folder R-packages on a local drive.</li>
-<li>Copy the location to that drive. For example: C:/Users/User/R-packages</li>
-<li>Run the following line of code in the console: file.edit(file.path(“~”, “.Rprofile”))</li>
-<li>RStudio now opens an editor window.</li>
-<li>Paste .libPaths(“C:/Users/User/R-packages”) (or whatever path you copied in 8.) in the editor, and save the file.</li>
-<li>Restart your R session.</li>
-<li>At the window on the bottom right of your screen, select the tab “packages”</li>
-<li>Click on “install”. A window opens. In this window, is Install to library pointing to C:/Users/User/R-packages? (or whatever path you copied in 8.).</li>
-</ol>
+<p>And load them:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>── Attaching packages ─────────────────────────────────────── tidyverse 1.3.2 ──
+✔ ggplot2 3.4.0      ✔ purrr   0.3.5 
+✔ tibble  3.1.8      ✔ dplyr   1.0.10
+✔ tidyr   1.2.1      ✔ stringr 1.5.0 
+✔ readr   2.1.3      ✔ forcats 0.5.2 
+── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
+✖ dplyr::filter() masks stats::filter()
+✖ dplyr::lag()    masks stats::lag()</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidytext)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: package 'tidytext' was built under R version 4.2.3</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(wordcloud)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: package 'wordcloud' was built under R version 4.2.3</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Loading required package: RColorBrewer</code></pre>
 </div>
 </div>
+A few words about the packages we are going to use:
+<ul>
+<li>
+<strong>tidyverse</strong>: this is an “opinionated collection of R packages designed for data science. All packages share an underlying design philosophy, grammar, and data structures”. Among the many tidyverse packages, we are going to use in particular:
+<ul>
+<li>
+<strong>readr</strong>: allowing to read data from files;
+</li>
+<li>
+<strong>dplyr</strong>: providing tools for data manipulation;
+</li>
+<li>
+<strong>tidyr</strong>: providing tools to make your data “tidy”;
+</li>
+<li>
+<strong>forcats</strong>: providing tools to solve problems with factors, and advanced R topic we would not spend much time talking about;
+</li>
+<li>
+<strong>ggplot2</strong>: a system for creating graphics.
+</li>
+</ul>
+</li><li>
+<strong>tidytext</strong>: an R package for text mining based on the tidy data principles;
+</li>
+<li>
+<strong>wordcloud</strong>: a package to generate word cloud plots.
+</li>
+</ul>
+</section>
+<section id="project-organization" class="level2">
+<h2 class="anchored" data-anchor-id="project-organization">Project Organization</h2>
+<p><strong>1. Create a project in RStudio</strong></p>
+<ul>
+<li><p>In RStudio, click <em>File</em> -&gt; <em>New Project</em> -&gt; <em>New Directory</em> -&gt; <em>New Project</em>.</p></li>
+<li><p>Give your project directory the following name: <code>text-mining-in-r</code></p></li>
+<li><p>Make sure your project directory folder is created (as a subdirectory) in an accessible place on your system.</p></li>
+<li><p>Select <code>Open project in a new session</code>.</p></li>
+</ul>
+<p><strong>2. Create a project structure suited for reproducible work</strong></p>
+<ul>
+<li>You can generate a directory structure by running the following piece of code in your R <strong>console</strong>:</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dir.create</span>(<span class="st">"data"</span>, <span class="at">recursive =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="fu">dir.create</span>(<span class="st">"lexicons"</span>, <span class="at">recursive =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="fu">dir.create</span>(<span class="st">"docs"</span>, <span class="at">recursive =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="fu">dir.create</span>(<span class="st">"results"</span>, <span class="at">recursive =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="fu">dir.create</span>(<span class="st">"R"</span>, <span class="at">recursive =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
-<section id="explore-r-rstudio" class="level2">
-<h2 class="anchored" data-anchor-id="explore-r-rstudio">Explore R &amp; RStudio</h2>
-<p>Watch the following 7-minute video to get an idea of how R &amp; RStudio works. Try to follow along on your own computer! The slides are also available for reference.</p>
-<section id="video" class="level3">
-<h3 class="anchored" data-anchor-id="video">Video</h3>
-<div class="cell">
-<div class="cell-output-display">
-<div class="vembedr">
-<div>
-<iframe src="https://www.youtube.com/embed/FFYSAUJ305o" width="533" height="300" frameborder="0" allowfullscreen="" data-external="1"></iframe>
-</div>
-</div>
-</div>
-</div>
+<section id="download-data" class="level2">
+<h2 class="anchored" data-anchor-id="download-data">Download Data</h2>
+<p>Download the data file linked below and place it in the <code>data</code> folder you just created:</p>
+<p><a href="">ianalyzer_query.csv</a></p>
 </section>
-<section id="slides" class="level3">
-<h3 class="anchored" data-anchor-id="slides">Slides</h3>
-<p>For this part, just consider the slides 12 - 16.</p>
-<div class="cell">
-<div class="cell-output-display">
-<div class="shareagain" style="min-width:300px;margin:1em auto;" data-exeternal="1">
-<iframe src="https://utrechtuniversity.github.io/workshop-introduction-to-R-and-data/slides/slides_introduction.html#12" width="400" height="300" style="border:2px solid currentColor;" loading="lazy" allowfullscreen=""></iframe>
-<script>fitvids('.shareagain', {players: 'iframe'});</script>
-</div>
-</div>
-</div>
-<p><a href="https://utrechtuniversity.github.io/workshop-introduction-to-R-and-data/slides/slides_introduction.html#12">Use this link to open slides in a new tab (refer to slide #12)</a></p>
+<section id="download-lexicon" class="level2">
+<h2 class="anchored" data-anchor-id="download-lexicon">Download Lexicon</h2>
+<p>Download the lexicon file linked below and place it in the <code>lexicons</code> folder:</p>
+<p><a href="">NRC_lexicon.txt</a></p>
+</section>
+<section id="some-reading" class="level2">
+<h2 class="anchored" data-anchor-id="some-reading">Some Reading</h2>
+<p>Read the section <em>Just before starting: tidyverse pipelines</em> in the next page. It’s alright if you don’t understand everything but it will help you become more familiar with the syntax we will be using in the text mining session.</p>
+</section>
+<section id="bonus-reading" class="level2">
+<h2 class="anchored" data-anchor-id="bonus-reading">Bonus Reading</h2>
+<p>The <a href="https://www.tidytextmining.com/">Text Mining with R</a> textbook is our go-to reference for the upcoming session. Take some time to skim through the case studies presented in the book:</p>
+<ul>
+<li><p><a href="https://www.tidytextmining.com/twitter.html">Comparing Twitter archives</a></p></li>
+<li><p><a href="https://www.tidytextmining.com/nasa.html">Mining NASA metadata</a></p></li>
+<li><p><a href="https://www.tidytextmining.com/usenet.html">Analyzing usenet text</a></p></li>
+</ul>
+<p>Again, it’s alright if you don’t understand everything. This is to familiarize you with the techniques we will be trying out in the next session <em>and</em> see how results of text mining techniques are presented and interpreted.</p>
 
 
-</section>
 </section>
 
 </main> <!-- /main -->
@@ -464,13 +569,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./ianalyzer-homework.html" class="pagination-link">
+      <a href="./lecture-and-literature-homework.html" class="pagination-link">
         <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Homework</span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./r-session.html" class="pagination-link">
-        <span class="nav-page-text">Base R</span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./text-mining-homework.html" class="pagination-link">
+        <span class="nav-page-text">Homework</span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

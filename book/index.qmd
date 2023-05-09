@@ -2,19 +2,18 @@
 
 Text mining methods are quickly gaining popularity among researchers, including those from Law, Economics and Governance (LEG) disciplines. Text mining exploits sizeable collections of digitized texts for automatic analysis, using software such as R or Python. For example, newspaper articles have been to measure economic sentiments and digitized court records to analyze the evolution of jurisdiction.
 
-In this course, we will get you up to speed with a simple workflow for data-driven research using digitized text collections, and learn to reflect on the pros and cons of using methods like these. We will start with selecting relevant texts in iAnalyzer and creating a dataset based on your own research question. After an introduction to R, you will gradually learn to analyze your dataset. This also allows you to develop general skills in R that are becoming ever more useful in the complex analysis of data. By the end of the course, you will be able to answer a simple research question based on your dataset, and to use an ‘Open Science’ approach to report on your workflow and the pros and cons of text-mining. 
+In this course, we will get you up to speed with a simple workflow for data-driven research using digitized text collections, and learn to reflect on the pros and cons of using methods like these. We will start with selecting relevant texts in iAnalyzer and creating a dataset based on your own research question. After an introduction to R, you will gradually learn to analyze your dataset. This also allows you to develop general skills in R that are becoming ever more useful in the complex analysis of data. By the end of the course, you will be able to answer a simple research question based on your dataset, and to use an 'Open Science' approach to report on your workflow and the pros and cons of text-mining.
 
 After completing this module, students will be able to:
 
--	process substantial datasets containing textual information;
+-   process substantial datasets containing textual information;
 
--	select subsets of digitized text collections such as newspapers for 
-analysis;
+-   select subsets of digitized text collections such as newspapers for analysis;
 
--	import and harmonize textual data in R;
+-   import and harmonize textual data in R;
 
--	visualize textual data using n-grams and relations between words;
+-   visualize textual data using n-grams and relations between words;
 
--	automatically identify themes and subjects within textual data (topic modeling);
+-   automatically identify themes and subjects within textual data (topic modeling);
 
--	reflect on the benefits and drawbacks of using text-mining methods for research.
+-   reflect on the benefits and drawbacks of using text-mining methods for research.

@@ -151,7 +151,56 @@
     "href": "lecture-and-literature-homework.html",
     "title": "Homework",
     "section": "",
-    "text": "Coming soon!"
+    "text": "As homework, you can start working on a draft of your reflection assignment, which can be found towards the end of the syllabus. Focus on writing up some notes on the literature you’ve summarized so for. Again, this is only a draft version which you will finalize at the end of the course - but you can already make some progress in this week.\nDon’t forget the preparation for the next session!"
+  },
+  {
+    "objectID": "text-mining-preparation.html#install-load-packages",
+    "href": "text-mining-preparation.html#install-load-packages",
+    "title": "Preparation",
+    "section": "Install & Load Packages",
+    "text": "Install & Load Packages\nLet’s be sure you have all the needed packages installed and that loading them into RStudio works fine.\nThese are two distinct operations: installing means downloading and installing all the files related to a package in your computer and this is usually a one-time operation, while loading a package means making the package’s functions and other features ready to be used in your R session.\nThe latter is something you need to do every time you start (or re-start) your R session. To install and load packages we use the R functions install.packages() and library(), respectively. Remember that install.packages() requires its arguments to be specified between double quotes, while library() accepts both double quotes or the plain name of the package.\nLet’s install the packages:\n\ninstall.packages(\"tidyverse\")\ninstall.packages(\"tidytext\")\ninstall.packages(\"wordcloud\")\n\nAnd load them:\n\nlibrary(tidyverse)\n\n── Attaching packages ─────────────────────────────────────── tidyverse 1.3.2 ──\n✔ ggplot2 3.4.0      ✔ purrr   0.3.5 \n✔ tibble  3.1.8      ✔ dplyr   1.0.10\n✔ tidyr   1.2.1      ✔ stringr 1.5.0 \n✔ readr   2.1.3      ✔ forcats 0.5.2 \n── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──\n✖ dplyr::filter() masks stats::filter()\n✖ dplyr::lag()    masks stats::lag()\n\nlibrary(tidytext)\n\nWarning: package 'tidytext' was built under R version 4.2.3\n\nlibrary(wordcloud)\n\nWarning: package 'wordcloud' was built under R version 4.2.3\n\n\nLoading required package: RColorBrewer\n\n\nA few words about the packages we are going to use:\n\n\ntidyverse: this is an “opinionated collection of R packages designed for data science. All packages share an underlying design philosophy, grammar, and data structures”. Among the many tidyverse packages, we are going to use in particular:\n\n\nreadr: allowing to read data from files;\n\n\ndplyr: providing tools for data manipulation;\n\n\ntidyr: providing tools to make your data “tidy”;\n\n\nforcats: providing tools to solve problems with factors, and advanced R topic we would not spend much time talking about;\n\n\nggplot2: a system for creating graphics.\n\n\n\ntidytext: an R package for text mining based on the tidy data principles;\n\n\nwordcloud: a package to generate word cloud plots."
+  },
+  {
+    "objectID": "text-mining-preparation.html#project-organization",
+    "href": "text-mining-preparation.html#project-organization",
+    "title": "Preparation",
+    "section": "Project Organization",
+    "text": "Project Organization\n1. Create a project in RStudio\n\nIn RStudio, click File -> New Project -> New Directory -> New Project.\nGive your project directory the following name: text-mining-in-r\nMake sure your project directory folder is created (as a subdirectory) in an accessible place on your system.\nSelect Open project in a new session.\n\n2. Create a project structure suited for reproducible work\n\nYou can generate a directory structure by running the following piece of code in your R console:\n\n\ndir.create(\"data\", recursive = TRUE)\ndir.create(\"lexicons\", recursive = TRUE)\ndir.create(\"docs\", recursive = TRUE)\ndir.create(\"results\", recursive = TRUE)\ndir.create(\"R\", recursive = TRUE)"
+  },
+  {
+    "objectID": "text-mining-preparation.html#download-data",
+    "href": "text-mining-preparation.html#download-data",
+    "title": "Preparation",
+    "section": "Download Data",
+    "text": "Download Data\nDownload the data file linked below and place it in the data folder you just created:\nianalyzer_query.csv"
+  },
+  {
+    "objectID": "text-mining-preparation.html#download-lexicon",
+    "href": "text-mining-preparation.html#download-lexicon",
+    "title": "Preparation",
+    "section": "Download Lexicon",
+    "text": "Download Lexicon\nDownload the lexicon file linked below and place it in the lexicons folder:\nNRC_lexicon.txt"
+  },
+  {
+    "objectID": "text-mining-preparation.html#some-reading",
+    "href": "text-mining-preparation.html#some-reading",
+    "title": "Preparation",
+    "section": "Some Reading",
+    "text": "Some Reading\nRead the section Just before starting: tidyverse pipelines in the next page. It’s alright if you don’t understand everything but it will help you become more familiar with the syntax we will be using in the text mining session."
+  },
+  {
+    "objectID": "text-mining-preparation.html#bonus-reading",
+    "href": "text-mining-preparation.html#bonus-reading",
+    "title": "Preparation",
+    "section": "Bonus Reading",
+    "text": "Bonus Reading\nThe Text Mining with R textbook is our go-to reference for the upcoming session. Take some time to skim through the case studies presented in the book:\n\nComparing Twitter archives\nMining NASA metadata\nAnalyzing usenet text\n\nAgain, it’s alright if you don’t understand everything. This is to familiarize you with the techniques we will be trying out in the next session and see how results of text mining techniques are presented and interpreted."
+  },
+  {
+    "objectID": "text-mining-homework.html",
+    "href": "text-mining-homework.html",
+    "title": "Homework",
+    "section": "",
+    "text": "As homework, you are required to:\n1. Complete the Text Mining exercises conducted during the session.\nThis is if you didn’t already finish it during the meeting.\nNote that you will be required to submit the completed exercises, as part of the grading of the course.\nIf you get stuck, don’t hesitate to reach out to the instructors during the Walk-In Hours of Research Data Management Support. The Walk-In Hours take place every Monday from 15:00 to 17:00 at the University Library in the Science Park. However, one instructor will be available at the University Library in the city center (in the seating area near the Digital Humanities Lab) and you are welcome free to request a meeting online (via MS Teams) during these hours as well.\nDon’t forget the preparation for the next session!"
   },
   {
     "objectID": "final-assignment.html#folder-structure",
