@@ -243,20 +243,25 @@ Few words about the packages we are going to use:
 </section>
 <section id="just-before-starting-tidyverse-pipelines" class="level3">
 <h3 class="anchored" data-anchor-id="just-before-starting-tidyverse-pipelines">Just before starting: tidyverse pipelines</h3>
-<p>Generally speaking, in programming a function takes an input and some more information specifying the function parameters, it runs some operation on the input according to the specified parameters, and it return an output.</p>
-<p><img src="pictures/pipeline.jpeg" class="img-fluid" alt="pipeline"> In data analysis, most of the times, you will find yourself in the situation where, in order to plot meaningful information or to extract meaningful statistical quantities from data, you need to apply several different functions to the data, collect their outputs, and use again that output as input for other functions. Assuming we want to apply 4 different functions to data, one after another, our R code will look like something like this:</p>
+<p>Generally speaking, in programming a function takes an input and some more information used to customize the function behavior (parameters), it runs some operation on the input according to the specified parameters, and it returns an output.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="pictures/pipeline.jpeg" class="img-fluid figure-img" style="width:95.0%"></p>
+</figure>
+</div>
+<p>In data analysis, most of the times, you will find yourself in the situation where, in order to plot meaningful information or to extract meaningful statistical quantities from data, you need to “feed” the data to several different functions, collect their outputs, and use those results as input for other functions. For example, you may want first read the data from a file, then select two columns, count how many identical values are in those columns, and plot a histogram plot with those counts. Each of these operation will in practice performed by a single function. Assuming we want to apply 4 different functions to data, one after another (like in the previous example), our R code will look like something like this:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>output1 <span class="ot">&lt;-</span> <span class="fu">func1</span>(data, pars1)</span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>output2 <span class="ot">&lt;-</span> <span class="fu">func2</span>(output1, pars2)</span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>output3 <span class="ot">&lt;-</span> <span class="fu">func3</span>(output2, pars3)</span>
 <span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>output4 <span class="ot">&lt;-</span> <span class="fu">func4</span>(output3, pars4)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>In most of the cases we will be interested only in the final output (output4) and saving each output into a variable (as we did in the previous block of code) would only waste memory space. To avoid that, we can use directly the output of a function as input for the next one in a <em>nested</em> structure:</p>
+<p>In most of the cases we will be interested only in the final output (output4) and saving each output into a variable (as it happens in the previous block of code) would only waste memory space. To avoid that, we can use directly the output of a function as input for the next one in a <em>nested</em> structure:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>output4 <span class="ot">&lt;-</span> <span class="fu">func4</span>(<span class="fu">func3</span>(<span class="fu">func2</span>(<span class="fu">func1</span>(data,pars1),pars2),pars3),pars4)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>At this point you probably noticed that, the nested structure can be quite confusing, making us loosing track of what is the input and the additional parameters for each function, especially when we need to apply several functions to data one after another.</p>
-<p>To simplify this situation, the package <code>tidyverse</code> (once loaded) allows to use a syntax called <em>pipeline</em>. In a pipeline, the input parameter of a function is NOT specified between the parenthesis of the function, like in normal R, but it appears OUTSIDE the function and it is followed by the “pipe” operator “%&gt;%”. The pipe operator takes whatever is on its left-hand side and it passes it as an input for the code on the right-hand side. Confused? Look how the previous line of code becomes using the tidyverse pipeline:</p>
+<p>At this point you probably noticed that the nested structure can be quite confusing, making us loosing track of what is the input and the additional parameters for each function, especially when we need to apply several functions to data one after another.</p>
+<p>To simplify this kind of situations, the package <code>tidyverse</code> (once loaded) allows to use an alternative syntax called <em>pipeline</em>. In a pipeline, the input parameter of a function is NOT specified between the parenthesis of the function, like in plain R, but it appears OUTSIDE the function and it is followed by the “pipe” operator “%&gt;%”. The pipe operator takes whatever is on its left-hand side and it passes it as an input for the code on the right-hand side. Confused? Look how the previous line of code becomes using the tidyverse pipeline:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>output4 <span class="ot">&lt;-</span> data <span class="sc">%&gt;%</span> </span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">func1</span>(pars1) <span class="sc">%&gt;%</span></span>
@@ -276,12 +281,12 @@ Few words about the packages we are going to use:
 <p>
 </p><ul>
 <li>
-data is out input. The pipe operator “<span class="math inline">\(&gt;\)</span>” takes it and uses it as an input for <code>func1(pars1)</code>, where pars1 are additional parameters specified by the user. func1 will produce an output, but instead of storing this output into a variable, we immediatly “inject” it into another function using again the pipe operator. We repeat this operation four times until we finish to perform all our operation. The result will be stored in the variable output4 specified at the beginning of the line.
+data is our first raw input. The pipe operator “$&gt;$” takes it and uses it as an input for <code>func1(pars1)</code>, where pars1 are additional parameters specified by the user. func1 will produce an output, but instead of storing this output into a variable, we immediatly “inject” it into another function using again the pipe operator. We repeat this operation four times, one time for each function we want to use, until we finish to perform all our operations. The result will be stored in the variable output4 as indicated by the operator “&lt;-” at the beginning of the line.
 </li>
 </ul>
 <p></p>
 </div>
-<p>The workflow and the result of the previous two blocks of code is absolutely identical, but tidyverse pipeline allows to write nested functions in a more concise, readable, easy to understand, and easy to modify way.</p>
+<p>The workflow and the final computed result of the previous two blocks of code (with plain R nested functions and tidyverse pipeline, respectively) is absolutely identical, but the tidyverse pipeline allows to write nested functions in a more concise, readable, easy to understand, and easy to modify way. Code using tidyverse pipelines is therefore less prone to errors, but it is ultimately up to you to choose your preferred syntax.</p>
 </section>
 <section id="reading-data" class="level3">
 <h3 class="anchored" data-anchor-id="reading-data">Reading data</h3>

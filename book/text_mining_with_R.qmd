@@ -134,16 +134,20 @@ Few words about the packages we are going to use:
 ### Just before starting: tidyverse pipelines
 
 Generally speaking, in programming a function takes an input and some more information
-specifying the function parameters, it runs some operation on the input according to
-the specified parameters, and it return an output.
+used to customize the function behavior (parameters), it runs some operation on the input according to
+the specified parameters, and it returns an output.
 
-![pipeline](pictures/pipeline.jpeg)
+![](pictures/pipeline.jpeg){width=95% fig-aling='center'}
+
 In data analysis, most of the times, you will find yourself in the situation where,
 in order to plot meaningful information or to extract meaningful statistical quantities
-from data, you need to apply several different functions to the data, collect their 
-outputs, and use again that output as input for other functions.
-Assuming we want to apply 4 different functions to data, one after another, our
-R code will look like something like this:
+from data, you need to "feed" the data to several different functions, collect their 
+outputs, and use those results as input for other functions. For example, you may want
+first read the data from a file, then select two columns, count how many identical
+values are in those columns, and plot a histogram plot with those counts. Each of
+these operation will in practice performed by a single function.
+Assuming we want to apply 4 different functions to data, one after another (like
+in the previous example), our R code will look like something like this:
 
 ```{r}
 #| eval: false
@@ -154,7 +158,7 @@ output4 <- func4(output3, pars4)
 ```
 
 In most of the cases we will be interested only in the final output (output4) and
-saving each output into a variable (as we did in the previous block of code) would
+saving each output into a variable (as it happens in the previous block of code) would
 only waste memory space. To avoid that, we can use directly the output of a function
 as input for the next one in a *nested* structure:
 
@@ -163,13 +167,13 @@ as input for the next one in a *nested* structure:
 output4 <- func4(func3(func2(func1(data,pars1),pars2),pars3),pars4)
 ```
 
-At this point you probably noticed that, the nested structure can be quite confusing,
+At this point you probably noticed that the nested structure can be quite confusing,
 making us loosing track of what is the input and the additional parameters for each
 function, especially when we need to apply several functions to data one after another.
 
-To simplify this situation, the package `tidyverse` (once loaded) allows to use a
+To simplify this kind of situations, the package `tidyverse` (once loaded) allows to use an alternative
 syntax called *pipeline*. In a pipeline, the input parameter of a function is NOT
-specified between the parenthesis of the function, like in normal R, but it appears OUTSIDE
+specified between the parenthesis of the function, like in plain R, but it appears OUTSIDE
 the function and it is followed by the "pipe" operator "%>%". The pipe operator takes
 whatever is on its left-hand side and it passes it as an input for the code on
 the right-hand side. Confused? Look how the previous line of code becomes using
@@ -199,21 +203,24 @@ output4 <- data %>%
 
 <ul>
 
-<li>data is out input. The pipe operator "$>$" takes it and uses it as an input
+<li>data is our first raw input. The pipe operator "\$>\$" takes it and uses it as an input
 for ```func1(pars1)```, where pars1 are additional parameters specified by the user. func1
 will produce an output, but instead of storing this output into a variable, we immediatly
 "inject" it into another function using again the pipe operator. We repeat this 
-operation four times until we finish to perform all our operation. The result 
-will be stored in the variable output4 specified at the beginning of the line.</li>
+operation four times, one time for each function we want to use, until we finish to perform all our operations. 
+The result 
+will be stored in the variable output4 as indicated by the operator "<-" at the beginning of the line.</li>
 
 </ul>
 
 </p>
 ::: 
 
-The workflow and the result of the previous two blocks of code is absolutely identical,
-but tidyverse pipeline allows to write nested functions in a more concise, readable, easy
-to understand, and easy to modify way.
+The workflow and the final computed result of the previous two blocks of code (with plain R nested 
+functions and tidyverse pipeline, respectively) is absolutely identical,
+but the tidyverse pipeline allows to write nested functions in a more concise, readable, easy
+to understand, and easy to modify way. Code using tidyverse pipelines is therefore 
+less prone to errors, but it is ultimately up to you to choose your preferred syntax.
  
 ### Reading data
 
