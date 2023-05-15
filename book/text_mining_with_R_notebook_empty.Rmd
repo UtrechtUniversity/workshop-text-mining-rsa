@@ -18,7 +18,7 @@ knitr::opts_chunk$set(echo = TRUE)
 - This is a list item with a **bold** word;
 - This is a list item with an *italic* word
 
-# Setup
+# Session 0: Setup
 
 ```{r}
 #| eval: false
@@ -33,7 +33,9 @@ library(tidytext)
 library(wordcloud)
 ```
 
-# Reading data
+# Session 1: counting words
+
+## Reading data
 
 <!-- Determine your raw data file full or relative path -->
 <!-- Read your file using the function read_delim(). Find the right arguments clicking on "Import Dataset" in the Environment tab -->
@@ -43,7 +45,8 @@ library(wordcloud)
 data_file_name <- ???
 
 data_df <- read_delim(???, 
-    delim = ???)
+    delim = ???,
+    col_types = cols(`date-pub` = col_date(format = "%B %d, %Y"))
 
 print(???(data_df))
 print(???(data_df))
@@ -147,7 +150,7 @@ word_cloud_plot <-
 word_cloud_plot
 ```
 
-# Sentiment Analysis
+# Session 2: Sentiment Analysis
 
 ## Lexicon and joy words
 
@@ -171,7 +174,7 @@ joy_words <- ???  %>%
   filter(???)
 ```
 
-# Computing joy words fraction
+## Computing joy words fraction
 
 <!-- Compute the total number of words PER ISSUE between two arbitrary dates -->
 
@@ -212,7 +215,7 @@ percent_of_joy_plot <-
 percent_of_joy_plot
 ```
 
-# Computing total joy fraction
+## Computing total joy fraction
 
 <!-- Make a DataFrame containing only distinct words sing the function distinct() -->
 
@@ -238,7 +241,7 @@ total_joy <- (???/???)*100
 print(???)
 ```
 
-# Analyzing word and document frequency: tf-idf
+# Session 3: Analyzing word and document frequency: tf-idf
 
 ## Computing term frequency
 
@@ -326,7 +329,9 @@ issue_tf_idf %>%
   labs(x = "tf-idf", y = NULL) 
 ```
 
-# Relationships Between Words
+# Session 4: Relationships Between Words
+
+## Tokenization with biagrams
 
 <!-- Tokenize text in groups of 2 words using unnest_tokens() with token="ngrams" and n=2 -->
 
@@ -396,6 +401,8 @@ tidy_content_rel_clean %>%
   filter(???) %>%
   count(issue, ???, sort=TRUE)
 ```
+
+## tf-idf for biagrams
 
 <!-- Compute tf-idf for the biagram and display the result in order of ascending tf-idf -->
 
