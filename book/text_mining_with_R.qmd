@@ -230,8 +230,13 @@ less prone to errors, but it is ultimately up to you to choose your preferred sy
 In this session we will work with data that we already collected using the web application <a url="https://ianalyzer.hum.uu.nl/home">I-Analyzer</a>. We obtained our data querying for "European Union" over the news of the Times Digital Archive between 1945 and 2010. The data are stored in a coma-separated-values (csv) file and we are going to convert them into an R DataFrame:
 
 ```{r}
-data_file_name <- '../data/times_ocr=80_100&date=1945-01-01_2010-12-31&query=_european_union_&category=News.csv'
-data_df <- read_delim(data_file_name, delim = ";", escape_double = FALSE, col_types = cols(`date-pub` = col_date(format = "%B %d, %Y")), trim_ws = TRUE)
+data_file_name <- '../data/ianalyzer_query.csv'
+
+data_df <- read_delim(data_file_name, 
+    delim = ";", 
+    escape_double = FALSE, 
+    col_types = cols(`date-pub` = col_date(format = "%B %d, %Y"), 
+        issue = col_integer()), trim_ws = TRUE)
 
 print(nrow(data_df))
 print(colnames(data_df))
@@ -494,7 +499,7 @@ Sentiment analysis is based on the assumption that we can view a text as a combi
 For our simple analysis, we already downloaded a lexicon, the **NRC emotion lexicon**. The NRC Emotion Lexicon is a list of English words and their associations with eight basic emotions (anger, fear, anticipation, trust, surprise, sadness, joy, and disgust) and two sentiments (negative and positive). If an emotion is associated with a word, its score will be 1, and if not it will be 0.
 
 ```{r}
-nrc_lexicon_df <- read.table("../data/NRC-Emotion-Lexicon-Wordlevel-v0.92.txt", header = FALSE, sep = "\t", stringsAsFactors = FALSE, col.names = c("word", "emotion", "score"))
+nrc_lexicon_df <- read.table("../lexicons/NRC-lexicon.txt", header = FALSE, sep = "\t", stringsAsFactors = FALSE, col.names = c("word", "emotion", "score"))
 
 joy_words <- nrc_lexicon_df  %>% 
   filter(emotion == "joy" & score == 1)
@@ -674,7 +679,7 @@ issue_total_words <- left_join(issue_words, total_words) %>%
 
 <ul>
 
-<li>We first tokenise our raw data using <code>unnest_tokens()</code>. Note that our
+<li>We first tokenize our raw data using <code>unnest_tokens()</code>. Note that our
 starting data is not anymore the cleaned up data of the previous sessions, but the
 "original" raw data stored in the DataFrame *data_df*. We tokenize the column *content* of our DataFrame by *word*. We then use the function <code>count()</code> to count the number of words per issue, assigning the result to the DataFrame *issue_words*.</li>
 
@@ -692,18 +697,24 @@ starting data is not anymore the cleaned up data of the previous sessions, but t
 In the previous block of code we computed and stored in two DataFrames the frequency of occurrence of each word and the total number of words per issue. For computation and visualisation convenience, we then stored the word count per issue and total number of words per issue in a single DataFrame. Now it's time to plot the term frequency per issue.
 
 ```{r, echo=FALSE, warning=FALSE}
-unique_issues <- issue_total_words %>% filter(total>10000) %>% distinct(issue)
+unique_issues <- issue_total_words %>% 
+  filter(total>10000) %>% 
+  distinct(issue)
+
 first_6_unique_issues <- unique_issues %>% slice(1:6)
 
 issue_total_words6 <- issue_total_words %>% 
   semi_join(first_6_unique_issues, by="issue") %>%
   mutate(issue=as.character(issue)) 
   
-issue_total_words6 %>% 
+freq_per_issue_plot <-
+  issue_total_words6 %>% 
   ggplot(aes(n/total, fill = issue)) +
   geom_histogram(show.legend = FALSE) +
   xlim(NA, 0.0005) +
   facet_wrap(~issue, ncol = 2, scales = "free_y")
+
+freq_per_issue_plot
 ```
 
 ::: {.box .type5}
@@ -780,6 +791,7 @@ issue_tf_idf %>%
 Arranging the tf-idf in descending order, we see in the first rows of our DataFrame rare words, but still not so rare. Rare words may indicate particularly significant events related to "European Union" as these words do not often occure in the Times news corpora. As we did for the term frequency, let's visualise the tf-idf for the 6 longest issues in our data set:
 
 ```{r}
+
 issue_tf_idf %>%
   semi_join(first_6_unique_issues, by="issue") %>%
   group_by(issue) %>%

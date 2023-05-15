@@ -1,0 +1,197 @@
+---
+title: "Notes on Text-Mining course by RDM"
+author: "best student ever"
+output: html_document
+date: "2023-05-14"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# My Notes
+
+## This is a smaller header
+
+### And so on
+
+- This is a list item with a **bold** word;
+- This is a list item with an *italic* word
+
+# Setup
+
+```{r}
+#| eval: false
+install.packages("tidyverse")
+install.packages("tidytext")
+install.packages("wordcloud")
+```
+
+```{r}
+library(tidyverse)
+library(tidytext)
+library(wordcloud)
+```
+
+# Reading data
+
+<!-- Use the function read_delim() to read data -->
+<!-- Print column names and number of rows of the DataFrame -->
+
+```{r}
+
+```
+
+# Tokenization
+
+<!-- Use unnest_tokens() to tokenize your data -->
+
+```{r}
+
+```
+
+# Cleaning up data
+
+<!-- Check if the column issue contains any NA -->
+
+```{r}
+```
+
+<!-- Clean up the DataFrame from rows whose issue value is NA -->
+
+```{r}
+```
+
+<!-- Check if the column issue contains any NA -->
+
+```{r}
+
+```
+
+# Removing stop words
+
+<!-- Load the stop_words DataFrame with data() -->
+<!-- Filter our stop_words from the DataFrame using anti_join() -->
+
+```{r}
+
+```
+
+# Counting words
+
+<!-- Count identical words and filter those whose count is larger than 2000 -->
+<!-- Use a bar plot to plot word count versus word -->
+
+```{r}
+
+```
+
+# Word cloud visualiation
+
+<!-- Make a word cloud plot -->
+
+```{r}
+
+```
+
+# Sentiment Analysis
+
+## Lexicon and joy words
+
+<!-- Load the NRC lexicon -->
+<!-- Make a new DataFrame only with joy words -->
+
+```{r}
+
+```
+# Computing joy words fraction
+
+<!-- Compute the total number of words per issue between two arbitrary dates -->
+<!-- Compute the total number of joy words per issue between two arbitrary dates -->
+<!-- Merge the two DataFrames in a single one -->
+
+```{r}
+
+```
+
+<!-- Plot the percent of joy words per issue -->
+
+```{r}
+
+```
+
+# Computing total joy fraction
+
+<!-- Make a DataFrame of distinct words -->
+<!-- Count the number of distinct words -->
+<!-- Count the number of distinct joy words -->
+<!-- Compute the ratio between the two -->
+
+```{r}
+
+```
+
+# Analyzing word and document frequency: tf-idf
+
+## Computing term frequency
+
+<!-- Count the number of distinct words per issue -->
+<!-- Clean up the Dataframe from NA values -->
+<!-- Count the total number of words per issue -->
+<!-- Join the two previous DataFrames -->
+
+```{r, warning=FALSE}
+
+```
+
+<!-- Make a DataFrame of issues with more than 10000 words -->
+<!-- Select the first 6 items -->
+<!-- Join the just created DataFrame with issue_total_words -->
+<!-- Plot term frequency per issue -->
+
+```{r}
+
+```
+
+## Computing and displaying tf-idf
+
+<!-- Compute tf-idf with bind_tf_itg -->
+
+```{r}
+
+```
+
+```{r}
+
+```
+
+<!-- Plot tf-idf -->
+
+```{r}
+
+```
+
+# Relationships Between Words
+
+<!-- Tokenize text in groups of 2 words -->
+
+```{r}
+```
+
+```{r}
+
+```
+
+## Cleaning up biagrams
+
+<!-- Cleanup your biagrams by stop words -->
+
+```{r}
+
+```
+
+## Plotting biagrams
+
+```{r}
+
+```
