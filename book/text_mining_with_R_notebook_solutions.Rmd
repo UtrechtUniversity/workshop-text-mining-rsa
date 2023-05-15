@@ -1,0 +1,430 @@
+---
+title: "Notes on Text-Mining course by RDM"
+author: "best student ever"
+output: html_document
+date: "2023-05-14"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# My Notes
+
+## This is a smaller header
+
+### And so on
+
+- This is a list item with a **bold** word;
+- This is a list item with an *italic* word
+
+# Session 0: Setup
+
+```{r}
+#| eval: false
+install.packages("tidyverse")
+install.packages("tidytext")
+install.packages("wordcloud")
+```
+
+```{r}
+library(tidyverse)
+library(tidytext)
+library(wordcloud)
+```
+
+# Session 1: counting words
+
+## Reading data
+
+<!-- Determine your raw data file full or relative path -->
+<!-- Read your file using the function read_delim(). Find the right arguments clicking on "Import Dataset" in the Environment tab -->
+<!-- Print column names and number of rows using the functions colnames() and nrow() respectively -->
+
+```{r}
+data_file_name <- '../data/ianalyzer_query.csv'
+
+data_df <- read_delim(data_file_name, 
+    delim = ";", 
+    escape_double = FALSE, 
+    col_types = cols(`date-pub` = col_date(format = "%B %d, %Y"), 
+        issue = col_integer()), trim_ws = TRUE)
+
+print(nrow(data_df))
+print(colnames(data_df))
+```
+
+## Tokenization
+
+<!-- Use unnest_tokens() to tokenize your data -->
+
+```{r}
+tidy_content <- data_df %>% unnest_tokens(word, content, token="words")
+
+tidy_content
+```
+
+## Cleaning up data
+
+<!-- Check if the column issue contains any NA -->
+
+```{r}
+are_there_na <- tidy_content$issue %>%
+  is.na() %>%
+  any()
+print(are_there_na)
+```
+
+<!-- Clean up the DataFrame from rows whose issue value is NA -->
+
+```{r}
+tidy_content <- tidy_content[!is.na(tidy_content$issue), ]
+```
+
+<!-- Check again if the column issue contains any NA -->
+
+```{r}
+are_there_na <- tidy_content$issue %>%
+  is.na() %>%
+  any()
+print(are_there_na)
+```
+
+## Counting words 1
+
+<!-- Using "tidy_content" as input, count the number of distinct words using the function count() -->
+<!-- count() argument is the column name containing words. The counts will be automatically stored -->
+<!-- in a new column named "n" -->
+<!-- Use the function filter so to select words occuring more than 2000 times --!>
+<!-- Rearrange the word column in order of descending n -->
+```{r}
+word_count <- tidy_content %>%
+  count(word) %>%
+  filter(n > 2000) %>%
+  mutate(word = reorder(word, n)) 
+```
+
+<!-- Make a bar plot using "word_count" as input, n as x, and word as y -->
+<!-- Display the plot -->
+```{r}
+word_count_plot <-
+  word_count %>%
+  ggplot(aes(n, word)) +
+  geom_col() +
+  labs(y = NULL)
+word_count_plot
+```
+
+## Removing stop words
+
+<!-- Load the stop_words DataFrame with data() -->
+<!-- Filter out stop_words from the DataFrame "tidy_content" using anti_join() -->
+
+```{r, warning=FALSE, message=FALSE}
+data(stop_words)
+
+tidy_clean_content <- tidy_content %>% 
+  anti_join(stop_words)
+
+tidy_clean_content
+```
+
+## Counting words 2
+
+<!-- Repeat the steps of counting words 1 for tidy_clean_content -->
+
+```{r}
+word_count <- tidy_clean_content %>%
+  count(word) %>%
+  filter(n > 2000) %>%
+  mutate(word = reorder(word, n)) 
+
+word_count_plot <-
+  word_count %>%
+  ggplot(aes(n, word)) +
+  geom_col() +
+  labs(y = NULL)
+
+word_count_plot
+```
+
+## Word cloud visualization
+
+<!-- Use the function wordcloud() to produce a word cloud plot -->
+<!-- First and second argument of wordcloud() are words and their frequencies, respectively -->
+<!-- Use the DataFrame word count -->
+
+```{r}
+word_cloud_plot <-
+  wordcloud(word_count$word, word_count$n)
+
+word_cloud_plot
+```
+
+# Session 2: Sentiment Analysis
+
+## Lexicon and joy words
+
+<!-- Determine your lexicon data file full or relative path -->
+<!-- Read your file using the function read_delim(). Find the right arguments clicking on "Import Dataset" in the Environment tab -->
+<!-- Give to the DataFrame columns the names "word", "emotion", and "score" -->
+
+```{r}
+lexicon_data_file <-  "../lexicons/NRC_lexicon.txt"
+  
+nrc_lexicon_df <- read.table(lexicon_data_file, 
+                             header = FALSE, 
+                             sep = "\t", 
+                             stringsAsFactors = FALSE, 
+                             col.names = c("word", "emotion", "score"))
+```
+
+<!-- Using the function filter() select only joy words (you need to specify conditions on two columns) -->
+
+```{r}
+joy_words <- nrc_lexicon_df  %>% 
+  filter(emotion == "joy" & score == 1)
+```
+
+
+## Computing joy words fraction
+
+<!-- Compute the total number of words PER ISSUE between two arbitrary dates -->
+
+```{r}
+issue_df <- tidy_clean_content %>%
+  filter( `date-pub` >='2000-01-01' & `date-pub` < '2010-01-01') %>%
+  group_by(issue) %>%
+  reframe(words_per_issue = n(), date= `date-pub`) %>%
+  unique()
+```
+
+<!-- Compute the total number of joy words PER ISSUE between the two same arbitrary dates -->
+
+```{r}
+issue_joy_df <- tidy_clean_content %>%
+  filter( `date-pub` >='2000-01-01' & `date-pub` < '2010-01-01') %>%
+  inner_join(joy_words) %>%
+  group_by(issue) %>%
+  reframe(joy_words_per_issue = n()) 
+```
+
+<!-- Merge the two DataFrames in a single one -->
+
+```{r}
+issue_tot_df <- merge(issue_df, issue_joy_df, by='issue')
+```
+
+<!-- Plot the percent of joy words per issue using date as x and per_cent_joy as y -->
+
+```{r}
+percent_of_joy_plot <-
+  issue_tot_df %>%
+  mutate(per_cent_joy=joy_words_per_issue/words_per_issue*100) %>%
+  ggplot(aes(x = date, y = per_cent_joy) )+
+  geom_col() +
+  labs(x = "Date", y = "Joy words [%]", title = "Joyfulness about EU in 2000-2010")
+
+percent_of_joy_plot
+```
+
+## Computing total joy fraction
+
+<!-- Make a DataFrame containing only distinct words sing the function distinct() -->
+
+```{r}
+distinct_words <- tidy_clean_content %>%
+  distinct(word)
+```
+
+<!-- Count the number of distinct words -->
+
+```{r}
+total_dis_words <- nrow(distinct_words)
+```
+
+<!-- Count the number of distinct joy words -->
+```{r}
+total_dis_joy_words <- nrow(inner_join(distinct_words,joy_words,by='word'))
+```
+
+<!-- Compute the ratio between the two and print the result -->
+```{r}
+total_joy <- (total_dis_joy_words/total_dis_words)*100
+print(total_joy)
+```
+
+# Session 3: Analyzing word and document frequency: tf-idf
+
+## Computing term frequency
+
+<!-- Count the number of distinct words PER ISSUE -->
+<!-- Clean up the Dataframe from NA values -->
+
+```{r, warning=FALSE}
+issue_words <- data_df %>%
+  unnest_tokens(word, content) %>%
+  count(issue, word, sort = TRUE)
+
+issue_words <- na.omit(issue_words)
+```
+
+<!-- Count the total number of words PER ISSUE using the functions group_by() and summarize() -->
+<!-- Join issue_words" and "total_words" and arrange them in descending issue order -->
+```{r}
+total_words <- issue_words %>% 
+  group_by(issue) %>% 
+  summarize(total = sum(n))
+
+issue_total_words <- left_join(issue_words, total_words) %>% 
+  arrange(desc(issue))
+```
+
+<!-- Make a DataFrame of issues with more than 10000 words and select the first 6-->
+
+```{r, echo=FALSE, warning=FALSE}
+unique_issues <- issue_total_words %>% 
+  filter(total>10000) %>% 
+  distinct(issue)
+
+first_6_unique_issues <- unique_issues %>% slice(1:6)
+```
+
+<!-- Join the just created DataFrame with issue_total_words -->
+<!-- Convert the values of the column issue from integer to character -->
+<!-- Plot term frequency per issue -->
+
+```{r, echo=FALSE, warning=FALSE}
+issue_total_words6 <- issue_total_words %>% 
+  semi_join(first_6_unique_issues, by="issue") %>%
+  mutate(issue=as.character(issue)) 
+  
+freq_per_issue_plot <-
+  issue_total_words6 %>% 
+  ggplot(aes(n/total, fill = issue)) +
+  geom_histogram(show.legend = FALSE) +
+  xlim(NA, 0.0005) +
+  facet_wrap(~issue, ncol = 2, scales = "free_y")
+
+freq_per_issue_plot
+```
+
+## Computing and displaying tf-idf
+
+<!-- Compute tf-idf using the function bind_tf_itf() -->
+<!-- Display the computed DataFrame in order of descending term frequency (use arrange()) -->
+
+```{r}
+issue_tf_idf <- issue_words %>%
+  bind_tf_idf(word, issue, n)
+
+issue_tf_idf %>%
+  arrange(desc(tf))
+```
+
+<!-- Now display the DataFrame in order of descending tf-idf -->
+
+```{r}
+issue_tf_idf %>%
+  arrange(desc(tf_idf))
+```
+
+<!-- Plot tf-idf for the first six issues defined before -->
+
+```{r}
+issue_tf_idf %>%
+  semi_join(first_6_unique_issues, by="issue") %>%
+  group_by(issue) %>%
+  slice_max(tf_idf, n = 10) %>%
+  ungroup() %>%
+  ggplot(aes(tf_idf, fct_reorder(word, tf_idf), fill = issue)) +
+  geom_col(show.legend = FALSE) +
+  facet_wrap(~issue, scales="free",ncol = 2) +
+  labs(x = "tf-idf", y = NULL) 
+```
+
+# Session 4: Relationships Between Words
+
+## Tokenization with biagrams
+
+<!-- Tokenize text in groups of 2 words using unnest_tokens() with token="ngrams" and n=2 -->
+
+```{r}
+tidy_content_rel <- data_df %>% 
+  unnest_tokens(bigram, content, token="ngrams", n=2)
+```
+
+<!-- Plot biagrams in a bar plot with n > 2000 using n as x and bigram as y -->
+
+```{r}
+tidy_content_rel %>%
+  count(bigram, sort = TRUE) %>%
+  filter(n > 2000) %>%
+  mutate(bigram = reorder(bigram, n)) %>%
+  ggplot(aes(n, bigram)) +
+  geom_col() +
+  labs(y = NULL)
+```
+
+## Cleaning up biagrams
+
+<!-- Split the column biagram in two columns called word1 and word2 using the function separate() -->
+
+```{r}
+bigrams_separated <- tidy_content_rel %>%
+  separate(bigram, c("word1", "word2"), sep = " ")
+```
+
+<!-- Filter rows so that the value of the column word1 and word2 does NOT correspond to -->
+<!-- any of the words containged in "stop_words" (use the operators ! and %in%) -->
+
+```{r}
+bigrams_filtered <- bigrams_separated %>%
+  filter(!word1 %in% stop_words$word) %>%
+  filter(!word2 %in% stop_words$word)
+```
+
+<!-- Make a new DataFrame putting together (back) the columns word1 and word2 in a single -->
+<!-- column made biagram. Use the function unite with first argument equatl to the name of -->
+<!-- the new column -->
+
+```{r}
+tidy_content_rel_clean <- bigrams_filtered %>%
+  unite(bigram, word1, word2, sep = " ")
+```
+
+## Plotting biagrams
+
+<!-- Plot the number of occurrence of the biagram -->
+
+```{r}
+tidy_content_rel_clean %>%
+  count(bigram, sort = TRUE) %>%
+  filter(n > 500) %>%
+  mutate(bigram = reorder(bigram, n)) %>%
+  ggplot(aes(n, bigram)) +
+  geom_col() +
+  labs(y = NULL)
+```
+
+<!-- Filter the biagram so that its second word is "vote" (use the DataFrame biagrams_filtered as input) -->
+<!-- Count all the words "preceding" the word "vote" PER ISSUE and display the result -->
+
+```{r}
+bigrams_filtered %>% 
+  filter(word2 == "vote") %>%
+  count(issue, word1, sort=TRUE)
+```
+
+## tf-idf for biagrams
+
+<!-- Compute tf-idf for the biagram and display the result in order of ascending tf-idf -->
+
+```{r}
+bigram_tf_idf <- tidy_content_rel_clean %>%
+  count(issue, bigram) %>%
+  bind_tf_idf(bigram, issue, n) %>%
+  arrange(tf_idf)
+
+bigram_tf_idf
+```
