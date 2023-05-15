@@ -4,8 +4,6 @@ format: html
 editor: visual
 ---
 
-# Exercises
-
 0.  **\[Reading\]** Go through the document "Text mining with R" and complete sessions eventually skipped in class 😃;
 
 1.  **\[Coding\]** Get new data either from I-Analyzer or other sources and go through the text mining analysis performed in class 😃😃;
@@ -23,4 +21,4 @@ editor: visual
 
 5.  **\[Coding\]** Repeat the sentiment analysis perfomed in class for different emotions. Check in the lexicon which emotions are listes, pick at least three, perform the analysis as in class, and describe your result 😃😃;
 
-6.  **\[Reading/Coding\]** Choose one of the cases of study in "Text mining with R" and run through the analysis step by step 😃.
+6.  **\[Reading/Coding\]** Choose one of the cases of study in "Text mining with R" and run the analysis step by step 😃.
