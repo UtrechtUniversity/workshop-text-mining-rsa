@@ -35,63 +35,116 @@ library(wordcloud)
 
 # Reading data
 
-<!-- Use the function read_delim() to read data -->
-<!-- Print column names and number of rows of the DataFrame -->
+<!-- Determine your raw data file full or relative path -->
+<!-- Read your file using the function read_delim(). Find the right arguments clicking on "Import Dataset" in the Environment tab -->
+<!-- Print column names and number of rows using the functions colnames() and nrow() respectively -->
 
 ```{r}
+data_file_name <- ???
 
+data_df <- read_delim(???, 
+    delim = ???)
+
+print(???(data_df))
+print(???(data_df))
 ```
 
 # Tokenization
 
-<!-- Use unnest_tokens() to tokenize your data -->
+<!-- Using data_df as input data, use unnest_tokens() to tokenize your data into words -->
+<!-- The first argument of unnest_tokens() is the name of the column that WILL cnotain the token -->
+<!-- The second argument of unnest_tokens() is the name of the column containing the text to tokenize -->
+<!-- The third argument of unnest_tokens() is the kind of token to create between double quotes -->
 
 ```{r}
-
+tidy_content <- ??? %>% 
+  unnest_tokens(word, ???, token= ???)
 ```
 
 # Cleaning up data
 
-<!-- Check if the column issue contains any NA -->
+<!-- Apply the function is.na to the column "issue" of the DataFrame "tidy_content" -->
+<!-- Apply the function any() to the result of the previous operation -->
+<!-- Print the result -->
 
 ```{r}
+are_there_na <- ??? %>%
+  ??? %>%
+  ???
+???
 ```
 
-<!-- Clean up the DataFrame from rows whose issue value is NA -->
+<!-- Select only the "tidy_content" rows whose issue values are NOT NA -->
+<!-- Store the result in a variable called, again, "tidy_content" -->
 
 ```{r}
+??? <- tidy_content[ ??? , ??? ]
 ```
 
-<!-- Check if the column issue contains any NA -->
+<!-- Check again if the column issue contains any NA -->
 
 ```{r}
+???
+```
 
+# Counting words 1
+
+<!-- Using "tidy_content" as input, count the number of distinct words using the function count() -->
+<!-- count() argument is the column name containing words. The counts will be automatically stored -->
+<!-- in a new column named "n" -->
+<!-- Use the function filter so to select words occuring more than 2000 times --!>
+<!-- Rearrange the word column in order of descending n -->
+```{r}
+word_count <- ??? %>%
+  count(???) %>%
+  filter(???) %>%
+  mutate(word = reorder(word, n)) 
+```
+
+<!-- Make a bar plot using "word_count" as input, n as x, and word as y -->
+<!-- Display the plot -->
+```{r}
+word_count_plot <-
+  ??? %>%
+  ggplot(aes(???, ???)) +
+  geom_col() +
+  labs(y = NULL)
+???
 ```
 
 # Removing stop words
 
 <!-- Load the stop_words DataFrame with data() -->
-<!-- Filter our stop_words from the DataFrame using anti_join() -->
+<!-- Filter out stop_words from the DataFrame "tidy_content" using anti_join() -->
 
-```{r}
+```{r, warning=FALSE, message=FALSE}
+data(stop_words)
 
+tidy_clean_content <- ??? %>% 
+  anti_join(???)
+
+tidy_clean_content
 ```
 
-# Counting words
+# Counting words 2
 
-<!-- Count identical words and filter those whose count is larger than 2000 -->
-<!-- Use a bar plot to plot word count versus word -->
+<!-- Repeat the steps of counting words 1 for "tidy_clean_content" -->
 
 ```{r}
-
+???
 ```
 
-# Word cloud visualiation
+# Word cloud visualization
 
-<!-- Make a word cloud plot -->
+<!-- Use the function wordcloud() to produce a word cloud plot -->
+<!-- First and second argument of wordcloud() are words and their frequencies, respectively -->
+<!-- Use the DataFrame word count -->
 
 ```{r}
+word_cloud_plot <-
+  wordcloud( ??? , ??? )
 
+word_cloud_plot
 ```
 
 # Sentiment Analysis

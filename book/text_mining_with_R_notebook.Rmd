@@ -66,7 +66,10 @@ tidy_content
 <!-- Check if the column issue contains any NA -->
 
 ```{r}
-are_there_na <- any(is.na(tidy_content$issue))
+are_there_na <- tidy_content$issue %>%
+  is.na() %>%
+  any()
+print(are_there_na)
 ```
 
 <!-- Clean up the DataFrame from rows whose issue value is NA -->
@@ -75,29 +78,57 @@ are_there_na <- any(is.na(tidy_content$issue))
 tidy_content <- tidy_content[!is.na(tidy_content$issue), ]
 ```
 
-<!-- Check if the column issue contains any NA -->
+<!-- Check again if the column issue contains any NA -->
 
 ```{r}
-are_there_na <- any(is.na(tidy_content$issue))
+are_there_na <- tidy_content$issue %>%
+  is.na() %>%
+  any()
+print(are_there_na)
+```
+
+# Counting words 1
+
+<!-- Using "tidy_content" as input, count the number of distinct words using the function count() -->
+<!-- count() argument is the column name containing words. The counts will be automatically stored -->
+<!-- in a new column named "n" -->
+<!-- Use the function filter so to select words occuring more than 2000 times --!>
+<!-- Rearrange the word column in order of descending n -->
+```{r}
+word_count <- tidy_content %>%
+  count(word) %>%
+  filter(n > 2000) %>%
+  mutate(word = reorder(word, n)) 
+```
+
+<!-- Make a bar plot using "word_count" as input, n as x, and word as y -->
+<!-- Display the plot -->
+```{r}
+word_count_plot <-
+  word_count %>%
+  ggplot(aes(n, word)) +
+  geom_col() +
+  labs(y = NULL)
+word_count_plot
 ```
 
 # Removing stop words
 
 <!-- Load the stop_words DataFrame with data() -->
-<!-- Filter our stop_words from the DataFrame using anti_join() -->
+<!-- Filter out stop_words from the DataFrame "tidy_content" using anti_join() -->
 
 ```{r, warning=FALSE, message=FALSE}
 data(stop_words)
 
-tidy_clean_content <- tidy_content %>% anti_join(stop_words)
+tidy_clean_content <- tidy_content %>% 
+  anti_join(stop_words)
 
 tidy_clean_content
 ```
 
-# Counting words
+# Counting words 2
 
-<!-- Count identical words and filter those whose count is larger than 2000 -->
-<!-- Use a bar plot to plot word count versus word -->
+<!-- Repeat the steps of counting words 1 for tidy_clean_content -->
 
 ```{r}
 word_count <- tidy_clean_content %>%
@@ -116,12 +147,13 @@ word_count_plot
 
 # Word cloud visualization
 
-<!-- Make a word cloud plot -->
+<!-- Use the function wordcloud() to produce a word cloud plot -->
+<!-- First and second argument of wordcloud() are words and their frequencies, respectively -->
+<!-- Use the DataFrame word count -->
 
 ```{r}
 word_cloud_plot <-
-  word_count %>%
-  with(wordcloud(word, n))
+  wordcloud(word_count$word, word_count$n)
 
 word_cloud_plot
 ```
