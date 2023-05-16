@@ -73,24 +73,22 @@ dir.create("R", recursive = TRUE)
 
 ## Download Data
 
-Download the data file linked below and place it in the `data` folder you just created:
+Download the data file linked below (right-click and select _Save link as..._) and place it in the `data` folder you just created:
 
 [ianalyzer_query.csv](https://raw.githubusercontent.com/UtrechtUniversity/workshop-text-mining-rsa/main/data/ianalyzer_query.csv)
 
 ## Download Lexicon
 
-Download the lexicon file linked below and place it in the `lexicons` folder:
+Download the lexicon file linked below (right-click and select _Save link as..._) and place it in the `lexicons` folder:
 
 [NRC_lexicon.txt](https://raw.githubusercontent.com/UtrechtUniversity/workshop-text-mining-rsa/main/lexicons/NRC_lexicon.txt)
 
 ## Download the R Markdown Files
 
-Download the following Rmd files:
+Download the following Rmd files (right-click and select _Save link as..._) and place these files in the `R` folder you just created.:
 
 -  [text_mining_with_R_notebook_empty.Rmd](https://raw.githubusercontent.com/UtrechtUniversity/workshop-text-mining-rsa/main/exercises/text_mining_with_R_notebook_empty.Rmd)
 -  [text_mining_with_R_notebook_solutions.Rmd](https://raw.githubusercontent.com/UtrechtUniversity/workshop-text-mining-rsa/main/exercises/text_mining_with_R_notebook_solutions.Rmd)
-
-Place these files in the `R` folder you just created.
 
 ## Some Reading
 
