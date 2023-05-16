@@ -1,13 +1,49 @@
 # Homework {.unnumbered}
 
+## Required Homework
+
 As homework, you are required to:
 
 **1. Complete the Text Mining exercises conducted during the session.**
 
-This is if you didn't already finish it during the meeting. 
+This is if you didn't already finish it during the meeting.  
 
-Note that you will be required to submit the completed exercises, as part of the grading of the course.
+Note that you will be required to submit the completed exercises as `text_mining_with_R_notebook_yourname.Rmd`, as part of the grading of the course.
 
-If you get stuck, don't hesitate to reach out to the instructors during the [Walk-In Hours of Research Data Management Support](https://www.uu.nl/en/research/research-data-management/walk-in-hours-workshops/walk-in-hours-research-data-software). The Walk-In Hours take place every Monday from 15:00 to 17:00 at the University Library in the Science Park. However, one instructor will be available at the University Library in the city center (in the seating area near the Digital Humanities Lab) and you are welcome free to request a meeting online (via MS Teams) during these hours as well.
+**2.a. Finalize your research question for the final assignment.** 
+**2.b. Draft a plan for data analysis in a simple text or Word document to answer the question.** 
 
-_**Don't forget the preparation for the next session!**_
+This plan would contain:
+
+-   Introduction of the research question.
+-   A query that will be run in I-Analyzer to obtain data relevant to your research question.
+-   Description of the text mining techniques that you want to apply to your dataset to answer your research question.
+
+This draft is meant to help you get thinking about how you can approach your final assignment. You can consult with the instructors if you want to further reflect on your research question and data analysis plan.
+
+**2. Obtain data from I-Analyzer relevant to your research question.**
+
+-   You can effectively make a start on your final assignment and go ahead with downloading a dataset from I-Analyzer (preferably the Times corpus). 
+-   Explain how you obtained the data: i.e. specify the corpus, the search parameters, the export options you selected, the file (and format) you ended up with. Essentially, another person should be able to obtain the same dataset if they follow your description.
+-   Your description of the process will become a part of the _Methods_ section of your final assignment.
+   
+## Bonus Homework
+
+We have some bonus homework if you'r feeling extra motivated. The emojis indicate the difficulty level of the exercise and how delighted the instructors would be if your tried them out.
+
+1.  **\[Coding\]** Repeat the sentiment analysis performed in class for different emotions. Check in the lexicon which emotions are listed, pick at least three, perform the analysis as in class, and describe your result 😃😃;
+
+2.  **\[Reading/Coding\]** Choose one of the case studies in the official "Text mining with R" textbook and run the analysis step by step 😃.
+
+3.  **\[Searching/Reading\]** In class **lexicons** where mentioned. Make a search on internet, try to find at least other 3 alternative lexicons compared to the one we used in class. Make a file listing what these lexicons have in common, their differences, the method used to make them, and your opinion about their reliability 😃😃;
+
+4.  **\[Coding\]** Using ngrams of 4 words, make a DataFrame selecting ngrams where the first three words are "European Union is". Count how many times different ngrams of this kind occur and display the result both in a table (simply visualizing the DataFrame) and making a plot as a function of the fourth word 😃😃😃;
+
+## Ask For Help!
+
+If you get stuck, don't hesitate to reach out to the instructors during the [Walk-In Hours of Research Data Management Support](https://www.uu.nl/en/research/research-data-management/walk-in-hours-workshops/walk-in-hours-research-data-software). The Walk-In Hours take place every Monday from 15:00 to 17:00 at the University Library in the Science Park. However, one instructor can be available at the University Library in the city center (in the seating area near the Digital Humanities Lab) and you are welcome free to request a meeting online (via MS Teams) during these hours as well. 
+
+You can also contact the course coordinator, Neha Moopen, by email at n.moopen@uu.nl
+
+_**Don't forget the preparation for the next session!**_`
+

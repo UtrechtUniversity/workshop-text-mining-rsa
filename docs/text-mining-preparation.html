@@ -93,7 +93,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./text-mining-homework.html" rel="next">
+<link href="./text_mining_with_R.html" rel="next">
 <link href="./lecture-and-literature-homework.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
@@ -261,17 +261,34 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="./text_mining_with_R.html" class="sidebar-item-text sidebar-link">Text Mining with R</a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="./text-mining-homework.html" class="sidebar-item-text sidebar-link">Homework</a>
   </div>
 </li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
-      <span class="sidebar-item-text sidebar-link text-start">5 Reproducible Reports</span>
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" aria-expanded="true">5 Reproducible Reports</a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" aria-expanded="true">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./reproducible-reports-preparation.html" class="sidebar-item-text sidebar-link">Preparation</a>
+  </div>
+</li>
+      </ul>
   </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./final-assignment.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Final Assignment</span></a>
+  <a href="./final-assignment.html" class="sidebar-item-text sidebar-link">Final Assignment</a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -292,6 +309,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   <li><a href="#project-organization" id="toc-project-organization" class="nav-link" data-scroll-target="#project-organization">Project Organization</a></li>
   <li><a href="#download-data" id="toc-download-data" class="nav-link" data-scroll-target="#download-data">Download Data</a></li>
   <li><a href="#download-lexicon" id="toc-download-lexicon" class="nav-link" data-scroll-target="#download-lexicon">Download Lexicon</a></li>
+  <li><a href="#download-the-r-markdown-files" id="toc-download-the-r-markdown-files" class="nav-link" data-scroll-target="#download-the-r-markdown-files">Download the R Markdown Files</a></li>
   <li><a href="#some-reading" id="toc-some-reading" class="nav-link" data-scroll-target="#some-reading">Some Reading</a></li>
   <li><a href="#bonus-reading" id="toc-bonus-reading" class="nav-link" data-scroll-target="#bonus-reading">Bonus Reading</a></li>
   </ul>
@@ -335,20 +353,49 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="cell">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
-<pre><code>── Attaching packages ─────────────────────────────────────── tidyverse 1.3.2 ──
-✔ ggplot2 3.4.0      ✔ purrr   0.3.5 
-✔ tibble  3.1.8      ✔ dplyr   1.0.10
-✔ tidyr   1.2.1      ✔ stringr 1.5.0 
-✔ readr   2.1.3      ✔ forcats 0.5.2 
+<pre><code>Warning: package 'tidyverse' was built under R version 4.2.3</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: package 'ggplot2' was built under R version 4.2.3</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: package 'tibble' was built under R version 4.2.3</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: package 'tidyr' was built under R version 4.2.3</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: package 'readr' was built under R version 4.2.3</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: package 'purrr' was built under R version 4.2.3</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: package 'dplyr' was built under R version 4.2.3</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: package 'forcats' was built under R version 4.2.3</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: package 'lubridate' was built under R version 4.2.3</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
+✔ dplyr     1.1.2     ✔ readr     2.1.4
+✔ forcats   1.0.0     ✔ stringr   1.5.0
+✔ ggplot2   3.4.2     ✔ tibble    3.2.1
+✔ lubridate 1.9.2     ✔ tidyr     1.3.0
+✔ purrr     1.0.1     
 ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
 ✖ dplyr::filter() masks stats::filter()
-✖ dplyr::lag()    masks stats::lag()</code></pre>
+✖ dplyr::lag()    masks stats::lag()
+ℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidytext)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidytext)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Warning: package 'tidytext' was built under R version 4.2.3</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(wordcloud)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(wordcloud)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Warning: package 'wordcloud' was built under R version 4.2.3</code></pre>
 </div>
@@ -399,22 +446,31 @@ A few words about the packages we are going to use:
 <li>You can generate a directory structure by running the following piece of code in your R <strong>console</strong>:</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dir.create</span>(<span class="st">"data"</span>, <span class="at">recursive =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="fu">dir.create</span>(<span class="st">"lexicons"</span>, <span class="at">recursive =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="fu">dir.create</span>(<span class="st">"docs"</span>, <span class="at">recursive =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="fu">dir.create</span>(<span class="st">"results"</span>, <span class="at">recursive =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="fu">dir.create</span>(<span class="st">"R"</span>, <span class="at">recursive =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dir.create</span>(<span class="st">"data"</span>, <span class="at">recursive =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="fu">dir.create</span>(<span class="st">"lexicons"</span>, <span class="at">recursive =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a><span class="fu">dir.create</span>(<span class="st">"docs"</span>, <span class="at">recursive =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a><span class="fu">dir.create</span>(<span class="st">"results"</span>, <span class="at">recursive =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a><span class="fu">dir.create</span>(<span class="st">"R"</span>, <span class="at">recursive =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="download-data" class="level2">
 <h2 class="anchored" data-anchor-id="download-data">Download Data</h2>
 <p>Download the data file linked below and place it in the <code>data</code> folder you just created:</p>
-<p><a href="">ianalyzer_query.csv</a></p>
+<p><a href="../data/ianalyzer_query.csv">ianalyzer_query.csv</a></p>
 </section>
 <section id="download-lexicon" class="level2">
 <h2 class="anchored" data-anchor-id="download-lexicon">Download Lexicon</h2>
 <p>Download the lexicon file linked below and place it in the <code>lexicons</code> folder:</p>
-<p><a href="">NRC_lexicon.txt</a></p>
+<p><a href="../lexicons/NRC_lexicon.txt">NRC_lexicon.txt</a></p>
+</section>
+<section id="download-the-r-markdown-files" class="level2">
+<h2 class="anchored" data-anchor-id="download-the-r-markdown-files">Download the R Markdown Files</h2>
+<p>Download the following Rmd files:</p>
+<ul>
+<li><a href="../exercises/text_mining_with_R_notebook_empty.Rmd">text_mining_with_R_notebook_empty.Rmd</a></li>
+<li><a href="../exercises/text_mining_with_R_notebook_solutions.Rmd">text_mining_with_R_notebook_solutions.Rmd</a></li>
+</ul>
+<p>Place these files in the <code>R</code> folder you just created.</p>
 </section>
 <section id="some-reading" class="level2">
 <h2 class="anchored" data-anchor-id="some-reading">Some Reading</h2>
@@ -574,8 +630,8 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./text-mining-homework.html" class="pagination-link">
-        <span class="nav-page-text">Homework</span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./text_mining_with_R.html" class="pagination-link">
+        <span class="nav-page-text">Text Mining with R</span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

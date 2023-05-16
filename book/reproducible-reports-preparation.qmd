@@ -1,0 +1,50 @@
+# Preparation {.unnumbered}
+
+In the final session, we will learn how to create a fully reproducible report in R! This will form a basis for the final assignment and help bring together everything we've learned so far into one project.
+
+You are required to complete the installation and preparation described on this page prior to attending the session. We will not have time to run through these steps during the meeting.
+
+If you get  with any of the steps below, don't hesitate to reach out to the instructors during the [Walk-In Hours of Research Data Management Support](https://www.uu.nl/en/research/research-data-management/walk-in-hours-workshops/walk-in-hours-research-data-software). The Walk-In Hours take place every Monday from 15:00 to 17:00 at the University Library in the Science Park. However, one instructor will be available at the University Library in the city center (in the seating area near the Digital Humanities Lab) and you are welcome free to request a meeting online (via MS Teams) during these hours as well.
+
+You can also contact the course coordinator, Neha Moopen, by email at [n.moopen@uu.nl](n.moopen@uu.nl)
+
+## Installation & Setup
+
+In addition to programs and packages we've installed previously, we will need to install and setup the following:
+
+### Quarto & usethis
+
+1. [Quarto](https://quarto.org/docs/get-started/), which is a scientific and technical publishing system. This is a tool you will install on your computer and RStudio will be able to access it.
+
+You can test if Quarto was installed correctly be (re)opening or (re)starting RStudio and clicking through _File_ -> _New File_ and checking if you the options for Quarto-related files like _Quarto Document_, _Quarto Presentation_ etc.
+
+2. You will also need the `usethis` package in R:
+
+```{r}
+#| eval: false
+
+install.packages("usethis")
+
+library(usethis)
+```
+
+### Zotero
+
+2. [Zotero](https://www.zotero.org/download/), which is an open-source reference management tool.
+
+3. [Zotero Connector](https://www.zotero.org/download/connectors), which is a browser plugin that allows you to add references to Zotero with one click.
+
+4. [Better BibTex for Zotero](https://retorque.re/zotero-better-bibtex/installation/), which is an add-on to Zotero that makes it easy to format your bibliography in BibTex format. The installation instructions are relatively clear, but in case it isn't: the add-on has to be downloaded from GitHub as a .xpi file (i.e. the _latest release_) but the .xpi file needs to be installed/opened via Zotero itself. 
+
+5. Create a Zotero account via their official [website](https://www.zotero.org/).
+
+6. [Sync](https://www.zotero.org/support/sync) your local Zotero installation with your online account by using the _Sync_ option in Zotero's [Preferences](https://www.zotero.org/support/preferences) window. This requires logging in with the account you just created online.
+
+7. Create a folder in your Zotero library - for example, `text-mining-literature-review`. Add the literature you reviewed in the previous sessions to this folder, you should end up with 4 bibliography items. You could add these files manually or using the Zotero Connector plugin (the latter might be slightly better).
+
+### GitHub
+
+Create an account on [GitHub](https://github.com/). If time allows, we will use GitHub as platform to publish our reproducible report online.
+
+
+

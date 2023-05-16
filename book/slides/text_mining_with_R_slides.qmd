@@ -1,0 +1,396 @@
+---
+title: "Text mining with R"
+format: 
+  revealjs:
+    theme: [moon]
+author: Research Data Management Support
+editor: visual
+---
+
+## About text mining
+
+-   Text mining refers to the process of extracting (*mining*) information and insights from text;
+-   Text mining can be extremely useful when looking for any sort of pattern, trend, or relationships in large volumes of text data (articles, documents, emails, social media posts, etc);
+-   The main challenge of text mining is obtaining meaningful information from unstructured and ambiguous material.
+
+## R packages for text mining
+
+```{r}
+#| echo: true
+library(tidyverse)
+library(tidytext)
+library(wordcloud)
+```
+
+-   **tidyverse**: this is an "opinionated collection of R packages designed for data science. All packages share an underlying design philosophy, grammar, and data structures";
+-   **tidytext**: an R package for text mining based on the tidy data principles;
+-   **wordcloud**: a package to generate word cloud plots.
+
+## Tidyverse pipeline
+
+![](../pictures/pipeline.jpeg){width="95%" fig-aling="center"}
+
+------------------------------------------------------------------------
+
+### Plain R syntax
+
+```{r}
+#| echo: true
+#| eval: false
+output1 <- func1(data, pars1)
+output2 <- func2(output1, pars2)
+output3 <- func3(output2, pars3)
+output4 <- func4(output3, pars4)
+```
+
+or
+
+```{r}
+#| echo: true
+#| eval: false
+output4 <- 
+  func4(func3(func2(func1(data,pars1),pars2),pars3),pars4)
+```
+
+<hr>
+
+### Tidyverse syntax
+
+```{r}
+#| echo: true
+#| eval: false
+output4 <- data %>% 
+  func1(pars1) %>%
+  func2(pars2) %>%
+  func3(pars3) %>%
+  func4(pars4) 
+```
+
+## Reading data
+
+```{r}
+#| echo: true
+data_file_name <- '../../data/ianalyzer_query.csv'
+
+data_df <- read_delim(data_file_name, 
+    delim = ";", 
+    escape_double = FALSE, 
+    col_types = cols(`date-pub` = col_date(format = "%B %d, %Y"), 
+        issue = col_integer()), trim_ws = TRUE)
+
+print(nrow(data_df))
+print(colnames(data_df))
+```
+
+::: columns
+::: {.column width="40%"}
+::: {style="font-size: 60%; text-align: center; border: 3px solid orange; margin: 30px"}
+if you are in truble with \`\``read_delim()`, get help from R studio
+:::
+:::
+
+::: {.column width="60%"}
+![](pictures/env_tab.png){width="100%" fig-align="center"}
+:::
+:::
+
+## Tokenization
+
+-   **Tokenization** is process of dividing a string of text into meaningful units called **tokens**;
+-   A token can be a word, a phrase, a paragraph, or a single character depending on the nature of our analysis;
+-   In R tokenization is performed using the tidytext function `unnest_tokens()`.
+
+## Tokenization
+
+```{r}
+#| echo: true
+tidy_content <- data_df %>% unnest_tokens(word, content, token="words")
+
+tidy_content
+```
+
+## Cleaning up data
+
+Checking if the column *issue* has any Na
+
+```{r}
+#| echo: true
+are_there_na <- any(is.na(tidy_content$issue))
+are_there_na
+```
+
+let's clean up
+
+```{r}
+#| echo: true
+tidy_content <- tidy_content[!is.na(tidy_content$issue), ]
+```
+
+and let's check again
+
+```{r}
+#| echo: true
+are_there_na <- any(is.na(tidy_content$issue))
+are_there_na
+```
+
+## Removing stop words
+
+::: {style="font-size: 60%"}
+Unstructured data can contain a lot of irrelevant information. The most common words in a text are words that have very little meaning, such as "the", "and", "a", etc. These words are referred to as **stop words** and removing stop words from text (in a way or another) is a fundamental step of text mining.
+:::
+
+```{r, warning=FALSE, message=FALSE}
+#| echo: true
+data(stop_words)
+
+tidy_clean_content <- tidy_content %>% anti_join(stop_words)
+
+tidy_clean_content
+```
+
+## Counting words
+
+```{r, style="font-size: 80%", out.width="100%", out.height="100%"}
+#| echo: true
+#| eval: true
+#| output-location: column
+word_count <- tidy_clean_content %>%
+  count(word) %>%
+  filter(n > 2000) %>%
+  mutate(word = reorder(word, n)) 
+
+word_count_plot <-
+  word_count %>%
+  ggplot(aes(n, word)) +
+  geom_col() +
+  labs(y = NULL)
+
+word_count_plot
+```
+
+## Word cloud visualization
+
+```{r, fig.align='center'}
+#| echo: true
+word_cloud_plot <-
+  word_count %>%
+  with(wordcloud(word, n))
+
+word_cloud_plot
+```
+
+## Sentiment analysis
+
+-   **sentiment analysis** has the goal of systematically identify, extract, quantify, and study affective states and subjective information from text;
+
+-   Sentiment analysis is based on the assumption that we can view a text as a combination of individual words (the text sentiment will be the sum of the sentiment of its individual words);
+
+-   To perform sentiment analysis, we need a reference database of words called **lexicon** assigning a sentiment to each word.
+
+## Lexicon and Joy words
+
+```{r}
+#| echo: true
+nrc_lexicon_df <- read.table("../../lexicons/NRC_lexicon.txt", header = FALSE, sep = "\t", stringsAsFactors = FALSE, col.names = c("word", "emotion", "score"))
+
+joy_words <- nrc_lexicon_df  %>% 
+  filter(emotion == "joy", score == 1)
+
+joy_words
+```
+
+## Computing joy words fraction
+
+$$Frac_{joy} (issue)=\frac{\textrm{Number of joy words per issue}}{\textrm{Number of words per issue}} * 100 [\%]$$
+
+```{r}
+#| echo: true
+issue_df <- tidy_clean_content %>%
+  filter(`date-pub`>='2000-01-01' & `date-pub` < '2010-01-01') %>%
+  group_by(issue) %>%
+  reframe(words_per_issue = n(), date= `date-pub`) %>%
+  unique()
+
+issue_joy_df <- tidy_clean_content %>%
+  filter(`date-pub`>='2000-01-01' & `date-pub` < '2010-01-01') %>%
+  inner_join(joy_words) %>%
+  group_by(issue) %>%
+  reframe(joy_words_per_issue = n()) 
+
+issue_tot_df <- merge(issue_df, issue_joy_df, by='issue')
+```
+
+---
+
+```{r, fig.align='center'}
+#| echo: true
+percent_of_joy_plot <-
+  issue_tot_df %>%
+  mutate(per_cent_joy=joy_words_per_issue/words_per_issue*100) %>%
+  ggplot(aes(x = date, y = per_cent_joy) )+
+  geom_col() +
+  labs(x = "Date", y = "Joy words [%]", 
+       title = "Joyfulness about EU in 2000-2010")
+
+percent_of_joy_plot
+```
+
+## Computing "total joy" fraction
+$$Frac_{joy} =\frac{\textrm{Number of joy words}}{\textrm{Number of words}} * 100 [\%]$$
+
+```{r}
+#| echo: true
+distinct_words <- tidy_clean_content %>%
+  distinct(word)
+
+total_dis_words <- distinct_words %>%
+  nrow()
+total_dis_joy_words <- distinct_words %>%
+  inner_join(joy_words,by='word') %>%
+  nrow()
+
+total_joy <- (total_dis_joy_words/total_dis_words)*100
+print(paste(total_joy,' [%]'))
+```
+
+## Analyzing word and document frequency: tf-idf
+
+$$ \textrm{tf-idf} = \textrm{term frequency} * idf$$
+
+$$ idf(term) = log \Bigg( {n_{documents} \over n_{documents \space containing \space term}} \Bigg) $$
+
+## Computing term frequency
+
+- Let's compute and store in two DataFrames the frequency of occurrence of each word and the total number of words per issue.
+```{r, warning=FALSE}
+#| echo: true
+issue_words <- data_df %>%
+  unnest_tokens(word, content) %>%
+  count(issue, word)
+
+issue_words <- na.omit(issue_words)
+
+total_words <- issue_words %>% 
+  group_by(issue) %>% 
+  summarize(total = sum(n))
+
+issue_total_words <- left_join(issue_words, total_words) %>% 
+  arrange(desc(issue))
+```
+
+## Computing term frequency
+
+```{r, echo=FALSE, warning=FALSE}
+#| echo: true
+#| output-location: slide
+unique_issues <- issue_total_words %>% 
+  filter(total>10000) %>% 
+  distinct(issue)
+
+first_6_unique_issues <- unique_issues %>% slice(1:6)
+
+issue_total_words6 <- issue_total_words %>% 
+  semi_join(first_6_unique_issues, by="issue") %>%
+  mutate(issue=as.character(issue)) 
+  
+freq_per_issue_plot <-
+  issue_total_words6 %>% 
+  ggplot(aes(n/total, fill = issue)) +
+  geom_histogram(show.legend = FALSE) +
+  xlim(NA, 0.0005) +
+  facet_wrap(~issue, ncol = 2, scales = "free_y")
+
+freq_per_issue_plot
+```
+
+## Computing and displaying tf-idf
+
+```{r}
+#| echo: true
+issue_tf_idf <- issue_words %>%
+  bind_tf_idf(word, issue, n)
+
+issue_tf_idf %>%
+  arrange(desc(tf))
+```
+
+## Computing and displaying tf-idf
+```{r}
+#| echo: true
+issue_tf_idf %>%
+  arrange(desc(tf_idf))
+```
+
+## Computing and displaying tf-idf
+```{r, fig.align='center'}
+#| echo: true
+#| eval: true
+#| output-location: slide
+issue_tf_idf %>%
+  semi_join(first_6_unique_issues, by="issue") %>%
+  group_by(issue) %>%
+  slice_max(tf_idf, n = 10) %>%
+  ungroup() %>%
+  ggplot(aes(tf_idf, fct_reorder(word, tf_idf), fill = issue)) +
+  geom_col(show.legend = FALSE) +
+  facet_wrap(~issue, scales="free",ncol = 2) +
+  labs(x = "tf-idf", y = NULL) 
+```
+
+## Relationships Between Words
+
+-   We can tokenize text so to obtain groups of n words or ngrams;
+
+-   An **ngram** is just a contiguous sequence of n items;
+
+-   In R ngrams are made using the tidytext function `unnest_tokens()`.
+
+## Relationships Between Words
+
+```{r}
+#| echo: true
+tidy_content_rel <- data_df %>% 
+  unnest_tokens(bigram, content, token="ngrams", n=2)
+
+tidy_content_rel
+```
+
+## Relationships Between Words
+
+```{r, fig.align='center'}
+#| echo: true
+tidy_content_rel %>%
+  count(bigram, sort = TRUE) %>%
+  filter(n > 2000) %>%
+  mutate(bigram = reorder(bigram, n)) %>%
+  ggplot(aes(n, bigram)) +
+  geom_col() +
+  labs(y = NULL)
+```
+
+## Cleaning up biagrams
+```{r}
+#| echo: true
+bigrams_separated <- tidy_content_rel %>%
+  separate(bigram, c("word1", "word2"), sep = " ")
+
+bigrams_filtered <- bigrams_separated %>%
+  filter(!word1 %in% stop_words$word) %>%
+  filter(!word2 %in% stop_words$word)
+
+tidy_content_rel_clean <- bigrams_filtered %>%
+  unite(bigram, word1, word2, sep = " ")
+```
+
+## Plotting biagrams
+```{r, fig.align='center'}
+#| echo: true
+tidy_content_rel_clean %>%
+  count(bigram, sort = TRUE) %>%
+  filter(n > 500) %>%
+  mutate(bigram = reorder(bigram, n)) %>%
+  ggplot(aes(n, bigram)) +
+  geom_col() +
+  labs(y = NULL)
+```

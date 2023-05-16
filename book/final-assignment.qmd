@@ -1,4 +1,4 @@
-# Final Assignment
+# Final Assignment {.unnumbered}
 
 The final assignment consists of three components.
 
