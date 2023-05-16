@@ -1,0 +1,24 @@
+---
+title: "Text mining with R homeworks"
+format: html
+editor: visual
+---
+
+0.  **\[Reading\]** Go through the document "Text mining with R" and complete sessions eventually skipped in class 😃;
+
+1.  **\[Coding\]** Get new data either from I-Analyzer or other sources and go through the text mining analysis performed in class 😃😃;
+
+2.  **\[Planning\]** Come up with a research question related to your field or current research and write done a very detailed plan of data analysis to answer that question. An example would be:
+
+-   Download twitter messages from this date to that date of this public account (explain how to get the data and in which format will be downloaded);
+-   Read the data in R in order to have a DataFrame with one twitter message per row and author, date, and content as columns;
+-   Tokenize the data in words;
+-   etc There is no real query, downloading, or coding involved in this exercise, just planning, but try to make your workflow steps realistic 😃😃😃;
+
+3.  **\[Searching/Reading\]** In class **lexicons** where mentioned. Make a search on internet, try to find at least other 3 alternative lexicons compared to the one we used in class. Make a file listing what these lexicons have in common, their differences, the method used to make them, and your opinion about their reliability 😃😃;
+
+4.  **\[Coding\]** Using ngrams of 4 words, make a DataFrame selecting ngrams where the first three words are "European Union is". Count how many times different ngrams of this kind occur and display the result both in a table (simply visualizing the DataFrame) and making a plot as a function of the fourth word 😃😃😃;
+
+5.  **\[Coding\]** Repeat the sentiment analysis performed in class for different emotions. Check in the lexicon which emotions are listes, pick at least three, perform the analysis as in class, and describe your result 😃😃;
+
+6.  **\[Reading/Coding\]** Choose one of the cases of study in "Text mining with R" and run the analysis step by step 😃.
