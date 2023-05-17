@@ -186,8 +186,33 @@ joy_words <- nrc_lexicon_df  %>%
   filter(emotion == "joy" & score == 1)
 ```
 
+## Computing total joy fraction
 
-## Computing joy words fraction
+<!-- Make a DataFrame containing only distinct words sing the function distinct() -->
+
+```{r}
+distinct_words <- tidy_clean_content %>%
+  distinct(word)
+```
+
+<!-- Count the number of distinct words -->
+
+```{r}
+total_dis_words <- nrow(distinct_words)
+```
+
+<!-- Count the number of distinct joy words -->
+```{r}
+total_dis_joy_words <- nrow(inner_join(distinct_words,joy_words,by='word'))
+```
+
+<!-- Compute the ratio between the two and print the result -->
+```{r}
+total_joy <- (total_dis_joy_words/total_dis_words)*100
+print(total_joy)
+```
+
+## Computing joy words fraction per issue
 
 <!-- Compute the total number of words PER ISSUE between two arbitrary dates -->
 
@@ -228,35 +253,9 @@ percent_of_joy_plot <-
 percent_of_joy_plot
 ```
 
-## Computing total joy fraction
-
-<!-- Make a DataFrame containing only distinct words sing the function distinct() -->
-
-```{r}
-distinct_words <- tidy_clean_content %>%
-  distinct(word)
-```
-
-<!-- Count the number of distinct words -->
-
-```{r}
-total_dis_words <- nrow(distinct_words)
-```
-
-<!-- Count the number of distinct joy words -->
-```{r}
-total_dis_joy_words <- nrow(inner_join(distinct_words,joy_words,by='word'))
-```
-
-<!-- Compute the ratio between the two and print the result -->
-```{r}
-total_joy <- (total_dis_joy_words/total_dis_words)*100
-print(total_joy)
-```
-
 # Session 3: Analyzing word and document frequency: tf-idf
 
-## Computing term frequency
+## Computing and displaying tf-idf
 
 <!-- Count the number of distinct words PER ISSUE -->
 <!-- Clean up the Dataframe from NA values -->
@@ -268,6 +267,40 @@ issue_words <- data_df %>%
 
 issue_words <- na.omit(issue_words)
 ```
+
+<!-- Compute tf-idf using the function bind_tf_idf() -->
+<!-- Display the computed DataFrame in order of descending term frequency (use arrange()) -->
+
+```{r}
+issue_tf_idf <- issue_words %>%
+  bind_tf_idf(word, issue, n)
+
+issue_tf_idf %>%
+  arrange(desc(tf))
+```
+
+<!-- Now display the DataFrame in order of descending tf-idf -->
+
+```{r}
+issue_tf_idf %>%
+  arrange(desc(tf_idf))
+```
+
+<!-- Plot tf-idf for the first six issues defined before -->
+
+```{r}
+issue_tf_idf %>%
+  semi_join(first_6_unique_issues, by="issue") %>%
+  group_by(issue) %>%
+  slice_max(tf_idf, n = 10) %>%
+  ungroup() %>%
+  ggplot(aes(tf_idf, fct_reorder(word, tf_idf), fill = issue)) +
+  geom_col(show.legend = FALSE) +
+  facet_wrap(~issue, scales="free",ncol = 2) +
+  labs(x = "tf-idf", y = NULL) 
+```
+
+## BONUS CODE & EXPLANATION: Computing term frequency
 
 <!-- Count the total number of words PER ISSUE using the functions group_by() and summarize() -->
 <!-- Join issue_words" and "total_words" and arrange them in descending issue order -->
@@ -309,43 +342,9 @@ freq_per_issue_plot <-
 freq_per_issue_plot
 ```
 
-## Computing and displaying tf-idf
-
-<!-- Compute tf-idf using the function bind_tf_itf() -->
-<!-- Display the computed DataFrame in order of descending term frequency (use arrange()) -->
-
-```{r}
-issue_tf_idf <- issue_words %>%
-  bind_tf_idf(word, issue, n)
-
-issue_tf_idf %>%
-  arrange(desc(tf))
-```
-
-<!-- Now display the DataFrame in order of descending tf-idf -->
-
-```{r}
-issue_tf_idf %>%
-  arrange(desc(tf_idf))
-```
-
-<!-- Plot tf-idf for the first six issues defined before -->
-
-```{r}
-issue_tf_idf %>%
-  semi_join(first_6_unique_issues, by="issue") %>%
-  group_by(issue) %>%
-  slice_max(tf_idf, n = 10) %>%
-  ungroup() %>%
-  ggplot(aes(tf_idf, fct_reorder(word, tf_idf), fill = issue)) +
-  geom_col(show.legend = FALSE) +
-  facet_wrap(~issue, scales="free",ncol = 2) +
-  labs(x = "tf-idf", y = NULL) 
-```
-
 # Session 4: Relationships Between Words
 
-## Tokenization with biagrams
+## Tokenization with bigrams
 
 <!-- Tokenize text in groups of 2 words using unnest_tokens() with token="ngrams" and n=2 -->
 
@@ -354,21 +353,9 @@ tidy_content_rel <- data_df %>%
   unnest_tokens(bigram, content, token="ngrams", n=2)
 ```
 
-<!-- Plot biagrams in a bar plot with n > 2000 using n as x and bigram as y -->
+## Cleaning up bigrams
 
-```{r}
-tidy_content_rel %>%
-  count(bigram, sort = TRUE) %>%
-  filter(n > 2000) %>%
-  mutate(bigram = reorder(bigram, n)) %>%
-  ggplot(aes(n, bigram)) +
-  geom_col() +
-  labs(y = NULL)
-```
-
-## Cleaning up biagrams
-
-<!-- Split the column biagram in two columns called word1 and word2 using the function separate() -->
+<!-- Split the column bigram in two columns called word1 and word2 using the function separate() -->
 
 ```{r}
 bigrams_separated <- tidy_content_rel %>%
@@ -393,9 +380,21 @@ tidy_content_rel_clean <- bigrams_filtered %>%
   unite(bigram, word1, word2, sep = " ")
 ```
 
-## Plotting biagrams
+## Plotting bigrams
 
-<!-- Plot the number of occurrence of the biagram -->
+<!-- Plot bigrams in a bar plot with n > 2000 using n as x and bigram as y -->
+
+```{r}
+tidy_content_rel %>%
+  count(bigram, sort = TRUE) %>%
+  filter(n > 2000) %>%
+  mutate(bigram = reorder(bigram, n)) %>%
+  ggplot(aes(n, bigram)) +
+  geom_col() +
+  labs(y = NULL)
+```
+
+<!-- Plot the number of occurrence of the bigrams -->
 
 ```{r}
 tidy_content_rel_clean %>%
@@ -407,7 +406,9 @@ tidy_content_rel_clean %>%
   labs(y = NULL)
 ```
 
-<!-- Filter the biagram so that its second word is "vote" (use the DataFrame biagrams_filtered as input) -->
+## Relation between words
+
+<!-- Filter the bigram so that its second word is "vote" (use the DataFrame biagrams_filtered as input) -->
 <!-- Count all the words "preceding" the word "vote" PER ISSUE and display the result -->
 
 ```{r}
@@ -416,9 +417,9 @@ bigrams_filtered %>%
   count(issue, word1, sort=TRUE)
 ```
 
-## tf-idf for biagrams
+## BONUS: tf-idf for bigrams
 
-<!-- Compute tf-idf for the biagram and display the result in order of ascending tf-idf -->
+<!-- Compute tf-idf for the bigram and display the result in order of ascending tf-idf -->
 
 ```{r}
 bigram_tf_idf <- tidy_content_rel_clean %>%
