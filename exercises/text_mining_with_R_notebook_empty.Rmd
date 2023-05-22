@@ -243,7 +243,7 @@ print(???)
 
 # Session 3: Analyzing word and document frequency: tf-idf
 
-## Computing term frequency
+## Computing and displaying tf-idf
 
 <!-- Count the number of distinct words PER ISSUE -->
 <!-- Clean up the Dataframe from NA values -->
@@ -255,6 +255,39 @@ issue_words <- data_df %>%
 
 issue_words <- na.omit(issue_words)
 ```
+
+<!-- Compute tf-idf using the function bind_tf_itf() -->
+<!-- Display the computed DataFrame in order of descending term frequency (use arrange()) -->
+
+```{r}
+issue_tf_idf <- ??? %>%
+  bind_tf_idf(word, issue, n)
+
+issue_tf_idf %>%
+  arrange(desc(???))
+```
+
+<!-- Now display the DataFrame in order of descending tf-idf -->
+
+```{r}
+???
+```
+
+<!-- Plot tf-idf for the first six issues defined before -->
+
+```{r}
+issue_tf_idf %>%
+  semi_join(???, by="issue") %>%
+  group_by(???) %>%
+  slice_max(tf_idf, n = 10) %>%
+  ungroup() %>%
+  ggplot(aes(tf_idf, fct_reorder(word, tf_idf), fill = issue)) +
+  geom_col(show.legend = FALSE) +
+  facet_wrap(~issue, scales="free",ncol = 2) +
+  labs(x = "tf-idf", y = NULL) 
+```
+
+## BONUS CODE & EXPLANATION: Computing term frequency
 
 <!-- Count the total number of words (sum) PER ISSUE using the functions group_by() and summarize() -->
 <!-- Join issue_words" and "total_words" and arrange them in descending issue order -->
@@ -294,39 +327,6 @@ freq_per_issue_plot <-
   facet_wrap(~issue, ncol = 2, scales = "free_y")
 
 freq_per_issue_plot
-```
-
-## Computing and displaying tf-idf
-
-<!-- Compute tf-idf using the function bind_tf_itf() -->
-<!-- Display the computed DataFrame in order of descending term frequency (use arrange()) -->
-
-```{r}
-issue_tf_idf <- ??? %>%
-  bind_tf_idf(word, issue, n)
-
-issue_tf_idf %>%
-  arrange(desc(???))
-```
-
-<!-- Now display the DataFrame in order of descending tf-idf -->
-
-```{r}
-???
-```
-
-<!-- Plot tf-idf for the first six issues defined before -->
-
-```{r}
-issue_tf_idf %>%
-  semi_join(???, by="issue") %>%
-  group_by(???) %>%
-  slice_max(tf_idf, n = 10) %>%
-  ungroup() %>%
-  ggplot(aes(tf_idf, fct_reorder(word, tf_idf), fill = issue)) +
-  geom_col(show.legend = FALSE) +
-  facet_wrap(~issue, scales="free",ncol = 2) +
-  labs(x = "tf-idf", y = NULL) 
 ```
 
 # Session 4: Relationships Between Words
@@ -393,6 +393,8 @@ tidy_content_rel_clean %>%
   labs(y = NULL)
 ```
 
+## Relation between words
+
 <!-- Filter the biagram so that its second word is "vote" (use the DataFrame biagrams_filtered as input) -->
 <!-- Count all the words "preceding" the word "vote" PER ISSUE and display the result -->
 
@@ -402,7 +404,7 @@ tidy_content_rel_clean %>%
   count(issue, ???, sort=TRUE)
 ```
 
-## tf-idf for biagrams
+## BONUS: tf-idf for biagrams
 
 <!-- Compute tf-idf for the biagram and display the result in order of ascending tf-idf -->
 
