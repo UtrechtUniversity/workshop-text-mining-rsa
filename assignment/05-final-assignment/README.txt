@@ -1,46 +1,11 @@
-# Final Assignment {.unnumbered}
+# README
 
-You can download a zipped file to organize your assignment here: [assignment](https://raw.githubusercontent.com/UtrechtUniversity/workshop-text-mining-rsa/main/assignment.zip)
+This folder contains a template project for the final assignment of the course. Follow the instructions in this README file step-by-step and build up your project along the way.
 
-The final assignment consists of three components.
-
-1. A reproducible report where you have applied text mining with I-Analyzer and R to your own research question/query.
-
-2. A reflection assignment
-
-3. A portfolio that contains your reproducible report and reflection assignment, as well as your homework over the course.
-
-We will dive into each component below.
-
-## Portfolio
-
-The portfolio contains all the work that you completed during the course, including the various exercises as well as the assignments. When you unzip the folder, you will already see the structure you want to use: 
-
-```
-LEG-SA-11_2023_surname/
-├── 01-i-analyzer/
-├── 02-base-r/
-├── 03-literature-review/
-├── 04-text-mining/
-├── 05-final-assignment/
-└── 06-reflection-assignment/
-```
-Move your completed exercises into the relevant folder, here is a checklist:
-
-- [ ] 2x I-Analyzer datasets (the export made during class + your homework, including the search parameters)
-- [ ] Base R exercises (completed .Rmd file)
-- [ ] Slides of literature review
-- [ ] Text Mining in R exercises (completed .Rmd file)
-
-## Final Assignment
-
-This folder contains a template project for the final assignment of the course. Follow the instructions here step-by-step and build up your project along the way.
-
-### Project Structure
+## Project Structure
 
 The project is structured in the following way:
 
-```
 05-final-assignment
 ├───05-final-assignment.Rproj
 ├───data
@@ -50,25 +15,24 @@ The project is structured in the following way:
 ├───R
     ├─── yourstudentnumber-final-assignment.Rmd
 └───README.txt
-```
 
-**1. R Project File**
+### R Project File
 
 Always use the R Project file (05-final-assignment.Rproj) to open your project. This will automatically set the working directory, which is needed to work with some of the template code we will provide.
 
-**2. Data**
+### Data
 
 Place the dataset you export from I-Analyzer in the data folder. Make sure to (re)name the dataset as data.csv (note that csv is the file extension) because the name assigned by I-Analyzer to the export can be very long and messy. 
 
-**3. Docs**
+### Docs
 
 Use the docs folder to place any supplementary materials such as notes etc.
 
-**4. Lexicons**
+### Lexicons
 
 This folder already contains the NRC Lexicon (NRC_lexicon.txt) that you will use in your text-mining analyses.
 
-**5. R**
+### R
 
 This folder contains the template R Markdown file for you to work on your assignment (yourstudentnumber_final-assignment.Rmd). Instructions on how to work with this template continue below in a separate section. Eventually, you will render this R Markdown file to HTML format.
 
@@ -86,11 +50,11 @@ In the YAML session (the lines at the very beginning of the source document betw
 -   Use your name and surname as author;
 -   Change the date to the date of submission of your assignment.
 
-### Markdown Format
+## Markdown Format
 
 You will write regular text using the Markdown format in your file. You can refer to this [Markdown Cheatsheet](https://www.markdownguide.org/cheat-sheet/). Moreover, you use the [Visual Editor](https://rstudio.github.io/visual-markdown-editing/) in RStudio to preview Markdown content as you go.
 
-### Introduction
+## Introduction
 
 Here you will write a small introduction about your research question/query of maximum 400 words. Every introduction usually follows a funnel structure, from general to particular:
 
@@ -99,7 +63,7 @@ Here you will write a small introduction about your research question/query of m
 -   Explain how and why exploring your research question/query would be interesting;
 -   Explain (in general) how the analysis you are going to perfrom can answer your research question/query.
 
-### Data 
+## Data 
 
 Here you will describe your data, including how you obtained it from I-Analyzer. Be sure to include the following information:
 
@@ -107,7 +71,7 @@ Here you will describe your data, including how you obtained it from I-Analyzer.
 -   Every single field you used in your I-Analyzer query; 
 -   Any other information relative to the corpus and the analysis (data timeline etc.).
 
-### Analysis & Results
+## Analysis & Results
 
 This is the only section of your assignment template that will contain code. Before performing any analyses, write a few lines on the text-mining techniques you are going to apply and what kind of results you expect to obtain from the analysis. In other words, provide a very brief overview of your data analysis plan in about 100 words at maximum. 
 
@@ -119,11 +83,11 @@ You can add code chunks as required by clicking the `Add Chunk` button. In case 
 
 After every code block, provide a couple of lines to describe the results of the operation. In some cases, it may be as simple as stating the number of values that were dropped after filtering NAs. In other cases, there may be more interesting output in the form of a table or plot. In this case, describe the results and interpret the findings in the context of your research question/query. Leave any conclusions for the next section. 
 
-### Conclusion
+## Conclusion
 
-Here you will summarize your analyses as a whole. What are your results and findings? What is your main conclusion (the short answer to your research question/query, if you found any. What are the possibilities of future analyses or studies to better explore the question/query. This conclusion can be a maximum of 300 words.
+Here you will summarize your analyses as a whole. What are your results and findings? What is your main conclusion (the short answer to your research question/query, if you found any. What are the possibilities of future analyses or studies to better explore the question/query.
 
-### References
+## References
 
 At minimum, you should include the following references:
 
@@ -131,16 +95,8 @@ At minimum, you should include the following references:
 2. The textbook that was used for this course (Text-Mining with I-Analyzer & R).
 3. The Text Mining with R: A Tidy Approach book.
 
-Add the references in BibTex format to the `references.bib` file. You can then insert them in your text using like `@moopen2023` for an unbracketed reference or `(@moopen2023)` for a bracketed reference. 
-
-### Render to HTML
+## Render to HTML
 
 When you are completed with your assignment and the code chunks are running smoothly, you can click the 'Knit' button in the RStudio menu to render/convert the R Markdown file to HTML format.
-
-## Reflection Assignment
-
-The reflection assignment is available as a Word document template. This should be completed as per the instructions in the document and the file should be renamed with your student number and name. 
-
-
 
 
