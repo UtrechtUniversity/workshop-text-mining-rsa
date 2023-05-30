@@ -1,0 +1,114 @@
+---
+title: "My_assignment"
+author: Stefano Rapisarda
+output: html_document
+date: "2023-05-28"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+This is the template for the final assignment of the text mining with R course. Follow the instructions step by step and change them into your own text.
+
+In the YAML session (the lines at the very beginning of the source document between three $-$):
+
+-   Change the title of the document from My_assigment into the title of your assignment. If you do not have a title, leave My_assignment;
+-   Use your name and surname as author;
+-   Change the date to the date of submission of your assignment.
+
+## Introduction
+
+Here you will write a small introduction about your research question/idea. Every introduction usually follows a funnel structure, from general to particular:
+
+-   Introduce the topic in a very general way;
+-   Focus on the particular case of your research question;
+-   Highlight the "unknown", the knowledge missing from your or the current status of knowledge in the field, in other words your research question;
+-   Explain how and why answering your research question will improve the general knowledge;
+-   Give a little "preview" of the analysis you are going to perform, of the data you are going to use, and (if you want) on the conclusions you got.
+
+During class we explored Times news containing the term "European Union". An example of introduction relative to our analysis would be the following:
+
+*Europe has always played a significant role in the human history, with numerous ancient civilizations, cultures, and empires emerging on its soil. * [very very general statement on Europe from the cultural point of view]. 
+
+*Politically speaking, Europe is nowadays composed of approximately 50 countries, with the European Union (EU) being a prominent supranational organization that includes 27 member states. The EU promotes economic and political integration among its members, facilitating cooperation in various areas, including trade, governance, and common policies.* 
+[narrow a bit down on Europe political structure and introduce EU]. 
+
+*The formation of an EU was not AN easy process and its maintenance is still a struggle in these days. On one hand European countries represent a unique set of different culturally rich societies sharing common values and struggling to find a place among the "giant" USA, Russia, and China, on the other hand such variety and different country interests lead to never ending conflicts, compromising the stability of the entire Union* [introducing the problem]. 
+
+*In June 2016 the UK citizens voted to leave Europe and on January 31 2020, for the first time in history, a country left the EU* [introducing the subject of the study, UK]. 
+
+*Understanding the reasons why UK left the EU and in particular why the UK citizen had a negative perception of the EU is a fundamental problem to improve the state of the union and to avoid that other countries could follow the example of UK* [presenting the main "unknown" and the importance of investigating it]. 
+
+*Media played a fundamental role in shaping UK opinion about European Union, well before the years of the vote. How news about EU are presented to the UK public? Do they overall present a neutral, positive, or negative view of EU? What where the topics such news were more often associated with?* [presenting more detailed research questions]. 
+
+*In this study we attempted to answer these questions analyzing a corpus of news from the Time megazine collected between 1945 and 2010 and containing the term European Union. In the session "Data Analysis" we will analyse the data applying text-mining techniques, results are discussed in the "Discussion" session while in "Conclusion" we will summarize our main findings* [general description of the data and analysis techniques used with references to the text]
+
+## Data
+
+Here you will describe where your data comes from. In particular, if you used i-analyzer, specify the following:
+
+-   Every single field you used in your I-analyzer query. Be sure to include the custom field "content", it is the one containing the actual text to analyze;
+-   The corpus of data and eventual references associated with it;
+-   Any other information relative to the corpus and relevant for the analysis (data gaps or any other problem);
+
+## Data analysis
+
+This is the only session of your assignment that will contain code. Before performing the analysis, write few lines on the kind of text mining techniques you are going to use and which kind of results you expect to obtain from the analysis. 
+
+Before every block of code, write very briefly what R is going to do. Do not overlook this point, writing a good description means that in case your code is wrong, your instructor can address that at least your intention was right.
+
+The first steps of your analysis will be identical to what we did during class.
+
+Loading R libraries needed for text-mining, data manipulation, and visualization
+```{r}
+library(tidyverse)
+library(tidytext)
+library(wordcloud)
+```
+
+Reading I-analyzer data into an R dataframe
+```{r}
+data_file_name <- '../data/ianalyzer_query.csv'
+
+data_df <- read_delim(data_file_name, 
+    delim = ";", 
+    escape_double = FALSE, 
+    col_types = cols(`date-pub` = col_date(format = "%B %d, %Y"), 
+        issue = col_integer()), trim_ws = TRUE)
+```
+
+Tokenizing the raw data into words
+```{r}
+tidy_content <- data_df %>% unnest_tokens(word, content, token="words")
+```
+
+Cleaning up data from NA values in the issue column
+```{r}
+tidy_content <- tidy_content[!is.na(tidy_content$issue), ]
+```
+
+Cleaning up data from stop words
+```{r, warning=FALSE, message=FALSE}
+data(stop_words)
+
+tidy_clean_content <- tidy_content %>% anti_join(stop_words)
+```
+
+Counting words and displaying the most common words
+```{r}
+```
+
+Etc
+
+## Discussion
+
+Here you will briefly discuss your findings referring to data and plots displayed in the data analysis session
+
+## Conclusions
+
+Here you will summarize **in very few lines** all you have done, your main conclusion (the short answer for your research question, if you found any), and the possibility of future studies to better explore the question (what's next?).
+
+## References
+
+<Instructions for integrating bibliography from Zenodo>
