@@ -7,16 +7,16 @@ bibliography: ../references.bib
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(eval = FALSE)
+knitr::opts_chunk$set(echo = TRUE)
 ```
 
 ## Introduction
 
 Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Sagittis id consectetur purus ut. Arcu bibendum at varius vel. Vitae tortor condimentum lacinia quis vel eros donec. Scelerisque purus semper eget duis at tellus. Sit amet cursus sit amet dictum sit amet. Tincidunt augue interdum velit euismod in pellentesque massa. Massa vitae tortor condimentum lacinia quis vel eros donec ac. Lorem ipsum dolor sit amet consectetur. Vulputate sapien nec sagittis aliquam malesuada bibendum. Euismod nisi porta lorem mollis aliquam ut porttitor leo a. Tempor orci dapibus ultrices in iaculis nunc. Tincidunt vitae semper quis lectus nulla at volutpat diam ut.
 
-Example Citation is @knuth84
+Example Citation: @knuth84
 
-## Data 
+## Data
 
 Sed faucibus turpis in eu mi bibendum neque egestas. Duis tristique sollicitudin nibh sit amet commodo nulla facilisi nullam. Amet est placerat in egestas erat imperdiet. Morbi tristique senectus et netus et malesuada fames ac. Convallis tellus id interdum velit laoreet id donec ultrices tincidunt. Maecenas pharetra convallis posuere morbi leo urna. Orci a scelerisque purus semper eget duis at. Neque egestas congue quisque egestas diam in arcu. Dictumst quisque sagittis purus sit amet. At ultrices mi tempus imperdiet nulla malesuada.
 
@@ -26,7 +26,7 @@ Nam aliquam sem et tortor consequat id porta nibh venenatis. Orci dapibus ultric
 
 ## Load Packages
 
-We first loading the R packages needed for text-mining, data manipulation, and visualization. 
+We first loading the R packages needed for text-mining, data manipulation, and visualization.
 
 ```{r}
 library(tidyverse) 
@@ -36,7 +36,7 @@ library(wordcloud)
 
 ## Import Data
 
-We now import the dataset from I-Analyzer into an R dataframe called `data_df`. We also convert the dates in the `date-pub` from string format to one that is suited for analysis in R. 
+We now import the dataset from I-Analyzer into an R dataframe called `data_df`. We also convert the dates in the `date-pub` from string format to one that is suited for analysis in R.
 
 ```{r}
 data_file_name <- '../data/data.csv'
@@ -66,7 +66,7 @@ tidy_content <- tidy_content[!is.na(tidy_content$issue), ]
 
 Next, we import the stop words into our environment. The stop words are provided with the `tidytext` package.
 
-We continue the data cleaning, by removing the stop words from the `tidy_content` dataframe and creating a new dataframe called `tidy_clean_content` based on that. 
+We continue the data cleaning, by removing the stop words from the `tidy_content` dataframe and creating a new dataframe called `tidy_clean_content` based on that.
 
 ```{r, warning=FALSE, message=FALSE}
 data(stop_words)
@@ -81,11 +81,10 @@ We start our analyses by counting words and displaying the most common words.
 ```{r}
 ```
 
-< continue inserting sections and code chunks as required for your analysis>
+< continue inserting sections and code chunks as required for your analysis\>
 
 ## Conclusion
 
 Tortor condimentum lacinia quis vel eros donec ac odio. Tristique sollicitudin nibh sit amet commodo nulla. Malesuada fames ac turpis egestas integer eget aliquet nibh praesent. In pellentesque massa placerat duis ultricies lacus sed turpis tincidunt. Amet mattis vulputate enim nulla aliquet porttitor lacus luctus accumsan. Sollicitudin aliquam ultrices sagittis orci a scelerisque purus semper. Eu mi bibendum neque egestas congue quisque egestas. Blandit cursus risus at ultrices mi tempus imperdiet. Faucibus ornare suspendisse sed nisi lacus sed viverra. Sit amet mattis vulputate enim nulla aliquet porttitor lacus luctus. Suscipit adipiscing bibendum est ultricies integer quis auctor elit. Leo integer malesuada nunc vel risus commodo viverra maecenas. Aliquam eleifend mi in nulla posuere sollicitudin. Ut venenatis tellus in metus vulputate. Nulla aliquet porttitor lacus luctus. Neque volutpat ac tincidunt vitae. Sed tempus urna et pharetra pharetra massa massa. Euismod in pellentesque massa placerat duis ultricies lacus sed. Nibh sed pulvinar proin gravida hendrerit lectus a.
 
 ## References
-

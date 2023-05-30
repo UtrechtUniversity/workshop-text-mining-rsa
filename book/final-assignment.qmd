@@ -1,6 +1,6 @@
 # Final Assignment {.unnumbered}
 
-You can download a zipped file to organize your assignment here: [assignment](https://raw.githubusercontent.com/UtrechtUniversity/workshop-text-mining-rsa/main/assignment.zip)
+You can download a zipped file to organize your assignment here (right-click on the link and click _Save link as_): [assignment](https://raw.githubusercontent.com/UtrechtUniversity/workshop-text-mining-rsa/main/assignment.zip). Extract the contents of the zipped file to an accessible location on your computer.
 
 The final assignment consists of three components.
 
@@ -31,6 +31,8 @@ Move your completed exercises into the relevant folder, here is a checklist:
 - [ ] Base R exercises (completed .Rmd file)
 - [ ] Slides of literature review
 - [ ] Text Mining in R exercises (completed .Rmd file)
+
+Finally, make sure you rename the folder correctly.
 
 ## Final Assignment
 

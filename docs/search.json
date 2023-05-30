@@ -256,7 +256,7 @@
     "href": "final-assignment.html#portfolio",
     "title": "Final Assignment",
     "section": "Portfolio",
-    "text": "Portfolio\nThe portfolio contains all the work that you completed during the course, including the various exercises as well as the assignments. When you unzip the folder, you will already see the structure you want to use:\nLEG-SA-11_2023_surname/\n├── 01-i-analyzer/\n├── 02-base-r/\n├── 03-literature-review/\n├── 04-text-mining/\n├── 05-final-assignment/\n└── 06-reflection-assignment/\nMove your completed exercises into the relevant folder, here is a checklist:\n\n2x I-Analyzer datasets (the export made during class + your homework, including the search parameters)\nBase R exercises (completed .Rmd file)\nSlides of literature review\nText Mining in R exercises (completed .Rmd file)"
+    "text": "Portfolio\nThe portfolio contains all the work that you completed during the course, including the various exercises as well as the assignments. When you unzip the folder, you will already see the structure you want to use:\nLEG-SA-11_2023_surname/\n├── 01-i-analyzer/\n├── 02-base-r/\n├── 03-literature-review/\n├── 04-text-mining/\n├── 05-final-assignment/\n└── 06-reflection-assignment/\nMove your completed exercises into the relevant folder, here is a checklist:\n\n2x I-Analyzer datasets (the export made during class + your homework, including the search parameters)\nBase R exercises (completed .Rmd file)\nSlides of literature review\nText Mining in R exercises (completed .Rmd file)\n\nFinally, make sure you rename the folder correctly."
   },
   {
     "objectID": "final-assignment.html#final-assignment",
