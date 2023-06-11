@@ -173,11 +173,11 @@ At minimum, you should include the following references:
 
 1. The textbook that was used for this course, _Text-Mining with I-Analyzer & R_.
 
-    _Hint:_ check the CITATION.cff file in the GitHub repository for the book.
+    _Hint:_ check the [GitHub repository](https://github.com/UtrechtUniversity/workshop-text-mining-rsa) for the book. Look in the _About_ section in the right-hand side of the repository and click _Cite this repository_ to find the Bibtex key.
 
 2. The _Text Mining with R: A Tidy Approach_ book.
 
-    _Hint:_ Check Google Scholar.
+    _Hint:_ Check Google Scholar. The Reproducible Reports chapter has instructions on where to find the BibTex key.
 
 Add the references in BibTex format to the `references.bib` file. You can then insert them in your text using like `@moopen2023` for an unbracketed reference or `(@moopen2023)` for a bracketed reference. 
 
@@ -185,7 +185,7 @@ For more information on how to work with referencing and BibTex keys, check the 
 
 ### Render to HTML
 
-When you are completed with your assignment and the code chunks are running smoothly, you can click the 'Knit' button in the RStudio menu to render/convert the R Markdown file to HTML format. T
+When you are completed with your assignment and the code chunks are running smoothly, you can click the 'Knit' button in the RStudio menu to render/convert the R Markdown file to HTML format. 
 
 ## Reflection Assignment
 
