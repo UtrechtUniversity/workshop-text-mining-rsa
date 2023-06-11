@@ -12,13 +12,9 @@ You can also contact the course coordinator, Neha Moopen, by email at [n.moopen@
 
 In addition to programs and packages we've installed previously, we will need to install and setup the following:
 
-### Quarto & usethis
+### usethis
 
-1. [Quarto](https://quarto.org/docs/get-started/), which is a scientific and technical publishing system. This is a tool you will install on your computer and RStudio will be able to access it.
-
-You can test if Quarto was installed correctly be (re)opening or (re)starting RStudio and clicking through _File_ -> _New File_ and checking if you the options for Quarto-related files like _Quarto Document_, _Quarto Presentation_ etc.
-
-2. You will also need the `usethis` package in R:
+You will need the `usethis` package in R:
 
 ```{r}
 #| eval: false
@@ -36,15 +32,11 @@ library(usethis)
 
 4. [Better BibTex for Zotero](https://retorque.re/zotero-better-bibtex/installation/), which is an add-on to Zotero that makes it easy to format your bibliography in BibTex format. The installation instructions are relatively clear, but in case it isn't: the add-on has to be downloaded from GitHub as a .xpi file (i.e. the _latest release_) but the .xpi file needs to be installed/opened via Zotero itself. 
 
-5. Create a Zotero account via their official [website](https://www.zotero.org/).
+5. A Zotero account, created via their official [website](https://www.zotero.org/).
 
 6. [Sync](https://www.zotero.org/support/sync) your local Zotero installation with your online account by using the _Sync_ option in Zotero's [Preferences](https://www.zotero.org/support/preferences) window. This requires logging in with the account you just created online.
 
 7. Create a folder in your Zotero library - for example, `text-mining-literature-review`. Add the literature you reviewed in the previous sessions to this folder, you should end up with 4 bibliography items. You could add these files manually or using the Zotero Connector plugin (the latter might be slightly better).
-
-### GitHub
-
-Create an account on [GitHub](https://github.com/). If time allows, we will use GitHub as platform to publish our reproducible report online.
 
 
 

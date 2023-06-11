@@ -33,6 +33,7 @@ book:
     - part: "5 Reproducible Reports"
       chapters:
       - reproducible-reports-preparation.qmd
+      - reproducible-reports-session.qmd
     - final-assignment.qmd
     - references.qmd
 

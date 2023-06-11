@@ -14,10 +14,10 @@ We will dive into each component below.
 
 ## Portfolio
 
-The portfolio contains all the work that you completed during the course, including the various exercises as well as the assignments. When you unzip the folder, you will already see the structure you want to use: 
+The portfolio contains all the work that you completed during the course, including the various exercises as well as the assignments. When you unzip the folder, you will already see the structure you want to use:
 
 ```
-LEG-SA-11_2023_surname/
+LEG-SA-11_2023_yourstudentnumber/
 ├── 01-i-analyzer/
 ├── 02-base-r/
 ├── 03-literature-review/
@@ -25,6 +25,7 @@ LEG-SA-11_2023_surname/
 ├── 05-final-assignment/
 └── 06-reflection-assignment/
 ```
+
 Move your completed exercises into the relevant folder, here is a checklist:
 
 - [ ] 2x I-Analyzer datasets (the export made during class + your homework, including the search parameters)
@@ -32,7 +33,7 @@ Move your completed exercises into the relevant folder, here is a checklist:
 - [ ] Slides of literature review
 - [ ] Text Mining in R exercises (completed .Rmd file)
 
-Finally, make sure you rename the folder correctly.
+Finally, make sure you rename the portfolio correctly: i.e. from `assignment` to `LEG-SA-11_2023_yourstudentnumber` where you include your student number.
 
 ## Final Assignment
 
@@ -72,7 +73,9 @@ This folder already contains the NRC Lexicon (NRC_lexicon.txt) that you will use
 
 **5. R**
 
-This folder contains the template R Markdown file for you to work on your assignment (yourstudentnumber_final-assignment.Rmd). Instructions on how to work with this template continue below in a separate section. Eventually, you will render this R Markdown file to HTML format.
+This folder contains the template R Markdown file for you to work on your assignment (yourstudentnumber_final-assignment.Rmd). Rename the .Rmd file to include your student number.
+
+Instructions on how to work with this template continue below in a separate section. Eventually, you will render this R Markdown file to HTML format.
 
 ## Assignment Template
 
@@ -80,9 +83,7 @@ We assume that you will start working with template after you have exported your
 
 ### YAML
 
-In the YAML (Yet Another Markup Language) section, which are the lines at the very beginning of the source document between three ---):
-
-In the YAML session (the lines at the very beginning of the source document between three $-$):
+In the YAML (Yet Another Markup Language) section, which are the lines at the very beginning of the source document between three `---`s:
 
 -   Replace "My_assigment" with the title of your report, based on your research question/query;
 -   Use your name and surname as author;
@@ -91,6 +92,8 @@ In the YAML session (the lines at the very beginning of the source document betw
 ### Markdown Format
 
 You will write regular text using the Markdown format in your file. You can refer to this [Markdown Cheatsheet](https://www.markdownguide.org/cheat-sheet/). Moreover, you use the [Visual Editor](https://rstudio.github.io/visual-markdown-editing/) in RStudio to preview Markdown content as you go.
+
+Moreover, the chapter on Reproducible Reports is also available for reference.
 
 ### Introduction
 
@@ -111,33 +114,78 @@ Here you will describe your data, including how you obtained it from I-Analyzer.
 
 ### Analysis & Results
 
-This is the only section of your assignment template that will contain code. Before performing any analyses, write a few lines on the text-mining techniques you are going to apply and what kind of results you expect to obtain from the analysis. In other words, provide a very brief overview of your data analysis plan in about 100 words at maximum. 
+This is the only section of your assignment template that will contain code. At the beginning of the section, before performing any analyses, write a few lines on the text-mining techniques you are going to apply and what kind of results you expect to obtain from the analysis. In other words, provide a very brief overview of your data analysis plan in about 100 words at maximum. 
 
-As you move through this section, before every block of code, provide a couple of lines describing what the specific code block is intended to do. 
+Independently from the research question, we would also like you to explain why the chosen techniques would be more effective to answer the research question/query and why the excluded techniques have not been considered (or why they would lead to less meaningful results compared to the chosen ones). This reflection can be covered partly in the beginning of this section and partly in the conclusion section as well.
+
+**Minimum Requirements for Text-Mining**
+
+We ask you to apply at least two of the following techniques in your text mining analyses: 
+
+- plain-word counting, 
+- sentiment analysis, 
+- id-idf statistics, or 
+- ngrams. 
+
+Techniques may be combined (like a sentiment analysis of ngrams) and/or repeated several times (like different sentiment analyses for different emotions). 
+
+The result of applying a specific technique must be represented in a plot, unless not strictly necessary, i.e. when the result of the analysis is a single number (like single word count of a certain period of time or total percent of joy words).
+
+**Code Chunks**
 
 In some cases, we have provided some template code blocks, which you will have to adjust to suit your data - much like the exercises in class. As you go through the steps of analyzing your data, you will have to build the code blocks more independently (though you can always refer to the earlier course materials).
 
 You can add code chunks as required by clicking the `Add Chunk` button. In case you need a reference, here is a link: [https://rmarkdown.rstudio.com/lesson-3.html](https://rmarkdown.rstudio.com/lesson-3.html)
 
+**Before A Code Chunk**
+
+As you move through this section, before every block of code, provide a couple of lines describing what the specific code block is intended to do. 
+
+For example:
+
+_In the next analysis, we will evaluate if the news content around the European Union is sad or happy or if the general mood of the content is positive or negative. We can do this using Sentiment Analysis (also known as opinion mining or emotion AI) - which is the use of natural language processing, text analysis, computational linguistics, and biometrics to systematically identify, extract, quantify, and study affective states and subjective information._ 
+
+_To run the sentiment analysis, we make use of a lexicon - specifically, the NRC Lexicon. We read the lexicon into an R dataframe and filter the words associated with joy. We then count how many joy words are present in the content and see if the news associated with the European Union can be classified as joyful not._
+
+This is just an idea of what it could look like. You will have to tailor this to your research question/query and keep it concise. Don't forget that you can refer to the Text Mining in R chapter for inspiration on how to describe your analysis and report on your results.
+
+**After A Code Chunk**
+
 After every code block, provide a couple of lines to describe the results of the operation. In some cases, it may be as simple as stating the number of values that were dropped after filtering NAs. In other cases, there may be more interesting output in the form of a table or plot. In this case, describe the results and interpret the findings in the context of your research question/query. Leave any conclusions for the next section. 
+
+For example:
+
+_Inspecting the plot we can see that the percent of joy words never exceed the 8% and that there is a decreasing joy trend up to 2006 while values go back to a more average 4% level in 2007._ 
+
+Again: This is just an idea of what it could look like. You will have to tailor this to your research question/query and keep it concise. Don't forget that you can refer to the Text Mining in R chapter for inspiration on how to describe your analysis and report on your results.
 
 ### Conclusion
 
-Here you will summarize your analyses as a whole. What are your results and findings? What is your main conclusion (the short answer to your research question/query, if you found any. What are the possibilities of future analyses or studies to better explore the question/query. This conclusion can be a maximum of 300 words.
+Here you will summarize your analyses as a whole. What are your results and findings? What is your main conclusion (the short answer to your research question/query, if you found any). What are the possibilities of future analyses or studies to better explore the question/query, refer back to your write-up at the beginning of the analysis and results section as well. This conclusion can be a maximum of 300 words.  
 
 ### References
 
+- Create a file called `references.bib`. You can do this using Notepad on Windows and TextEdit on MacOS: simply open the program and save the new/empty file as `references.bib` (make sure the file extension is.bib and not .txt).
+
+- Save the .bib file in the `05-final-assignment` folder.
+
 At minimum, you should include the following references:
 
-1. The corpus your referred to in I-Analyzer
-2. The textbook that was used for this course (Text-Mining with I-Analyzer & R).
-3. The Text Mining with R: A Tidy Approach book.
+1. The textbook that was used for this course, _Text-Mining with I-Analyzer & R_.
+
+    _Hint:_ check the CITATION.cff file in the GitHub repository for the book.
+
+2. The _Text Mining with R: A Tidy Approach_ book.
+
+    _Hint:_ Check Google Scholar.
 
 Add the references in BibTex format to the `references.bib` file. You can then insert them in your text using like `@moopen2023` for an unbracketed reference or `(@moopen2023)` for a bracketed reference. 
 
+For more information on how to work with referencing and BibTex keys, check the Reproducible Manuscripts chapter.
+
 ### Render to HTML
 
-When you are completed with your assignment and the code chunks are running smoothly, you can click the 'Knit' button in the RStudio menu to render/convert the R Markdown file to HTML format.
+When you are completed with your assignment and the code chunks are running smoothly, you can click the 'Knit' button in the RStudio menu to render/convert the R Markdown file to HTML format. T
 
 ## Reflection Assignment
 

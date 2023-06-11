@@ -93,7 +93,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./final-assignment.html" rel="next">
+<link href="./reproducible-reports-session.html" rel="next">
 <link href="./text-mining-homework.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
@@ -284,6 +284,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   <a href="./reproducible-reports-preparation.html" class="sidebar-item-text sidebar-link active">Preparation</a>
   </div>
 </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./reproducible-reports-session.html" class="sidebar-item-text sidebar-link">Reproducible Reports</a>
+  </div>
+</li>
       </ul>
   </li>
         <li class="sidebar-item">
@@ -307,9 +312,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   <ul>
   <li><a href="#installation-setup" id="toc-installation-setup" class="nav-link active" data-scroll-target="#installation-setup">Installation &amp; Setup</a>
   <ul class="collapse">
-  <li><a href="#quarto-usethis" id="toc-quarto-usethis" class="nav-link" data-scroll-target="#quarto-usethis">Quarto &amp; usethis</a></li>
+  <li><a href="#usethis" id="toc-usethis" class="nav-link" data-scroll-target="#usethis">usethis</a></li>
   <li><a href="#zotero" id="toc-zotero" class="nav-link" data-scroll-target="#zotero">Zotero</a></li>
-  <li><a href="#github" id="toc-github" class="nav-link" data-scroll-target="#github">GitHub</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -341,15 +345,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <section id="installation-setup" class="level2">
 <h2 class="anchored" data-anchor-id="installation-setup">Installation &amp; Setup</h2>
 <p>In addition to programs and packages we’ve installed previously, we will need to install and setup the following:</p>
-<section id="quarto-usethis" class="level3">
-<h3 class="anchored" data-anchor-id="quarto-usethis">Quarto &amp; usethis</h3>
-<ol type="1">
-<li><a href="https://quarto.org/docs/get-started/">Quarto</a>, which is a scientific and technical publishing system. This is a tool you will install on your computer and RStudio will be able to access it.</li>
-</ol>
-<p>You can test if Quarto was installed correctly be (re)opening or (re)starting RStudio and clicking through <em>File</em> -&gt; <em>New File</em> and checking if you the options for Quarto-related files like <em>Quarto Document</em>, <em>Quarto Presentation</em> etc.</p>
-<ol start="2" type="1">
-<li>You will also need the <code>usethis</code> package in R:</li>
-</ol>
+<section id="usethis" class="level3">
+<h3 class="anchored" data-anchor-id="usethis">usethis</h3>
+<p>You will need the <code>usethis</code> package in R:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"usethis"</span>)</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
@@ -362,14 +360,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li><p><a href="https://www.zotero.org/download/">Zotero</a>, which is an open-source reference management tool.</p></li>
 <li><p><a href="https://www.zotero.org/download/connectors">Zotero Connector</a>, which is a browser plugin that allows you to add references to Zotero with one click.</p></li>
 <li><p><a href="https://retorque.re/zotero-better-bibtex/installation/">Better BibTex for Zotero</a>, which is an add-on to Zotero that makes it easy to format your bibliography in BibTex format. The installation instructions are relatively clear, but in case it isn’t: the add-on has to be downloaded from GitHub as a .xpi file (i.e.&nbsp;the <em>latest release</em>) but the .xpi file needs to be installed/opened via Zotero itself.</p></li>
-<li><p>Create a Zotero account via their official <a href="https://www.zotero.org/">website</a>.</p></li>
+<li><p>A Zotero account, created via their official <a href="https://www.zotero.org/">website</a>.</p></li>
 <li><p><a href="https://www.zotero.org/support/sync">Sync</a> your local Zotero installation with your online account by using the <em>Sync</em> option in Zotero’s <a href="https://www.zotero.org/support/preferences">Preferences</a> window. This requires logging in with the account you just created online.</p></li>
 <li><p>Create a folder in your Zotero library - for example, <code>text-mining-literature-review</code>. Add the literature you reviewed in the previous sessions to this folder, you should end up with 4 bibliography items. You could add these files manually or using the Zotero Connector plugin (the latter might be slightly better).</p></li>
 </ol>
-</section>
-<section id="github" class="level3">
-<h3 class="anchored" data-anchor-id="github">GitHub</h3>
-<p>Create an account on <a href="https://github.com/">GitHub</a>. If time allows, we will use GitHub as platform to publish our reproducible report online.</p>
 
 
 </section>
@@ -516,8 +510,8 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./final-assignment.html" class="pagination-link">
-        <span class="nav-page-text">Final Assignment</span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./reproducible-reports-session.html" class="pagination-link">
+        <span class="nav-page-text">Reproducible Reports</span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

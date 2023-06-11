@@ -1,0 +1,25 @@
+# This CITATION.cff file was generated with cffinit.
+# Visit https://bit.ly/cffinit to generate yours today!
+
+cff-version: 1.2.0
+title: Text Mining with I-Analyzer & R
+message: >-
+  If you use this software, please cite it using the
+  metadata from this file.
+type: software
+authors:
+  - given-names: Neha
+    family-names: Moopen
+  - given-names: Stefano
+    family-names: Rapisarda
+  - given-names: Lena
+    family-names: Thole
+  - given-names: Andreas
+    family-names: Franzke
+  - given-names: Jacques
+    family-names: Flores
+repository-code: >-
+  https://github.com/UtrechtUniversity/workshop-text-mining-rsa
+url: >-
+  https://utrechtuniversity.github.io/workshop-text-mining-rsa/
+license: MIT
